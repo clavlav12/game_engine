@@ -1,0 +1,28 @@
+    # def collision(self, other):
+    #     if self.rect.center[0] > other.rect.center[0]:
+    #         other.rect.right = self.rect.left
+    #         other.velocity.x = 0
+    #         self.velocity.x = 0
+    #         other.force.x = 0
+    #         self.force.x = 0
+    #     elif self.rect.center[0] < other.rect.center[0]:
+    #         other.rect.left = self.rect.right
+    #         other.velocity.x = 0
+    #         self.velocity.x = 0
+    #         other.force.x = 0
+    #         self.force.x = 0
+    #     if self.rect.center[1] > other.rect.center[1]:
+    #         other.rect.top = self.rect.bottom
+    #         other.velocity.y = 0
+    #         self.velocity.y = 0
+    #         other.force.y = 0
+    #         self.force.y = 0
+    #     elif self.rect.center[1] < other.rect.center[1]:
+    #         other.rect.bottom = self.rect.top
+    #         other.velocity.y = 0
+    #         self.velocity.y = 0
+    #         other.force.y = 0
+    #         self.force.y = 0
+    #
+    #     other.position.x = other.rect.x
+    #     other.position.y = other.rect.y
