@@ -1,5 +1,6 @@
-import MySprites
 import pygame
+import Engine.pygame_structures as pygame_structures
+
 
 class Particle(pygame.sprite.Sprite):
     particle_list = pygame.sprite.Group()
@@ -14,7 +15,7 @@ class Particle(pygame.sprite.Sprite):
             Particle.particle_sprite_list.add(self)
 
     def draw(self):
-        MySprites.Camera.blit(self.image, self.rect.topleft - MySprites.Camera.scroller)
+        pygame_structures.Camera.blit(self.image, self.rect.topleft - pygame_structures.Camera.scroller)
         # self.draw_rect()
         
     def update(self):
@@ -30,22 +31,23 @@ class Particle(pygame.sprite.Sprite):
 
     def draw_rect(self, clr=pygame.Color('red')):
         r = pygame.Rect(self.rect)
-        r.topleft = r.topleft - MySprites.Camera.scroller
-        pygame.draw.rect(MySprites.Camera.screen, clr, r, 1)
+        r.topleft = r.topleft - pygame_structures.Camera.scroller
+        pygame.draw.rect(pygame_structures.Camera.screen, clr, r, 1)
 
     @classmethod
-    def check_all_collision(cls):
+    def check_all_collision(cls, sprites_list):
         for particle in cls.particle_sprite_list:
-            lst = pygame.sprite.spritecollide(particle, MySprites.BaseSprite.sprites_list, False)
+            lst = pygame.sprite.spritecollide(particle, sprites_list, False)
             for sprite in lst:
                 particle.collide(sprite)
 
 
 class Explosion(Particle):
-    IMAGE_LIST = MySprites.get_images_list(r'animation\explostions\\*.png', 1)
+    print("here")
+    IMAGE_LIST = pygame_structures.get_images_list(r'animation\explostions\\*.png', 1)
 
     def __init__(self, center_position, fpi=20, collide_function=None):
-        self.animation = MySprites.Animation.by_images_list(Explosion.IMAGE_LIST, frames_per_image=fpi, repeat=False)
+        self.animation = pygame_structures.Animation.by_images_list(Explosion.IMAGE_LIST, frames_per_image=fpi, repeat=False)
         self.collide_function = collide_function
         super(Explosion, self).__init__(self.animation.get_image(), center_position, collide_function is not None)
 

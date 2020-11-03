@@ -7,11 +7,10 @@ import sys
 from typing import Union
 import pygame.locals as pl
 from re import finditer
-from pymaybe import maybe
 import pyperclip
 sys.path.insert(1, os.path.dirname(os.path.os.getcwd()))
 from structures import *
-from Sound import Player
+from Engine.Sound import Player
 image_folder = 'GUI images\\'
 
 

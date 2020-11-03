@@ -1,6 +1,7 @@
 from pygame import mixer, init
 from enum import Enum
 import os
+
 mixer.init(frequency=22050, size=-16, channels=2, buffer=512)
 cwd = os.getcwd()
 

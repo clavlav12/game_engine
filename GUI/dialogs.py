@@ -1,6 +1,5 @@
 import pygame
 from GlobalUse import *
-from structures import Default
 from sys import exit as close_program
 
 

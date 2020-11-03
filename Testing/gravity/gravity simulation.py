@@ -1,26 +1,26 @@
 import os
 import pygame
-from GlobalUse import DisplayMods
 import math
-from structures import VectorType, Vector2, Direction, DegTrigo
+from Engine.structures import VectorType, Vector2, Direction, DegTrigo
+import Engine.base_sprites as base_sprites
+import Engine.base_control as base_control
+import Engine.pygame_structures as pygame_structures
 import random
 
 W = 1000
 H = 700
 # screen = DisplayMods.Windowed((1680, 1080))
-screen = DisplayMods.Windowed((W, H))
-W, H = DisplayMods.current_width, DisplayMods.current_height
+print("mod")
+screen = pygame_structures.DisplayMods.Windowed((W, H))
+W, H = pygame_structures.DisplayMods.current_width, pygame_structures.DisplayMods.current_height
 
-import controls_new
-import MySprites
-
-MySprites.Camera.init(screen, "dynamic", None)
+pygame_structures.Camera.init(screen, "dynamic", None)
 
 
-# MySprites.Camera.init(screen, "static", None)
+# pygame_structures.Camera.init(screen, "static", None)
 
 
-class Planet(MySprites.BaseSprite):
+class Planet(base_sprites.BaseSprite):
     # GravitationalConstant = .1e-2
     GravitationalConstant = 100
     # CoulombConstant = .1e-2
@@ -31,7 +31,7 @@ class Planet(MySprites.BaseSprite):
         pygame.draw.circle(self.image, color, (radius, radius), radius)
         self.image.convert_alpha()
         super(Planet, self).__init__(pygame.Rect(x - radius, y - radius, radius * 2, radius * 2),
-                                     controls_new.BaseControl(self, Direction.right), mass)
+                                     base_control.BaseControl(self, Direction.right), mass)
         self.color = color
         self.radius = radius
 
@@ -101,8 +101,8 @@ class Planet(MySprites.BaseSprite):
         self.mass_rect.center = self.rect.center
         self.mass_rect.bottom = self.rect.top
         r = pygame.Rect(self.mass_rect)
-        r.topleft = r.topleft - MySprites.Camera.scroller
-        MySprites.Camera.blit(self.mass_text, r)
+        r.topleft = r.topleft - pygame_structures.Camera.scroller
+        pygame_structures.Camera.blit(self.mass_text, r)
         # self.draw_rect()
 
 
@@ -128,19 +128,19 @@ def next_sprite():
     global current
     try:
         if current is None:
-            for i in MySprites.BaseSprite.sprites_list:
+            for i in base_sprites.BaseSprite.sprites_list:
                 break
             current = i
             return i
         else:
             now = False
-            for i in MySprites.BaseSprite.sprites_list:
+            for i in base_sprites.BaseSprite.sprites_list:
                 if now:
                     current = i
                     return i
                 if i is current:
                     now = True
-            for i in MySprites.BaseSprite.sprites_list:
+            for i in base_sprites.BaseSprite.sprites_list:
                 break
             current = i
             return i
@@ -169,8 +169,8 @@ def Main():
     # planet1 = Planet(*random_position(), 10000, pygame.Color('blue'), r)
     # planet2 = Planet(*random_position(), 10000, pygame.Color('red'), r)
     # planet3 = Planet(*random_position(), 10000, pygame.Color('green'), r)
-    MySprites.Camera.set_scroller_position(lambda: (W // 2, H // 2), smooth_move=False)
-    MySprites.Map([], [], [], [], 50)
+    pygame_structures.Camera.set_scroller_position(lambda: (W // 2, H // 2), smooth_move=False)
+    pygame_structures.Map([], [], [], [], 50)
     running = 1
     fps = 1000
     elapsed = 1 / fps
@@ -179,7 +179,7 @@ def Main():
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.WINDOWEVENT:
-                MySprites.clock.tick()
+                base_sprites.clock.tick()
                 continue
             if event.type == pygame.QUIT:
                 running = 0
@@ -188,22 +188,22 @@ def Main():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     random_planet(*add_positions(add_positions(pygame.mouse.get_pos(),
-                                                               MySprites.Camera.scroller.position()),
+                                                               pygame_structures.Camera.scroller.position()),
                                                  (-W // 2, -H // 2)))
                 elif event.button == 3:
-                    MySprites.Camera.set_scroller_position(next_sprite(), smooth_move=True)
+                    pygame_structures.Camera.set_scroller_position(next_sprite(), smooth_move=True)
         # first = fnt.render(f'Hit Points: {tank1.hit_points}', True, get_color(tank1.hit_points))
         # second = fnt.render(f'Hit Points: {tank2.hit_points}', True, get_color(tank2.hit_points))
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LCTRL] and keys[pygame.K_r]:
-            MySprites.BaseSprite.sprites_list.empty()
-        MySprites.tick(elapsed, MySprites.clock, keys)
+            base_sprites.BaseSprite.sprites_list.empty()
+        base_sprites.tick(elapsed, base_sprites.clock, keys)
         # Camera.blit(first, (W - 150, 50))
         # Camera.blit(second, (5, 50))
-        MySprites.Camera.post_process()
+        pygame_structures.Camera.post_process(base_sprites.BaseSprite.sprites_list)
         pygame.display.flip()
-        elapsed = min(MySprites.clock.tick(fps) / 1000.0, 5 / fps)
+        elapsed = min(base_sprites.clock.tick(fps) / 1000.0, 5 / fps)
 
 
 if __name__ == '__main__':

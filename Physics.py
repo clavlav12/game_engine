@@ -1,3 +1,0 @@
-
-# GRAVITY = 30
-# GRAVITY = 2000
