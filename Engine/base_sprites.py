@@ -40,7 +40,7 @@ class Tile(pygame.sprite.Sprite):
         Tile.blocks_list.add(self)
 
     def sprite_collide(self, _sprite, axis):
-        pass
+        return _sprite.to_dict()
 
     def update(self):
         self.draw()
@@ -67,8 +67,10 @@ class BlockingTile(Tile):
         # if not sprite.collide_mask(self, _sprite):
         #     return
         # print(self.rect.topleft)
+        before = super(BlockingTile, self).sprite_collide(_sprite, axis)
         if not isinstance(_sprite, AdvancedSprite):
             return
+
         if axis == structures.Direction.vertical:
             # print("velocity: ", _sprite.velocity.y)
             if _sprite.velocity.y > 0:  # hit from top
@@ -96,6 +98,8 @@ class BlockingTile(Tile):
             _sprite.position.x = _sprite.rect.x
             _sprite.force.x = 0
             _sprite.velocity.x = 0
+
+        return before
 
     def friction(self, _sprite, was_on):
         if not was_on:  # he fell on the platform
@@ -162,6 +166,9 @@ class BaseSprite(pygame.sprite.Sprite):
         self.control = control
 
         BaseSprite.sprites_list.add(self)
+
+    def to_dict(self):
+        return {}
 
     def operate_gravity(self):
         self.add_force(structures.Vector2.Cartesian(0, GRAVITY * self.mass), 'gravity', False)
@@ -239,7 +246,7 @@ class BaseSprite(pygame.sprite.Sprite):
             self.position.x += self.velocity.x * time_delta
             self.rect.x = int(self.position.x)
 
-    def on_platform_collision(self, direction, platform):
+    def on_platform_collision(self, direction, platform, before):
         """Called when the sprite collides with a platform"""
         # when finishing the game, should try to change it to forced verision
         pass
@@ -251,20 +258,20 @@ class BaseSprite(pygame.sprite.Sprite):
 
         self.update_position(structures.Direction.vertical, time_delta)
 
-        platform = pygame_structures.Map.check_platform_collision(self, structures.Direction.vertical)
+        platform, before = pygame_structures.Map.check_platform_collision(self, structures.Direction.vertical)
         if platform is not None:
-            self.on_platform_collision(structures.Direction.vertical, platform)
-            self.control.platform_collide(structures.Direction.vertical, platform)
+            self.on_platform_collision(structures.Direction.vertical, platform, before)
+            self.control.platform_collide(structures.Direction.vertical, platform, before)
 
         self.update_acceleration()
         self.update_velocity(time_delta)
 
         self.update_position(structures.Direction.horizontal, time_delta)
-        platform = pygame_structures.Map.check_platform_collision(self, structures.Direction.horizontal)
+        platform, before = pygame_structures.Map.check_platform_collision(self, structures.Direction.horizontal)
 
         if platform is not None:
-            self.on_platform_collision(structures.Direction.horizontal, platform)
-            self.control.platform_collide(structures.Direction.horizontal, platform)
+            self.on_platform_collision(structures.Direction.horizontal, platform, before)
+            self.control.platform_collide(structures.Direction.horizontal, platform, before)
 
         self.force.reset()
 
@@ -321,7 +328,7 @@ class AdvancedSprite(BaseSprite):
     def __init__(self, rect, control, mass, hit_points,
                  health_bar_colors: Optional[Tuple[tuple, tuple]] = None, resistance_length=0):
         # hit boxes & moving
-        super(AdvancedSprite, self).__init__(rect, control, 1)
+        super(AdvancedSprite, self).__init__(rect, control, mass)
         #
 
         # jumping & physics
@@ -342,7 +349,6 @@ class AdvancedSprite(BaseSprite):
         self.velocity = structures.Vector2.Zero()
         self.acceleration = structures.Vector2.Zero()
         self.force = structures.Vector2.Zero()
-        self.mass = 1
 
         #  so the sprite will flicker when it has resistance
         self.alpha = -1
@@ -398,10 +404,10 @@ class AdvancedSprite(BaseSprite):
         self.force.reset()
 
         self.update_position(structures.Direction.vertical, time_delta)
-        platform = pygame_structures.Map.check_platform_collision(self, structures.Direction.vertical)
+        platform, before = pygame_structures.Map.check_platform_collision(self, structures.Direction.vertical)
         if platform is not None:
-            self.on_platform_collision(structures.Direction.vertical, platform)
-            self.control.platform_collide(structures.Direction.vertical, platform)
+            self.on_platform_collision(structures.Direction.vertical, platform, before)
+            self.control.platform_collide(structures.Direction.vertical, platform, before)
             self.platform_collide = platform
 
         self.on_platform = platform
@@ -410,12 +416,11 @@ class AdvancedSprite(BaseSprite):
         self.update_velocity(time_delta)
 
         self.update_position(structures.Direction.horizontal, time_delta)
-        platform = pygame_structures.Map.check_platform_collision(self, structures.Direction.horizontal)
+        platform, before = pygame_structures.Map.check_platform_collision(self, structures.Direction.horizontal)
 
         if platform is not None:
-            self.on_platform_collision(structures.Direction.horizontal, platform)
-            self.control.platform_collide(structures.Direction.horizontal, platform)
-            self.control.platform_collide(structures.Direction.vertical, platform)
+            self.on_platform_collision(structures.Direction.horizontal, platform, before)
+            self.control.platform_collide(structures.Direction.vertical, platform, before)
             self.platform_collide = platform
 
         self.force.reset()
@@ -467,7 +472,7 @@ class Bullet(BaseSprite):
     DAMAGE = 1
 
     def __init__(self, rect, damage, travel_distance):
-        super(Bullet, self).__init__(rect, controls.NoMoveControl(self, None), 1)
+        super(Bullet, self).__init__(rect, controls.NoMoveControl(), 1)
         self.damage = damage
         self.travel_distance = travel_distance
         self.first_frame = True
@@ -495,7 +500,7 @@ class Bullet(BaseSprite):
             # Camera.shake()
         # elif isinstance(other, Bullet):
 
-    def on_platform_collision(self, direction, platform):
+    def on_platform_collision(self, direction, platform, before):
         if direction == structures.Direction.vertical:
             self.kill()
 
@@ -567,7 +572,7 @@ class GunBullet(Bullet):
                                  'medium or large')
 
 
-def tick(elapsed, clock, keys=pygame.key.get_pressed()):
+def tick(elapsed, keys=pygame.key.get_pressed()):
     # print(len(BaseSprite.sprites_list))
     start = time()
     BaseSprite.update_states(keys, elapsed)

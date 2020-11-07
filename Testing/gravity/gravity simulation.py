@@ -38,6 +38,7 @@ class Planet(base_sprites.BaseSprite):
         self.mass_text = self.fnt.render(f'{self.mass:,}', True, pygame.Color('green'))
         self.mass_rect = self.mass_text.get_rect()
 
+    # def
     def update(self, kwargs):
         # if not (10 * W > self.rect.x > - 10 * W):
         #     MySprites.BaseSprite.sprites_list.remove(self)
@@ -198,7 +199,7 @@ def Main():
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LCTRL] and keys[pygame.K_r]:
             base_sprites.BaseSprite.sprites_list.empty()
-        base_sprites.tick(elapsed, base_sprites.clock, keys)
+        base_sprites.tick(elapsed, keys)
         # Camera.blit(first, (W - 150, 50))
         # Camera.blit(second, (5, 50))
         pygame_structures.Camera.post_process(base_sprites.BaseSprite.sprites_list)

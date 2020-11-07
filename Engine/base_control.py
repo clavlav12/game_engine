@@ -26,7 +26,7 @@ class BaseControl:
     def sprite_collide(self, sprite):
         pass
 
-    def platform_collide(self, direction, platform):
+    def platform_collide(self, direction, platform, before):
         pass
 
     def reset(self):
@@ -118,4 +118,8 @@ class JumpControl(BaseControl):
 
 
 class NoMoveControl(BaseControl):
-    pass
+    def __init__(self):
+        super(NoMoveControl, self).__init__(None, None)
+
+    def reset(self):
+        pass

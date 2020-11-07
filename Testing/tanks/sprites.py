@@ -33,6 +33,7 @@ class MissileMagazine(pygame.sprite.Group):
 
 class TankShootControl(base_controls.BaseControl):
     MAG_CAPACITY = 1
+    MAG_CAPACITY = 10000
     SHOT_DELAY = 1
     # SHOOT_SPEED = 1000
     SHOOT_SPEED = 1500
@@ -166,7 +167,7 @@ class Tank(base_sprites.Vehicle):
 
 class Missile(base_sprites.Bullet):
     DAMAGE = 1
-    TRAVEL_DISTANCE = 1500
+    TRAVEL_DISTANCE = 15000000
     MISSILE_IMAGE = pygame.image.load(r'images\missile.png').convert_alpha()
     MISSILE_IMAGE = pygame_structures.smooth_scale_image(MISSILE_IMAGE, 1.5)
 
@@ -195,8 +196,24 @@ class Missile(base_sprites.Bullet):
         self.shoot_force = shoot_force
         self.rect_collision = False
 
+        self.angle = int(self.shoot_force.theta)
+        self.angular_velocity = 0
+        self.angular_acceleration = 0
+        self.torque = 0
+        pygame_structures.Camera.set_scroller_position(self)
+
+    def operate_gravity(self):
+        super(Missile, self).operate_gravity()
+        self.torque = structures.DegTrigo.cos(self.angle) * 2  # mass differences
+
+    def update_kinematics(self, time_delta):
+        super(Missile, self).update_kinematics(time_delta)
+        self.angular_acceleration = self.torque
+        self.angular_velocity += self.angular_acceleration * time_delta
+        self.angle += self.angular_velocity
+
     def draw(self):
-        self.missile_image.rotate(int(self.velocity.theta))
+        self.missile_image.rotate(int(self.angle))
         self.image = self.missile_image.blit_image()
         self.rect.width = self.missile_image.rect.width
         self.rect.height = self.missile_image.rect.height

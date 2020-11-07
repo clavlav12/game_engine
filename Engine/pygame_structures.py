@@ -84,6 +84,10 @@ class Map:
         self.forth_quadrant = [[Tile.get_tile(tile_id)(*args, x * tile_size, -y * tile_size)
                                 for x, (tile_id, *args) in enumerate(row)] for y, row in
                                enumerate(reversed(forth_quadrant))]
+        # for i in self.first_quadrant:
+        #     for a in i:
+        #         if a.id == 1:
+        #             print(a.rect.top)
 
         # print(*[['0' if isinstance(tile, air) else '1' for tile in column] for column in self.map], sep='\n')
         self.map_maps = {
@@ -133,13 +137,13 @@ class Map:
                     if not isinstance(tile, Air):
                         if sprite.rect_collision or \
                                 pygame.sprite.collide_mask(tile, sprite):  # mask
-                            tile.sprite_collide(sprite, axis)
-                            return tile
+                            before = tile.sprite_collide(sprite, axis)
+                            return tile, before
 
                 except IndexError:  # no collision
                     pass
 
-        return None
+        return None, None
 
 
 class DisplayMods:

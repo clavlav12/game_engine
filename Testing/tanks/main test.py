@@ -1,16 +1,18 @@
 import os
 import pygame
 from Engine.pygame_structures import DisplayMods, Camera, Map, Timer
+W = 1920
+H = 1080
+screen = DisplayMods.Windowed((W, H))
 W = 1000
 H = 700
-screen = DisplayMods.Windowed((W, H))
 
 from Engine.structures import VectorType, Vector2, Direction
 from Engine.base_sprites import clock, tick, BaseSprite
 from sprites import Tank
 
-# Camera.init(screen, "dynamic", None)
-Camera.init(screen, "static", None)
+Camera.init(screen, "dynamic", None)
+# Camera.init(screen, "static", None)
 
 
 def get_color(hitpoints):
@@ -53,8 +55,8 @@ def Main():
     for i in range(H//50-1, H//50-7, -1):
         tile_list[i][(W//2 - 25)//size] = (1, sur)
 
-    # Map(tile_list, [], [], [], size)
-    Map(tile_list, tile_list, tile_list, tile_list, size)
+    Map(tile_list, [], [], [], size)
+    # Map(tile_list, tile_list, tile_list, tile_list, size)
     # print(*[['1' if not isinstance(tile, air) else '0' for tile in column] for column in Map.get_map(1, 1)], sep='\n')
     # print(*[['1' if not isinstance(tile, air) else '0' for tile in column] for column in Map.get_map(1, 1)], sep='\n')
     # man.rect.left = b.rect.left
@@ -96,7 +98,7 @@ def Main():
         #     is_zombie = not is_zombie
         #     timer.activate()
         keys = pygame.key.get_pressed()
-        tick(elapsed, clock, keys)
+        tick(elapsed, keys)
         Camera.blit(first, (W - 150, 50))
         Camera.blit(second, (5, 50))
         Camera.post_process(BaseSprite.sprites_list)

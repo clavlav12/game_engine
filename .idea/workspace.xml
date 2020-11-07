@@ -2,338 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="71a335b9-b6e5-4148-a18b-ae04a242155c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Engine/pygame_structures.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Testing/man_zombie/controls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Testing/man_zombie/sprites.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Testing/tanks/controls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Testing/tanks/sprites.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/platform_game-online.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/platform_game-online.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/rigidCube.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/GUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/dialogs.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/dialogs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MySprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/MySprites.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Particale.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Particle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Physics.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sound.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Sound.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tiles.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/Tank/1.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/Tank/1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/Tank/2.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/Tank/2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/Tank/3.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/Tank/3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/Tank/4.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/Tank/4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/bullet/large/blue.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/bullet/large/blue.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/bullet/large/green.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/bullet/large/green.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/bullet/large/red.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/bullet/large/red.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/bullet/large/yellow.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/bullet/large/yellow.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/bullet/medium/blue.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/bullet/medium/blue.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/bullet/medium/green.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/bullet/medium/green.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/bullet/medium/red.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/bullet/medium/red.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/bullet/medium/yellow.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/bullet/medium/yellow.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/bullet/small/blue.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/bullet/small/blue.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/bullet/small/green.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/bullet/small/green.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/bullet/small/red.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/bullet/small/red.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/bullet/small/yellow.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/bullet/small/yellow.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/explostions/regularExplosion00.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/explostions/regularExplosion00.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/explostions/regularExplosion01.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/explostions/regularExplosion01.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/explostions/regularExplosion02.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/explostions/regularExplosion02.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/explostions/regularExplosion03.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/explostions/regularExplosion03.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/explostions/regularExplosion04.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/explostions/regularExplosion04.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/explostions/regularExplosion05.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/explostions/regularExplosion05.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/explostions/regularExplosion06.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/explostions/regularExplosion06.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/explostions/regularExplosion07.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/explostions/regularExplosion07.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/explostions/regularExplosion08.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/explostions/regularExplosion08.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_006.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_006.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_007.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_007.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_008.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_008.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_009.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_009.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_010.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_010.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_011.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_011.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_012.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_012.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_013.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_013.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_014.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_014.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_015.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_015.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_016.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_016.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/Idle/Idle_017.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/Idle/Idle_017.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Dying/Dying_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Dying/Dying_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Dying/Dying_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Dying/Dying_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Dying/Dying_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Dying/Dying_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Dying/Dying_006.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_006.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Dying/Dying_007.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_007.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Dying/Dying_008.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_008.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Dying/Dying_009.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_009.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Dying/Dying_010.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_010.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Dying/Dying_011.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_011.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Dying/Dying_012.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_012.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Dying/Dying_013.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_013.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Dying/Dying_014.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_014.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_006.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_006.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_007.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_007.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_008.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_008.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_009.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_009.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_010.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_010.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_011.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_011.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_012.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_012.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_013.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_013.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_014.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_014.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing in The Air/Firing in The Air_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing in The Air/Firing in The Air_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing in The Air/Firing in The Air_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing in The Air/Firing in The Air_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing in The Air/Firing in The Air_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing in The Air/Firing in The Air_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing in The Air/Firing in The Air_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing in The Air/Firing in The Air_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing new/frame_00_delay-0.1s.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_00_delay-0.1s.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing new/frame_01_delay-0.1s.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_01_delay-0.1s.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing new/frame_02_delay-0.1s.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_02_delay-0.1s.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing new/frame_03_delay-0.1s.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_03_delay-0.1s.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing new/frame_04_delay-0.1s.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_04_delay-0.1s.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing new/frame_05_delay-0.1s.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_05_delay-0.1s.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing new/frame_06_delay-0.1s.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_06_delay-0.1s.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing new/frame_07_delay-0.1s.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_07_delay-0.1s.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing new/frame_08_delay-0.1s.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_08_delay-0.1s.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing new/frame_09_delay-0.1s.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_09_delay-0.1s.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing new/frame_10_delay-0.1s.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_10_delay-0.1s.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing new/frame_11_delay-0.1s.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_11_delay-0.1s.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing new/frame_12_delay-0.1s.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_12_delay-0.1s.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing new/frame_13_delay-0.1s.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_13_delay-0.1s.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing new/frame_14_delay-0.1s.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_14_delay-0.1s.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing old firing/Firing_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing old firing/Firing_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing old firing/Firing_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing old firing/Firing_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing old firing/Firing_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing old firing/Firing_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing old firing/Firing_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing old firing/Firing_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing/idle_0.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing/idle_0.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing/idle_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing/idle_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing/idle_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing/idle_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Firing/idle_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Firing/idle_3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_006.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_006.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_007.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_007.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_008.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_008.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_009.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_009.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_010.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_010.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_011.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_011.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_006.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_006.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_007.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_007.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_008.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_008.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_009.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_009.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_010.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_010.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_011.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_011.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_012.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_012.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_013.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_013.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_014.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_014.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_015.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_015.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_016.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_016.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_017.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_017.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 1.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 10.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 10.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 11.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 11.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 12.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 12.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 13.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 13.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 14.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 14.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 15.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 15.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 16.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 16.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 17.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 17.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 18.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 18.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 2.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 3.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 4.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 5.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 6.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 6.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 7.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 7.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 8.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 8.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Run Firing/Background 9.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 9.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Squat Firing/Squat Firing_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Squat Firing/Squat Firing_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Squat Firing/Squat Firing_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Squat Firing/Squat Firing_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Squat Firing/Squat Firing_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Squat Firing/Squat Firing_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/Squat Firing/Squat Firing_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/Squat Firing/Squat Firing_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Firing_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Firing_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Firing_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Firing_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Firing_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Firing_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Firing_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Firing_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_006.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_006.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_007.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_007.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_008.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_008.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_009.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_009.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_010.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_010.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_011.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_011.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_012.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_012.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_013.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_013.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_014.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_014.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_015.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_015.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_016.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_016.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_017.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_017.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_006.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_006.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_007.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_007.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_008.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_008.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_009.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_009.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_010.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_010.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_011.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_011.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_006.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_006.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_007.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_007.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_008.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_008.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_009.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_009.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_010.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_010.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_011.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_011.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_012.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_012.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_013.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_013.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_014.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_014.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_006.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_006.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_007.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_007.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_008.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_008.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_009.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_009.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_010.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_010.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_011.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_011.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_006.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_006.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_007.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_007.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_008.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_008.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_009.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_009.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_010.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_010.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_011.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_011.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_000.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_003.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_003.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_004.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_004.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_005.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_005.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_006.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_006.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_007.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_007.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_008.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_008.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_009.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_009.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_010.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_010.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_011.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_011.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_012.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_012.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_013.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_013.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_014.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_014.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_015.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_015.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_016.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_016.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_017.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_017.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/controls_new.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crop image.py" beforeDir="false" afterPath="$PROJECT_DIR$/Related/crop image.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravity simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/gravity/gravity simulation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/M484BulletCollection1.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/images/M484BulletCollection1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/aa.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/images/aa.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/background.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/images/background.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main-turret.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/images/main-turret.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/missile.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/images/missile.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/platform.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/images/platform.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/player1 keyboard.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/images/player1 keyboard.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/player2 keyboard.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/images/player2 keyboard.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/portal.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/images/portal.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/portal2.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/images/portal2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/shot.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/images/shot.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/main test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saved.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sounds effects/beep.wav" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/sounds effects/beep.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sounds effects/button push old.wav" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/sounds effects/button push old.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sounds effects/button push.wav" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/sounds effects/button push.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sounds effects/death effect.wav" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/sounds effects/death effect.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sounds effects/explosion.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/sounds effects/explosion.ogg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sounds effects/gun sound.wav" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/sounds effects/gun sound.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sounds effects/jump sound.wav" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/sounds effects/jump sound.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sounds effects/large beep.wav" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/sounds effects/large beep.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sounds effects/music sound.wav" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/sounds effects/music sound.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sounds effects/skelly.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/sounds effects/skelly.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sounds effects/win sound.wav" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/sounds effects/win sound.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/structures.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test playground.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/base_control.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test rotation 2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/base_control.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/base_control.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/base_sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/base_sprites.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/pygame_structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/pygame_structures.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/structures.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/gravity/gravity simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/gravity/gravity simulation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/tanks/main test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/main test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/tanks/sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/sprites.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -369,17 +46,17 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\aviro\Desktop\platform-game\animation\fighter\PNG\PNG Sequences" />
-      <recent name="E:\platform_game-online" />
-      <recent name="F:\platform_game-online" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\aviro\Desktop\game_engine\Testing\tanks" />
       <recent name="C:\Users\aviro\Desktop\game_engine\Engine" />
       <recent name="C:\Users\aviro\Desktop\game_engine\" />
       <recent name="C:\Users\aviro\Desktop\game_engine\Testing\gravity" />
       <recent name="C:\Users\aviro\Desktop\game_engine\Related" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\aviro\Desktop\platform-game\animation\fighter\PNG\PNG Sequences" />
+      <recent name="E:\platform_game-online" />
+      <recent name="F:\platform_game-online" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -394,7 +71,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.main test (1)">
+  <component name="RunManager" selected="Python.scratch_38">
     <configuration name="Unnamed" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -408,6 +85,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="base_control" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="platform_game-online" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Engine" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Engine/base_control.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -458,7 +156,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="scratch_36" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="rigidCube" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="platform_game-online" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/rigidCube.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="scratch_38" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -470,28 +189,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch_36.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="server" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="platform_game-online" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server.py" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch_38.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -521,43 +219,22 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test rotation 2" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="platform_game-online" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test rotation 2.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.Unnamed" />
       <item itemvalue="Python.tes" />
-      <item itemvalue="Python.server" />
-      <item itemvalue="Python.test rotation 2" />
-      <item itemvalue="Python.scratch_36" />
       <item itemvalue="Python.gravity simulation" />
       <item itemvalue="Python.main test (1)" />
+      <item itemvalue="Python.rigidCube" />
+      <item itemvalue="Python.base_control" />
+      <item itemvalue="Python.scratch_38" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main test (1)" />
+        <item itemvalue="Python.scratch_38" />
         <item itemvalue="Python.gravity simulation" />
-        <item itemvalue="Python.scratch_36" />
-        <item itemvalue="Python.test rotation 2" />
-        <item itemvalue="Python.server" />
+        <item itemvalue="Python.rigidCube" />
+        <item itemvalue="Python.main test (1)" />
+        <item itemvalue="Python.base_control" />
       </list>
     </recent_temporary>
   </component>
@@ -579,11 +256,16 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="176" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1580468121796">

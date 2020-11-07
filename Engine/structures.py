@@ -53,7 +53,7 @@ def angle_between_points(point1, point2):
     return DegTrigo.atan1(dx, dy)
 
 
-def accurate_rect_collide(rect1, rect2, dpos1, dpos2=(0, 0)):
+def accurate_rect_collide_old(rect1, rect2, dpos1, dpos2=(0, 0)):
     rectangle_a = {"x1": rect1.x + dpos1[0], "y1": rect1.y + dpos1[1],
                    "x2": rect1.bottomright[0] + dpos1[0], "y2": rect1.bottomright[1] + dpos1[1]}
     rectangle_b = {"x1": rect2.x + dpos2[0], "y1": rect2.y + dpos2[1],
@@ -69,6 +69,18 @@ def add_tuples(*tuples):
         x += tup[0]
         y += tup[1]
     return x, y
+
+
+def accurate_rect_collide(rect1, rect2, dpos1, dpos2=(0, 0)):
+    max_1 = add_tuples(rect1.bottomright, dpos1)
+    max_2 = add_tuples(rect2.bottomright, dpos2)
+    min_1 = add_tuples(rect1.topleft, dpos1)
+    min_2 = add_tuples(rect2.topleft, dpos2)
+    if max_1[0] < min_2[0] or min_1[0] > max_2[0]:
+        return False
+    if max_1[1] < min_2[1] or min_1[1] > max_2[1]:
+        return False
+    return True
 
 
 def sub_tuples(a, b):
@@ -385,6 +397,20 @@ class Vector2:
 
     def __bool__(self):
         return bool(round(self.r, 5))
+
+    def __pow__(self, other):
+        """returns the cross product of the vector self and other"""
+        if isinstance(other, (float, int)):
+            return Vector2.Cartesian(other * self.y, -other * self.x)
+        elif isinstance(other, Vector2):
+            return self.x * other.y - self.y * other.x
+
+    def __rpow__(self, other):
+        """returns the cross product of other and the vector self"""
+        if isinstance(other, (float, int)):
+            return Vector2.Cartesian(-other * self.y, other * self.x)
+        elif isinstance(other, Vector2):
+            return other.__pow__(self)
 
 
 class Default:
