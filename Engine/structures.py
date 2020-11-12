@@ -10,6 +10,7 @@ def print_time(func):
         before = time()
         func(*args, **kwargs)
         print(time() - before)
+
     return wrapper
 
 
@@ -69,6 +70,11 @@ def add_tuples(*tuples):
         x += tup[0]
         y += tup[1]
     return x, y
+
+
+def get_rect_min_max(rect, dpos):
+    return add_tuples(rect.topleft, dpos), \
+           add_tuples(rect.bottomright, dpos)
 
 
 def accurate_rect_collide(rect1, rect2, dpos1, dpos2=(0, 0)):
@@ -132,11 +138,11 @@ class DegTrigo:
     @classmethod
     def atan1(cls, x, y):  # 0 to 360
         if (x > 0) and (y >= 0):
-            return cls.atan(y/x)
+            return cls.atan(y / x)
         elif (x > 0) and (y < 0):
-            return cls.atan(y/x) + 360
+            return cls.atan(y / x) + 360
         elif x < 0:
-            return cls.atan(y/x) + 180
+            return cls.atan(y / x) + 180
         elif (x == 0) and (y > 0):
             return 90
         elif (x == 0) and (y < 0):
@@ -193,7 +199,7 @@ class Vector2:
 
     @property
     def r(self):
-        return math.sqrt(self.x**2 + self.y**2)
+        return math.sqrt(self.x ** 2 + self.y ** 2)
 
     @r.setter
     def r(self, value):
@@ -227,6 +233,10 @@ class Vector2:
         return cls(cls.__key, (x, y), VectorType.cartesian)
 
     @classmethod
+    def Point(cls, point):
+        return cls(cls.__key, (point[0], point[1]), VectorType.cartesian)
+
+    @classmethod
     def Polar(cls, r, theta):
         return cls(cls.__key, (r, theta), VectorType.polar)
 
@@ -253,6 +263,20 @@ class Vector2:
         new.rotate(angle)
         return new
 
+    def normalized(self):
+        return Vector2.Cartesian(self.x / self.magnitude(), self.y / self.magnitude())
+
+    def normalize(self):
+        self.x /= self.magnitude()
+        self.y /= self.magnitude()
+
+    def floor(self):
+        return Vector2.Cartesian(int(self.x), int(self.y))
+
+    def set_values(self, x=None, y=None):
+        self.x = maybe(x).or_else(self.x)
+        self.y = maybe(y).or_else(self.y)
+
     def __round__(self, n=None):
         return Vector2.Cartesian(round(self.x, n), round(self.y, n))
 
@@ -263,6 +287,8 @@ class Vector2:
         return Vector2.Cartesian(self.x, self.y)
 
     def __add__(self, other):  # + operator
+        if isinstance(other, (list, tuple)) and len(other) >= 2:
+            other = Vector2.Cartesian(other[0], other[1])
         if isinstance(other, self.__class__):
             return self.__class__.Cartesian(self.x + other.x, self.y + other.y)
         elif isinstance(other, (int, float)):
@@ -270,6 +296,8 @@ class Vector2:
         return NotImplemented
 
     def __iadd__(self, other):  # += operator
+        if isinstance(other, (list, tuple)) and len(other) >= 2:
+            other = Vector2.Cartesian(other[0], other[1])
         if isinstance(other, self.__class__):
             self.x += other.x
             self.y += other.y
@@ -279,9 +307,11 @@ class Vector2:
         return NotImplemented
 
     def __radd__(self, other):
-        return -self + other
+        return self + other
 
     def __sub__(self, other):  # - operator
+        if isinstance(other, (list, tuple)) and len(other) >= 2:
+            other = Vector2.Cartesian(other[0], other[1])
         if isinstance(other, self.__class__):
             return self.__class__.Cartesian(self.x - other.x, self.y - other.y)
         elif isinstance(other, (int, float)):
@@ -289,6 +319,8 @@ class Vector2:
         return NotImplemented
 
     def __isub__(self, other):  # -= operator
+        if isinstance(other, (list, tuple)) and len(other) >= 2:
+            other = Vector2.Cartesian(other[0], other[1])
         if isinstance(other, self.__class__):
             self.x -= other.x
             self.y -= other.y
@@ -301,6 +333,8 @@ class Vector2:
         return self - other
 
     def __mul__(self, other):
+        if isinstance(other, (list, tuple)) and len(other) >= 2:
+            other = Vector2.Cartesian(other[0], other[1])
         if isinstance(other, (int, float)):
             return Vector2.Cartesian(self.x * other, self.y * other)
         elif isinstance(other, self.__class__):
@@ -318,6 +352,8 @@ class Vector2:
         return self * other
 
     def __truediv__(self, other):
+        if isinstance(other, (list, tuple)) and len(other) >= 2:
+            other = Vector2.Cartesian(other[0], other[1])
         if isinstance(other, (int, float)):
             return self.__class__.Polar(self.r / other, self.theta)
         elif isinstance(other, self.__class__):
@@ -335,13 +371,15 @@ class Vector2:
         return Vector2.Cartesian(other / self.x, other / self.y)
 
     def __floordiv__(self, other):
+        if isinstance(other, (list, tuple)) and len(other) >= 2:
+            other = Vector2.Cartesian(other[0], other[1])
         if isinstance(other, (int, float)):
             return self.__class__.Polar(self.r // other, self.theta)
         elif isinstance(other, self.__class__):
             "Returns the inverse of the dot product of the vectors"
             return self.x // other.x + self.y // other.y
-        return NotImplemented   
-        
+        return NotImplemented
+
     def __ifloordiv__(self, other):
         if isinstance(other, int):
             self.r //= other
@@ -357,7 +395,7 @@ class Vector2:
         if typ == VectorType.polar:
             return f"r={self.r:.2f}, θ={self.theta:.2f}"
         elif typ == VectorType.cartesian:
-            return f"[{self.x:.2f}, {self.y:.2f}]"
+            return f"[{self.x:.5f}, {self.y:.5f}]"
         else:
             return f"r={self.r:.2f}, θ={self.theta:.2f}" + ' : ' f"[{self.x:.2f}, {self.y:.2f}]"
 
@@ -391,6 +429,8 @@ class Vector2:
             raise IndexError()
 
     def __eq__(self, other):
+        if isinstance(other, (list, tuple)) and len(other) >= 2:
+            other = Vector2.Cartesian(other[0], other[1])
         if isinstance(other, self.__class__):
             return (self.x == other.x) and (self.y == other.y)
         return NotImplemented
@@ -399,6 +439,8 @@ class Vector2:
         return bool(round(self.r, 5))
 
     def __pow__(self, other):
+        if isinstance(other, (list, tuple)) and len(other) >= 2:
+            other = Vector2.Cartesian(other[0], other[1])
         """returns the cross product of the vector self and other"""
         if isinstance(other, (float, int)):
             return Vector2.Cartesian(other * self.y, -other * self.x)
@@ -407,10 +449,25 @@ class Vector2:
 
     def __rpow__(self, other):
         """returns the cross product of other and the vector self"""
+        if isinstance(other, (list, tuple)) and len(other) >= 2:
+            other = Vector2.Cartesian(other[0], other[1])
         if isinstance(other, (float, int)):
             return Vector2.Cartesian(-other * self.y, other * self.x)
         elif isinstance(other, Vector2):
-            return other.__pow__(self)
+            return other ** self
+
+    def __mod__(self, other):
+        if isinstance(other, (float, int)):
+            return Vector2.Cartesian(self.x % other, self.y % other)
+
+    def __abs__(self):
+        return self.magnitude()
+
+    def modf(self):
+        x_float, x_num = math.modf(self.x)
+        y_float, y_num = math.modf(self.y)
+        return Vector2.Cartesian(x_float, y_float), \
+            Vector2.Cartesian(x_num, y_num)
 
 
 class Default:
@@ -591,8 +648,8 @@ class Scroller:  # tested
             x = self.position()[0]
         if y is None:
             y = self.position()[1]
-        self.tx = min(max(x - self.display_size[0]/2, self.minx), self.maxx)
-        self.ty = min(max(y - self.display_size[1]/2, self.miny), self.maxy)
+        self.tx = min(max(x - self.display_size[0] / 2, self.minx), self.maxx)
+        self.ty = min(max(y - self.display_size[1] / 2, self.miny), self.maxy)
 
     def set_position(self, position, smooth_move=False):
         if isinstance(position, tuple):
@@ -611,7 +668,7 @@ class Scroller:  # tested
 
     def update(self):
         x, y = self.position()
-        dx = (x - self.tx - self.display_size[0]/2)
+        dx = (x - self.tx - self.display_size[0] / 2)
         if (abs(dx) < 3) and (abs(dx) < abs(self.last_dx)):  # makes movement smoother
             dx += sign(int(dx)) * Scroller.SCROLL_DELAY
 
@@ -630,7 +687,27 @@ members = [attr for attr in dir(Direction) if not callable(getattr(Direction, at
 direction = {eval(f'Direction.{i}'): i for i in members}
 
 if __name__ == '__main__':
-    v = Vector2.Polar(15, 0)
-    print(v, v.r, v.theta)
-    v.rotate(45)
-    print(*v)
+    v = Vector2.Cartesian(30, 30)
+    n = Vector2.Cartesian(y=1)
+    t = v - (v*n)*n
+
+    t.normalize()
+
+    jt = - (v * t)
+
+    massA = massB = 2
+    staticFrictionA = staticFrictionB = 1
+    dynamicFrictionA = dynamicFrictionB = 0.5
+
+    jt /= (1 / massA + 1 / massB)
+
+    mu = math.hypot(staticFrictionA, staticFrictionB)
+    if abs(jt) < jt * mu:
+        frictionImpulse = jt * t
+    else:
+        dynamicFriction = math.hypot(dynamicFrictionA, dynamicFrictionB)
+        frictionImpulse = -j * t * dynamicFriction
+
+    # A->velocity -= (1 / A->mass) * frictionImpulse
+    # B->velocity += (1 / B->mass) * frictionImpulse
+

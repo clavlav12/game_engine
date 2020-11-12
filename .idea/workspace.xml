@@ -2,13 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="71a335b9-b6e5-4148-a18b-ae04a242155c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Testing/rigidCube.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/base_control.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/base_control.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/base_sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/base_sprites.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/pygame_structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/pygame_structures.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/structures.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Testing/gravity/gravity simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/gravity/gravity simulation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/rigidCube.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/rigidCube.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Testing/tanks/main test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/main test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Testing/tanks/sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/sprites.py" afterDir="false" />
     </list>
@@ -42,21 +43,23 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python" />
     <property name="last.edited.regexp" value="Sample Text" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../game_engine-main" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Testing/tanks" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\aviro\Desktop\game_engine\Engine\images" />
       <recent name="C:\Users\aviro\Desktop\game_engine\Testing\tanks" />
       <recent name="C:\Users\aviro\Desktop\game_engine\Engine" />
       <recent name="C:\Users\aviro\Desktop\game_engine\" />
       <recent name="C:\Users\aviro\Desktop\game_engine\Testing\gravity" />
-      <recent name="C:\Users\aviro\Desktop\game_engine\Related" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\aviro\Desktop\game_engine\Testing\tanks" />
+      <recent name="C:\Users\aviro\Desktop\game_engine\Testing" />
+      <recent name="C:\Users\aviro\Desktop\game_engine\Engine" />
       <recent name="C:\Users\aviro\Desktop\platform-game\animation\fighter\PNG\PNG Sequences" />
       <recent name="E:\platform_game-online" />
-      <recent name="F:\platform_game-online" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -71,7 +74,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.scratch_38">
+  <component name="RunManager" selected="Python.simple test">
     <configuration name="Unnamed" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -93,7 +96,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="base_control" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="base_sprites" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -105,28 +108,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Engine/base_control.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="gravity simulation" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="platform_game-online" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/gravity" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/gravity/gravity simulation.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Engine/base_sprites.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -156,28 +138,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="rigidCube" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="platform_game-online" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/rigidCube.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="scratch_38" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="scratch_42" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -189,7 +150,49 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch_38.py" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch_42.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="scratch_43" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="platform_game-online" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch_43.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="simple test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="platform_game-online" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/tanks" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/tanks/simple test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -222,19 +225,19 @@
     <list>
       <item itemvalue="Python.Unnamed" />
       <item itemvalue="Python.tes" />
-      <item itemvalue="Python.gravity simulation" />
       <item itemvalue="Python.main test (1)" />
-      <item itemvalue="Python.rigidCube" />
-      <item itemvalue="Python.base_control" />
-      <item itemvalue="Python.scratch_38" />
+      <item itemvalue="Python.base_sprites" />
+      <item itemvalue="Python.simple test" />
+      <item itemvalue="Python.scratch_42" />
+      <item itemvalue="Python.scratch_43" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.scratch_38" />
-        <item itemvalue="Python.gravity simulation" />
-        <item itemvalue="Python.rigidCube" />
+        <item itemvalue="Python.simple test" />
         <item itemvalue="Python.main test (1)" />
-        <item itemvalue="Python.base_control" />
+        <item itemvalue="Python.scratch_43" />
+        <item itemvalue="Python.base_sprites" />
+        <item itemvalue="Python.scratch_42" />
       </list>
     </recent_temporary>
   </component>
@@ -249,6 +252,13 @@
       <option name="presentableId" value="Default" />
       <updated>1570184384522</updated>
     </task>
+    <task id="LOCAL‎00001" summary="bad rigidCube">
+      <created>1604790254036</created>
+      <option name="number" value="LOCAL‎00001" />
+      <option name="presentableId" value="LOCAL‎00001" />
+      <updated>1604790254036</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -265,7 +275,8 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="bad rigidCube" />
+    <option name="LAST_COMMIT_MESSAGE" value="bad rigidCube" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="176" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1580468121796">

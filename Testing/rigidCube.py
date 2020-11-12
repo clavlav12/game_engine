@@ -27,11 +27,13 @@ class RigidCube(base_sprites.AdvancedSprite):
         self.moment_of_inertia = size ** 4 / 12
         self.moment_of_inertia = size ** 4 / 36
         self.size = size
-        image = pg.Surface((size, size), pg.SRCALPHA, 32)
-        image.fill(pg.Color('blue'))
+        image = pg.transform.smoothscale(base_sprites.Slime.sur, [size] * 2).convert_alpha()
         half_diagonal = self.size * math.sqrt(2) / 4
         # print(half_diagonal)
         self.real_image = pygame_structures.RotatableImage(image, self.angle, (0, 0), lambda: self.rect.center)
+
+        self.generate_collision_manifold = True
+        self.restitution = 0.05
 
         # pygame_structures.Camera.set_scroller_position(self)
 
@@ -78,54 +80,42 @@ class RigidCube(base_sprites.AdvancedSprite):
     def draw(self):
         self.real_image.rotate(self.angle)
         self.image = self.real_image.blit_image()
-        # self.rect.width = self.real_image.rect.width
-        # self.rect.height = self.real_image.rect.height
-        # self.rect.topleft = self.real_image.rect.topleft
-        # self.draw_rect()
+        self.rect.width = self.real_image.rect.width
+        self.rect.height = self.real_image.rect.height
+        # self.position.values = self.rect.topleft
+        self.draw_rect()
         # print(self.rect.bottom,  "bottom")
 
-    def collision(self, other):
-        print(self.velocity.magnitude())
+    def collision(self, other, collision):
+        print(collision)
+        # print(self.velocity.magnitude())
         if round(self.velocity.magnitude()) > 0:
             self.angular_velocity += (self.velocity.magnitude() / 3)
-            print(round(self.velocity.magnitude()))
+            # print(round(self.velocity.magnitude()))
         self.torque = - structures.DegTrigo.sin(45 - (other.angle - self.angle)) * self.size * (math.sqrt(2) / 2) * self.mass * \
                       self.GRAVITY
-        self.sprite_collide_func(other, structures.Direction.vertical)
+
+        self.sprite_collide_func(other, collision)
         return True
 
-    def sprite_collide_func(self, _sprite, axis):
-        # if not sprite.collide_mask(self, _sprite):
-        #     return
-        # print(self.rect.topleft)
-        if axis == structures.Direction.vertical:
-            # print("velocity: ", _sprite.velocity.y)
-            if _sprite.velocity.y > 0:  # hit from top
-                # while _sprite.collide_mask(_sprite, self):
-                #     _sprite.position.y -= 1
-                #     _sprite.rect.y -= 1
-                _sprite.rect.bottom = self.rect.top
-                was_on = _sprite.on_platform
-                _sprite.on_platform = self
-            else:  # hit from bottom
-                _sprite.rect.top = self.rect.bottom
-            _sprite.position.y = _sprite.rect.y
-            _sprite.force.y = 0
-            _sprite.velocity.y = 0
-            if hasattr(_sprite.control, 'jumping') and _sprite.control.jumping:
-                _sprite.control.jumping = False
-                _sprite.on_platform = None
+    def sprite_collide_func(self, _sprite, collision):
+        relative_velocity = _sprite.velocity - self.velocity
+        velocity_among_normal = relative_velocity * collision.normal
+        if velocity_among_normal > 0:
+            return
 
-        else:
-            if _sprite.velocity.x > 0:  # hit from left
-                _sprite.rect.right = self.rect.left
-            else:  # hit from right
-                _sprite.rect.left = self.rect.right
-            _sprite.position.x = _sprite.rect.x
-            _sprite.force.x = 0
-            _sprite.velocity.x = 0
+        j = -(1 + self.restitution) * velocity_among_normal
+        j /= 1 / float('inf') + 1 / _sprite.mass
+        impulse = j * collision.normal
 
+        _sprite.velocity += 1 / _sprite.mass * impulse
+        self.velocity -= 1 / self.mass * impulse
 
+        percent = 0.2
+        slop = 0.01
+        correction = max(collision.penetration - slop, 0.0) / (1 / _sprite.mass) * percent * collision.normal
+        _sprite.position += 1 / _sprite.mass * correction
+        _sprite.set_position()
 
 
 def main():

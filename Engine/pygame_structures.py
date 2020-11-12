@@ -7,19 +7,20 @@ from time import time
 import pygame
 import math
 
+Tile: type = type
+Sprite: type = type
+Air: type = type
+clock: type = type
 
-def init(TileClass, AirClass, clockInstance):
+def init(TileClass, AirClass, SpriteClass, clockInstance):
     global Tile
+    global Sprite
     global Air
     global clock
     Tile = TileClass
     Air = AirClass
     clock = clockInstance
-
-
-Tile = None
-Air = None
-clock = None
+    Sprite = SpriteClass
 
 
 def smooth_scale_image(img, scale):
@@ -60,6 +61,66 @@ def singleton_classmethod(function):
     return inner
 
 
+class collision_manifold:
+    def __init__(self, sprite1, sprite2, penetration, normal, n, collision, x_collision, y_collision):
+        self.sprite1 = sprite1
+        self.sprite2 = sprite2
+        self.penetration = penetration
+        self.normal = normal
+        self.n = n
+        self.collision = collision
+        self.y_collision = x_collision
+        self.x_collision = y_collision
+
+    def __str__(self):
+        return str(self.collision)
+
+    @classmethod
+    def by_two_objects(cls, obj1, obj2):
+        normal = cls.get_mid(obj2) - cls.get_mid(obj1)
+        obj1_extent_x = obj1.rect.width / 2
+        obj2_extent_x = obj2.rect.width / 2
+
+        x_overlap = obj1_extent_x + obj2_extent_x - abs(normal.x)
+
+        y_collision = False
+        x_collision = False
+        if x_overlap > 0:
+            obj1_extent_y = obj1.rect.height / 2
+            obj2_extent_y = obj2.rect.height / 2
+
+            y_overlap = obj1_extent_y + obj2_extent_y - abs(normal.y)
+            if y_overlap > 0:
+                if x_overlap < y_overlap:
+                    if normal.x < 0:
+                        normal_normalized = structures.Vector2.Cartesian(-1, 0)
+                    else:
+                        normal_normalized = structures.Vector2.Cartesian(1, 0)
+                    penetration = x_overlap
+                    x_collision = True
+                else:
+                    if normal.y < 0:
+                        normal_normalized = structures.Vector2.Cartesian(0, -1)
+                    else:
+                        normal_normalized = structures.Vector2.Cartesian(0, 1)
+                    penetration = y_overlap
+                    y_collision = True
+
+                return cls(obj1, obj2, penetration, normal_normalized, normal, True, x_collision, y_collision)
+
+        return cls(obj1, obj2, None, None, None, False, False, False)
+
+    @staticmethod
+    def get_mid(obj):
+        if isinstance(obj, Sprite):
+            return obj.position + (structures.Vector2.Point(obj.rect.size) / 2)
+        else:  # Tile
+            return obj.rect.topleft + (structures.Vector2.Point(obj.rect.size) / 2)
+
+    def __bool__(self):
+        return self.collision
+
+
 class Map:
     instance = None
 
@@ -67,21 +128,24 @@ class Map:
                  second_quadrant,
                  third_quadrant,
                  forth_quadrant,
-                 tile_size):
+                 tile_size
+                 , *,
+                 empty=False
+                 ):
         assert Map.instance is None, "Two Maps?!"
         """
         :param mp: 2 dimensional list
         """
-        self.first_quadrant = [[Tile.get_tile(tile_id)(*args, x * tile_size, y * tile_size)
+        self.first_quadrant = [[Tile.get_tile(tile_id)(*args, x=x * tile_size, y=y * tile_size)
                                 for x, (tile_id, *args) in enumerate(row)] for y, row in enumerate(first_quadrant)]
 
-        self.second_quadrant = [[Tile.get_tile(tile_id)(*args, -x * tile_size, y * tile_size)
+        self.second_quadrant = [[Tile.get_tile(tile_id)(*args, x=-x * tile_size, y=y * tile_size)
                                  for x, (tile_id, *args) in enumerate(reversed(row))]
                                 for y, row in enumerate(second_quadrant)]
-        self.third_quadrant = [[Tile.get_tile(tile_id)(*args, -x * tile_size, -y * tile_size)
+        self.third_quadrant = [[Tile.get_tile(tile_id)(*args, x=-x * tile_size, y=-y * tile_size)
                                 for x, (tile_id, *args) in enumerate(reversed(row))]
                                for y, row in enumerate(reversed(third_quadrant))]
-        self.forth_quadrant = [[Tile.get_tile(tile_id)(*args, x * tile_size, -y * tile_size)
+        self.forth_quadrant = [[Tile.get_tile(tile_id)(*args, x=x * tile_size, y=-y * tile_size)
                                 for x, (tile_id, *args) in enumerate(row)] for y, row in
                                enumerate(reversed(forth_quadrant))]
         # for i in self.first_quadrant:
@@ -98,10 +162,16 @@ class Map:
 
         }
         self.tile_size = tile_size
+
+        self.empty = empty
         Map.instance = self
 
     def get_tile(self, x, y):
         return self.map_maps[(int(math.copysign(1, x)), int(math.copysign(1, y)))][abs(y)][abs(x)]
+
+    @classmethod
+    def No_Map(cls):
+        cls([], [], [], [], 1, empty=True)
 
     @classmethod
     def from_file(cls, file):
@@ -112,14 +182,16 @@ class Map:
         return self.map_maps[(int(math.copysign(1, x)), int(math.copysign(1, y)))]
 
     @singleton_classmethod
-    def check_platform_collision(self, sprite, axis):
+    def check_platform_collision(self, sprite, axis, time_delta):
+        if self.empty:
+            return None, None
+
         x, y, width, height = sprite.position.x, sprite.position.y, sprite.rect.width, sprite.rect.height
         left = int(x // self.tile_size)
         right = int((x + width) // self.tile_size)
         top = int(y // self.tile_size)
         bottom = int((y + height) // self.tile_size)
 
-        # print((left, top), (right, bottom))
         if (y + height) / self.tile_size == bottom:
             bottom -= 1
         if y / self.tile_size == top:
@@ -129,7 +201,10 @@ class Map:
         if (x + width) / self.tile_size == right:
             right -= 1
 
+        sprite.update_velocity_and_acceleration(time_delta)
+
         row, column = 0, 0
+        called = []
         for column in range(top, bottom + 1):
             for row in range(left, right + 1):
                 try:
@@ -137,13 +212,18 @@ class Map:
                     if not isinstance(tile, Air):
                         if sprite.rect_collision or \
                                 pygame.sprite.collide_mask(tile, sprite):  # mask
-                            before = tile.sprite_collide(sprite, axis)
-                            return tile, before
-
+                            before = tile.sprite_collide(sprite, axis,
+                                                         collision_manifold.by_two_objects(tile, sprite),
+                                                         called)
+                            sprite.update_velocity_and_acceleration(time_delta)
+                            called.append(tile)
                 except IndexError:  # no collision
                     pass
 
-        return None, None
+        try:
+            return tile, before
+        except:
+            return None, None
 
 
 class DisplayMods:

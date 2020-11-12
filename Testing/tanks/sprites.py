@@ -146,6 +146,9 @@ class Tank(base_sprites.Vehicle):
                                                   Tank.position_offset,
                                                   self.rect, structures.Direction.left)
 
+        self.mass = 1
+        # self.rect_collision = False
+
     def set_turret_angle(self, angle):
         self.turret_angle = max(min((abs(angle) % 380) * sign(angle), 116), -45)
         self.turret_image.rotate(self.turret_angle)
@@ -153,6 +156,11 @@ class Tank(base_sprites.Vehicle):
     def change_turret_angle(self, angle_change):
         self.set_turret_angle(self.turret_angle + angle_change)
 
+    def add_force(self, force: structures.Vector2, signature: str = None, mul_dtime: bool = True):
+        force = super(Tank, self).add_force(force, signature, mul_dtime)
+        if signature == 'normal' and force.x > 0:
+            print("shouldn't happend!", force)
+        return force
     def draw(self):
         if self.hit_points > 0:
             self.turret_image.blit_image(self.control.direction)
@@ -167,7 +175,7 @@ class Tank(base_sprites.Vehicle):
 
 class Missile(base_sprites.Bullet):
     DAMAGE = 1
-    TRAVEL_DISTANCE = 15000000
+    TRAVEL_DISTANCE = 1000
     MISSILE_IMAGE = pygame.image.load(r'images\missile.png').convert_alpha()
     MISSILE_IMAGE = pygame_structures.smooth_scale_image(MISSILE_IMAGE, 1.5)
 
@@ -191,7 +199,6 @@ class Missile(base_sprites.Bullet):
                 r.topright = turret_rect.bottomleft
         super(Missile, self).__init__(r, Missile.DAMAGE, Missile.TRAVEL_DISTANCE)
         self.missile_image = pygame_structures.RotatableImage(Missile.MISSILE_IMAGE, 0, (0, 0), lambda: self.rect.topleft)
-        self.total_movement = 0
         self.killed = False
         self.shoot_force = shoot_force
         self.rect_collision = False
@@ -213,7 +220,7 @@ class Missile(base_sprites.Bullet):
         self.angle += self.angular_velocity
 
     def draw(self):
-        self.missile_image.rotate(int(self.angle))
+        self.missile_image.rotate(int(self.velocity.theta))
         self.image = self.missile_image.blit_image()
         self.rect.width = self.missile_image.rect.width
         self.rect.height = self.missile_image.rect.height
@@ -223,17 +230,9 @@ class Missile(base_sprites.Bullet):
     def _update(self, control_dict):
         if self.first_frame:
             self.add_force(self.shoot_force, "shoot", True)
-        self.total_movement = 0
         self.operate_gravity()
         super(Missile, self)._update(control_dict)
-        self.travel_distance -= math.sqrt(self.total_movement)
         self.first_frame = False
-
-    def update_position(self, axis, time_delta):
-        if self.travel_distance <= 0:
-            self.kill()
-        self.total_movement += abs(self.velocity.x * time_delta) ** 2
-        super(Missile, self).update_position(axis, time_delta)
 
     def kill(self):
         if not self.killed:
@@ -249,7 +248,7 @@ class Missile(base_sprites.Bullet):
                 other.hit_points -= self.damage
                 other.resistance_timer.activate()
 
-    def collision(self, other):
+    def collision(self, other, collision):
         if self.first_frame:
             return
         if (isinstance(other, base_sprites.AdvancedSprite)) and not other.is_dead:

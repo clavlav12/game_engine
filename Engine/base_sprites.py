@@ -8,6 +8,7 @@ from typing import Tuple, Optional
 from pymaybe import maybe
 from numpy import sign
 from time import time
+import math
 import os
 
 player = Sound.Player()
@@ -31,15 +32,16 @@ class Tile(pygame.sprite.Sprite):
     def __init_subclass__(cls, **kwargs):
         Tile.classes[cls.id] = cls
 
-    def __init__(self, img: pygame.Surface, x: int, y: int):
+    def __init__(self, img: pygame.Surface, *, x: int, y: int):
         super(Tile, self).__init__()
         self.image = img
         self.rect = img.get_rect()
         self.rect.topleft = x, y
+
         # self.mask = pygame.mask.from_surface(img)
         Tile.blocks_list.add(self)
 
-    def sprite_collide(self, _sprite, axis):
+    def sprite_collide(self, _sprite, axis, collision: pygame_structures.collision_manifold):
         return _sprite.to_dict()
 
     def update(self):
@@ -57,76 +59,155 @@ class Tile(pygame.sprite.Sprite):
 class BlockingTile(Tile):
     id = 1
 
-    def __init__(self, img, x, y):
-        super(BlockingTile, self).__init__(img, x, y)
-        self.friction_coeff = 0  # change to mul
+    def __init__(self, img, restitution: float = 0.0, static_friction: float = 0.0, dynamic_friction: float = 0.0,
+                 *, x, y):
+        super(BlockingTile, self).__init__(img, x=x, y=y)
         self.max_stopping_friction = float('inf')  # change if want to simulate ice or something with low friction coeff
         # self.max_stopping_friction = 0  # change if want to simulate ice or something with low friction coeff
 
-    def sprite_collide(self, _sprite, axis):
+        self.dynamic_friction = 0  # not how real life friction works, but feels nice.
+        self.static_friction = 0  # not how real life friction works, but feels nice.
+        self.restitution = restitution  # how "bouncy" the tile is, from zero to one
+
+        self.normal = structures.Vector2.Zero()
+
+    def sprite_collide(self, _sprite, axis, collision: pygame_structures.collision_manifold, called):
         # if not sprite.collide_mask(self, _sprite):
         #     return
         # print(self.rect.topleft)
-        before = super(BlockingTile, self).sprite_collide(_sprite, axis)
+        before = super(BlockingTile, self).sprite_collide(_sprite, axis, collision)
+
         if not isinstance(_sprite, AdvancedSprite):
-            return
+            return before
+        try:
+            if axis == structures.Direction.vertical:
+                relative_velocity = _sprite.velocity.copy()
 
-        if axis == structures.Direction.vertical:
-            # print("velocity: ", _sprite.velocity.y)
-            if _sprite.velocity.y > 0:  # hit from top
-                # while _sprite.collide_mask(_sprite, self):
-                #     _sprite.position.y -= 1
-                #     _sprite.rect.y -= 1
-                _sprite.rect.bottom = self.rect.top
-                was_on = _sprite.on_platform
-                self.friction(_sprite, was_on)
-                _sprite.on_platform = self
-            else:  # hit from bottom
-                _sprite.rect.top = self.rect.bottom
-            _sprite.position.y = _sprite.rect.y
-            _sprite.force.y = 0
-            _sprite.velocity.y = 0
-            if hasattr(_sprite.control, 'jumping') and _sprite.control.jumping:
-                _sprite.control.jumping = False
-                _sprite.on_platform = None
+                velocity_among_normal = relative_velocity * collision.normal
 
-        else:
-            if _sprite.velocity.x > 0:  # hit from left
-                _sprite.rect.right = self.rect.left
-            else:  # hit from right
-                _sprite.rect.left = self.rect.right
-            _sprite.position.x = _sprite.rect.x
-            _sprite.force.x = 0
-            _sprite.velocity.x = 0
+                if velocity_among_normal > 0:
+                    return before
+
+                if collision.x_collision:
+                    was_on = _sprite.on_platform
+                    _sprite.on_platform = self
+
+                for tile in called:
+                    if (tile.rect.x == self.rect.x and collision.x_collision) or \
+                            (tile.rect.y == self.rect.y and collision.y_collision):
+                        return before
+
+                j = -(1 + self.restitution) * velocity_among_normal
+                j /= 1 / float('inf') + 1 / _sprite.mass
+
+                impulse = j * collision.normal
+
+                self.friction(_sprite, collision, j)
+                if not impulse:
+                    return
+                _sprite.velocity += 1 / _sprite.mass * impulse
+                # _sprite.add_force(impulse, 'normal', TrueSA)
+
+                percent = 0.2
+                slop = 0.01
+                correction = max(collision.penetration - slop, 0.0) / (1 / _sprite.mass) * percent * collision.normal
+                _sprite.position += 1 / _sprite.mass * correction
+
+        except Exception as e:
+            raise e
+            print(e)
+            print(collision)
 
         return before
 
-    def friction(self, _sprite, was_on):
-        if not was_on:  # he fell on the platform
-            _sprite.add_force(structures.Vector2.Cartesian(min(-_sprite.velocity.x, self.max_stopping_friction)),
-                              'super friction')
-        else:  # normal friction
-            _sprite.add_force(structures.Vector2.Cartesian(-sign(_sprite.velocity.x) * min(self.friction_coeff,
-                                                                                           abs(_sprite.velocity.x))),
-                              'friction')
+    def friction(self, _sprite, collision, j):
+        t = _sprite.velocity - (_sprite.velocity * collision.normal) * collision.normal
+        if t:
+            t.normalize()
 
+        jt = - (_sprite.velocity * t)
+        jt *= _sprite.mass
 
+        mu = math.hypot(self.static_friction, _sprite.static_friction)
+        if abs(jt) < j * mu:
+            print("static")
+            frictionImpulse = - jt * t
+        else:
+            dynamic_friction = math.hypot(self.dynamic_friction, _sprite.dynamic_friction)
+            frictionImpulse = -jt * t * dynamic_friction
+
+        _sprite.velocity -= (1 / _sprite.mass) * frictionImpulse
+        _sprite.update_velocity_and_acceleration(BaseSprite.game_states['dtime'])
+        # print("changing velocity by:", frictionImpulse)
+
+'''
+    def friction(self, _sprite, collision, j):
+        t = _sprite.velocity - (_sprite.velocity * collision.normal) * collision.normal
+        if t:
+            t.normalize()
+        else:
+            _sprite.update_velocity_and_acceleration(BaseSprite.game_states['dtime'])
+            return
+        jt = - (_sprite.velocity * t)
+        jt *= _sprite.mass
+
+        dynamic_friction = math.hypot(self.dynamic_friction, _sprite.dynamic_friction)
+        frictionImpulse = -jt * t * dynamic_friction
+        _sprite.add_force(- frictionImpulse, 'friction', False)
+        _sprite.update_velocity_and_acceleration(BaseSprite.game_states['dtime'])
+        # print("changing velocity by:", frictionImpulse)
+        # _sprite.velocity -= (1 / _sprite.mass) * frictionImpulse
+
+    def friction_old(self, _sprite, collision):
+        velocity = _sprite.get_future_velocity(BaseSprite.game_states['dtime'])
+        t = velocity - (velocity * collision.normal) * collision.normal
+        if t:
+            t.normalize()
+        mu = math.hypot(self.static_friction, _sprite.static_friction)
+        # print("sprite force is ", _sprite.force, t)
+        # print(_sprite.force_document['sigma'], collision.normal, mu, normal)
+
+        jt = - (_sprite.velocity * t)
+
+        jt *= _sprite.mass
+
+        if round(t * _sprite.velocity) == 0:
+            if _sprite.force_document['sigma'] * t < collision.normal * mu * self.normal / BaseSprite.game_states['dtime']:
+                frictionImpulse = structures.Vector2.Zero()
+                _sprite.add_force((-_sprite.force_document['sigma'] * t) * t, 'static friction', False)
+                _sprite.force_document['sigma'] = structures.Vector2.Zero()
+        else:
+            dynamic_friction = math.hypot(self.dynamic_friction, _sprite.dynamic_friction)
+            frictionImpulse = -jt * t * dynamic_friction
+            _sprite.add_force(- frictionImpulse, 'friction', False)
+        # print("changing velocity by:", frictionImpulse)
+        # _sprite.velocity -= (1 / _sprite.mass) * frictionImpulse
+'''
 class Spike(BlockingTile):
     id = 2
 
-    def sprite_collide(self, _sprite, axis):
+    def sprite_collide(self, _sprite, axis, collision: pygame_structures.collision_manifold):
         if isinstance(_sprite, AdvancedSprite) and _sprite.resistance_timer and axis == structures.Direction.vertical:
             _sprite.hit_points -= 1
             _sprite.resistance_timer.activate()
-        super(Spike, self).sprite_collide(_sprite, axis)
+        super(Spike, self).sprite_collide(_sprite, axis, collision)
+
+
+class Slime(BlockingTile):
+    id = 4
+    sur = pygame.image.load(os.path.dirname(__file__) + '\\images\\Slime_block.png')
+
+    def __init__(self, size, *, x, y):
+        sur = pygame.transform.smoothscale(self.sur, [size] * 2).convert_alpha()
+        super(Slime, self).__init__(sur, restitution=0.7, static_friction=0.5, dynamic_friction=0.5, x=x, y=y)
 
 
 class air(Tile):
     id = 3
     sur = pygame.Surface((0, 0))
 
-    def __init__(self, x, y):
-        super(air, self).__init__(air.sur, x, y)
+    def __init__(self, *, x, y):
+        super(air, self).__init__(air.sur, x=x, y=y)
         Tile.blocks_list.remove(self)
 
     def sprite_collide(self, _sprite, axis):
@@ -138,13 +219,16 @@ class air(Tile):
     def draw(self):
         pass
 
+    def __bool__(self):
+        return False
+
 
 class BaseSprite(pygame.sprite.Sprite):
     sprites_list = pygame.sprite.Group()
     image = pygame.Surface((100, 100))
     game_states = {'sprites': sprites_list, 'keys': [], 'dtime': 0}
 
-    def __init__(self, rect, control, mass, *, rect_collision=True):
+    def __init__(self, rect, control, mass, *, rect_collision=True, generate_collision_manifold=False):
         # hit boxes & moving
         super(BaseSprite, self).__init__()
         #
@@ -161,7 +245,11 @@ class BaseSprite(pygame.sprite.Sprite):
         self.force = structures.Vector2.Zero()
         self.force_document = {}
         self.rect_collision = rect_collision
+        self.generate_collision_manifold = generate_collision_manifold
         self.mass = mass
+
+        self.static_friction = 0
+        self.dynamic_friction = 0
 
         self.control = control
 
@@ -188,17 +276,11 @@ class BaseSprite(pygame.sprite.Sprite):
         :param mul_dtime: if True -> multiply the force by delta time
         getting normal force from walls
         """
-        # if signature == 'gravity' and isinstance(self, Tank):
-        #     print(force, signature, direction[self.control.direction])
-        # if signature == 'push':
-        #     print(force, signature, direction[self.control.direction])
         if mul_dtime:
-            # print("Im muling with ", BaseSprite.game_states['dtime'])
             force = force / BaseSprite.game_states['dtime']
-        else:
-            force = force
         self.force_document[signature] = force
         self.force += force
+        self.force_document['sigma'] = self.force.copy()
         return force
 
     def debug(self, *args):
@@ -225,26 +307,24 @@ class BaseSprite(pygame.sprite.Sprite):
         pass
 
     def update_acceleration(self):
-        # print(self.force)
         self.acceleration = (self.force / self.mass)  # Σ𝑓 = 𝓂 ⋅ 𝒶 -⋙ 𝒶 = Σ𝑓 / 𝓂
 
     def update_velocity(self, time_delta, axis=None):
-        # print("on update: ", round((self.acceleration * time_delta).x, 5))
         if axis is None:
-            # print("Im changin with ", time_delta)
             self.velocity += self.acceleration * time_delta
         elif axis == structures.Direction.horizontal:
             self.velocity.x += self.acceleration.x * time_delta
         elif axis == structures.Direction.vertical:
             self.velocity.y += self.acceleration.y * time_delta
 
-    def update_position(self, axis, time_delta):
-        if axis == structures.Direction.vertical:
-            self.position.y += self.velocity.y * time_delta
-            self.rect.y = int(self.position.y)
-        else:
-            self.position.x += self.velocity.x * time_delta
-            self.rect.x = int(self.position.x)
+    def update_position(self, time_delta):
+        print(self.velocity)
+        self.position += self.velocity * time_delta
+        self.rect.topleft = tuple(self.position.floor())
+
+    def set_position(self, x=None, y=None):
+        self.position.set_values(x, y)
+        self.rect.topleft = tuple(self.position.floor())
 
     def on_platform_collision(self, direction, platform, before):
         """Called when the sprite collides with a platform"""
@@ -252,28 +332,24 @@ class BaseSprite(pygame.sprite.Sprite):
         pass
 
     def update_kinematics(self, time_delta):
-        self.update_acceleration()
-        self.update_velocity(time_delta)
-        self.force.reset()
-
-        self.update_position(structures.Direction.vertical, time_delta)
-
-        platform, before = pygame_structures.Map.check_platform_collision(self, structures.Direction.vertical)
+        platform, before = pygame_structures.Map.check_platform_collision(self, structures.Direction.vertical, time_delta)
         if platform is not None:
             self.on_platform_collision(structures.Direction.vertical, platform, before)
             self.control.platform_collide(structures.Direction.vertical, platform, before)
 
+        # print(self.force)
+        self.update_velocity_and_acceleration(time_delta)
+        self.update_position(time_delta)
+
+        return platform
+
+    def update_velocity_and_acceleration(self, time_delta):
         self.update_acceleration()
         self.update_velocity(time_delta)
-
-        self.update_position(structures.Direction.horizontal, time_delta)
-        platform, before = pygame_structures.Map.check_platform_collision(self, structures.Direction.horizontal)
-
-        if platform is not None:
-            self.on_platform_collision(structures.Direction.horizontal, platform, before)
-            self.control.platform_collide(structures.Direction.horizontal, platform, before)
-
         self.force.reset()
+
+    def get_future_velocity(self, time_delta):
+        return self.velocity + (self.force / self.mass) * time_delta
 
     @classmethod
     def check_sprite_collision(cls, collision_type='mask'):
@@ -284,24 +360,30 @@ class BaseSprite(pygame.sprite.Sprite):
                     if skip > 0:
                         skip -= 1
                         continue
+
                     if pygame.sprite.collide_rect(sprite1, sprite2) and pygame.sprite.collide_mask(sprite1, sprite2):
 
-                        block_second = sprite1.collision(sprite2)
-                        sprite1.control.sprite_collide(sprite2)
+                        if sprite1.generate_collision_manifold or sprite2.generate_collision_manifold:
+                            collision = pygame_structures.collision_manifold.by_two_objects(sprite1, sprite2)
+                        else:
+                            collision = None
+                        block_second = sprite1.collision(sprite2, collision)
+                        sprite1.control.sprite_collide(sprite2, collision)
 
                         if not block_second:
-                            sprite2.collision(sprite1)
-                            sprite2.control.sprite_collide(sprite1)
+                            sprite2.collision(sprite1, collision)
+                            sprite2.control.sprite_collide(sprite1, collision)
 
         elif collision_type == 'rect':
             for sprite1 in cls.sprites_list:
                 for sprite2 in pygame.sprite.spritecollide(sprite1, cls.sprites_list, False):
                     if sprite2 is not sprite1:
-                        sprite1.collision(sprite2)
-                        sprite1.control.sprite_collide(sprite2)
+                        collision = pygame_structures.collision_manifold.by_two_objects(sprite1, sprite2)
+                        sprite1.collision(sprite2, collision)
+                        sprite1.control.sprite_collide(sprite2, collision)
 
-                        sprite2.collision(sprite1)
-                        sprite2.control.sprite_collide(sprite1)
+                        sprite2.collision(sprite1, collision)
+                        sprite2.control.sprite_collide(sprite1, collision)
 
     @classmethod
     def update_all(cls):
@@ -315,8 +397,10 @@ class BaseSprite(pygame.sprite.Sprite):
         cls.game_states['dtime'] = time_delta
         cls.game_states['keys'] = keys
 
-    def collision(self, other):
-        """Called when one sprite collides with another"""
+    def collision(self, other, collision):
+        """Called when one sprite collides with another
+        :param collision:
+        """
         pass
 
 
@@ -356,7 +440,6 @@ class AdvancedSprite(BaseSprite):
 
         BaseSprite.sprites_list.add(self)
 
-        self.platform_collide = False  # Turn on when collides with platform - vertically or horizontally -
         # used for conditions
         self.sprite_collide = False  # Turn on when collides with sprite - used for conditions
 
@@ -384,48 +467,18 @@ class AdvancedSprite(BaseSprite):
         super(AdvancedSprite, self).draw()
 
     def _update(self, controls_dict):
-        self.platform_collide = False
         self.dead_check()
         self.control.move(**controls_dict)
+        self.update(controls_dict)
         self.operate_gravity()
         self.update_kinematics(controls_dict['dtime'])
         self.draw()
         self.force_document = {}
 
-    # def update_position(self, axis, time_delta):
-    #     # if axis == Direction.horizontal and abs(round(self.velocity.y, 3)) != 0:
-    #     #     print(self.velocity)
-    #     #     self.on_platform = False
-    #     super(AdvancedSprite, self).update_position(axis, time_delta)
-
     def update_kinematics(self, time_delta):
-        self.update_acceleration()
-        self.update_velocity(time_delta)
-        self.force.reset()
+        self.on_platform = super(AdvancedSprite, self).update_kinematics(time_delta)
 
-        self.update_position(structures.Direction.vertical, time_delta)
-        platform, before = pygame_structures.Map.check_platform_collision(self, structures.Direction.vertical)
-        if platform is not None:
-            self.on_platform_collision(structures.Direction.vertical, platform, before)
-            self.control.platform_collide(structures.Direction.vertical, platform, before)
-            self.platform_collide = platform
-
-        self.on_platform = platform
-
-        self.update_acceleration()
-        self.update_velocity(time_delta)
-
-        self.update_position(structures.Direction.horizontal, time_delta)
-        platform, before = pygame_structures.Map.check_platform_collision(self, structures.Direction.horizontal)
-
-        if platform is not None:
-            self.on_platform_collision(structures.Direction.horizontal, platform, before)
-            self.control.platform_collide(structures.Direction.vertical, platform, before)
-            self.platform_collide = platform
-
-        self.force.reset()
-
-    def collision(self, other):
+    def collision(self, other, collision):
         self.sprite_collide = other
 
     def dead_check(self):
@@ -444,12 +497,12 @@ class DrivableSprite(AdvancedSprite):
 
     def _update(self, controls_dict):
         if self.vehicle is None:
-            super(DrivableSprite, self).__update(controls_dict)
+            super(DrivableSprite, self)._update(controls_dict)
         else:
             self.rect.topleft = self.vehicle.get_sprite_position()  # update position to vehicle position
             self.position.values = self.rect.topleft
 
-    def collision(self, other):
+    def collision(self, other, collision):
         if isinstance(other, Vehicle):
             return True
 
@@ -480,14 +533,13 @@ class Bullet(BaseSprite):
     def __str__(self):
         return super(Bullet, self).__str__() + f', travel_distance{self.travel_distance}'
 
-    def update_position(self, axis, time_delta):
-        if axis == structures.Direction.vertical:
-            if self.travel_distance <= 0:
-                self.kill()
-            self.travel_distance -= abs(self.velocity.x * time_delta)
-        super(Bullet, self).update_position(axis, time_delta)
+    def update_position(self, time_delta):
+        if self.travel_distance <= 0:
+            self.kill()
+        self.travel_distance -= abs(self.velocity * time_delta)
+        super(Bullet, self).update_position(time_delta)
 
-    def collision(self, other):
+    def collision(self, other, collision):
         if self.first_frame:
             self.first_frame = False
             return
@@ -585,4 +637,3 @@ def tick(elapsed, keys=pygame.key.get_pressed()):
     Tile.update_all()
     pygame_structures.Camera.scroller.update()
     structures.UntilCondition.update_all()
-    # Timer.tick_all(clock.get_fps())

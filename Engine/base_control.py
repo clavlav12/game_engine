@@ -23,7 +23,7 @@ class BaseControl:
     def move(self, **kwargs):  # {'sprites' : sprite_list, 'dtime': delta time, 'keys': keys}
         pass
 
-    def sprite_collide(self, sprite):
+    def sprite_collide(self, sprite, collision):
         pass
 
     def platform_collide(self, direction, platform, before):
@@ -83,11 +83,13 @@ class LeftRightMovement(BaseControl):
         super(LeftRightMovement, self).move(**kwargs)
 
     def stop(self):
+        # if self.sprite.on_platform:
+        #     self.sprite.on_platform.stop_sprite(self.sprite)
+        # else:
         self.sprite.add_force(Vector2.Cartesian(-sign(self.sprite.velocity.x) *
                                                 min(abs(self.sprite.velocity.x),
                                                     maybe(self.sprite.on_platform).max_stopping_friction.
-                                                    or_else(float('inf')))), 'stop movement')
-
+                                                    or_else(float('inf')))) * self.sprite.mass, 'stop movement')
         if self.direction not in Direction.idles:
             if self.direction == Direction.right:
                 self.direction = Direction.idle_right

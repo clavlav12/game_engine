@@ -1,8 +1,8 @@
 import os
 import pygame
 from Engine.pygame_structures import DisplayMods, Camera, Map, Timer
-W = 1920
-H = 1080
+W = 1000
+H = 700
 screen = DisplayMods.Windowed((W, H))
 W = 1000
 H = 700
@@ -11,8 +11,8 @@ from Engine.structures import VectorType, Vector2, Direction
 from Engine.base_sprites import clock, tick, BaseSprite
 from sprites import Tank
 
-Camera.init(screen, "dynamic", None)
-# Camera.init(screen, "static", None)
+# Camera.init(screen, "dynamic", None)
+Camera.init(screen, "static", None)
 
 
 def get_color(hitpoints):
@@ -36,12 +36,14 @@ def Main():
     os.environ['SDL_VIDEO_CENTERED'] = '1'
     # man = Man(600, 200, K_SPACE, K_RIGHT, K_LEFT, K_RETURN, ((0, 255, 0), (255, 0, 0)), 'M')
     # man.rect.bottom = 400
+
     # man.position.values = man.rect.topleft
-    tank1 = Tank(Direction.right, (600, 200), shoot_key=pygame.K_KP_ENTER, health_bar_color=(pygame.Color('red'), pygame.Color('green')))
-    tank2 = Tank(Direction.right, (200, 200), pygame.K_a, pygame.K_d, pygame.K_SPACE, pygame.K_w, pygame.K_s, health_bar_color=(pygame.Color('red'), pygame.Color('green')))
+    tank1 = Tank(Direction.right, (600, 200), shoot_key=pygame.K_KP_ENTER, health_bar_color=(pygame.Color('green'), pygame.Color('red')))
+
+    tank2 = Tank(Direction.right, (200, 200), pygame.K_a, pygame.K_d, pygame.K_SPACE, pygame.K_w, pygame.K_s, health_bar_color=(pygame.Color('green'), pygame.Color('red')))
     # man = Man(200, 200, K_t, K_h, K_f, K_g, (Color('blue'), Color('light blue')), 'avi')
     # man = Man(400, 20, K_UP, K_RIGHT, K_LEFT, K_SPACE, (Color('blue'), Color('light blue')), 'avi2')
-    Camera.set_scroller_position(tank2, smooth_move=True)
+    # Camera.set_scroller_position(tank2, smooth_move=True)
     sur = pygame.Surface((50, 50)).convert()
     sur.fill((0, 0, 255))
     sur2 = pygame.Surface((50, 50))
@@ -50,8 +52,10 @@ def Main():
         [(3,) for _ in range(50)] for __ in range(50)
     ]
     size = 50
-    for i in range(0, W//size + 20):
+    for i in range(0, W//size):
         tile_list[(H-size)//size][i] = (1, sur)
+    # for i in range(0, W//size + 20):
+    #     tile_list[(H-size)//size - 1][i] = (4, size)
     for i in range(H//50-1, H//50-7, -1):
         tile_list[i][(W//2 - 25)//size] = (1, sur)
 
