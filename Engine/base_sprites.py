@@ -89,8 +89,8 @@ class BlockingTile(Tile):
         if not isinstance(_sprite, AdvancedSprite):
             return before
         try:
-            # relative_velocity = - _sprite.get_future_velocity(BaseSprite.game_states['dtime'])
-            relative_velocity = - _sprite.calculate_relative_velocity(BaseSprite.game_states['dtime'])
+            relative_velocity = _sprite.get_future_velocity(BaseSprite.game_states['dtime'])
+            # relative_velocity = - _sprite.calculate_relative_velocity(BaseSprite.game_states['dtime'])
 
             velocity_among_normal = relative_velocity * collision.normal
 
