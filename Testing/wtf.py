@@ -64,12 +64,12 @@ class RigidCube(base_sprites.RigidBody):
             size, size
         )
         image = pg.transform.smoothscale(base_sprites.Slime.sur, [size] * 2).convert_alpha()
-        super(RigidCube, self).__init__(image, rect, 500, 10 ** 2, random.randrange(90))
+        super(RigidCube, self).__init__(image, rect, 500, 10 ** 2, 0)
 
         self.size = size
         self.generate_collision_manifold = True
         self.collision_manifold_generator = self.manifold_generator
-        # self.collision_manifold_generator = pygame_structures.collision_manifold.by_two_objects
+        self.collision_manifold_generator = pygame_structures.collision_manifold.by_two_objects
         self.restitution = 0
 
         self.vertices_unrotated = [pg.math.Vector2(point) * 0.5 for point in (
@@ -85,7 +85,7 @@ class RigidCube(base_sprites.RigidBody):
             (0, 1))
                                   ]
 
-        self.restitution = 0
+        self.restitution = 0.5
         # self.vertices_rotated = self.vertices_unrotated
         # self.normals = self.normals_unrotated
         self.rotate(self.orientation)
@@ -168,13 +168,9 @@ class RigidCube(base_sprites.RigidBody):
         else:
             p2 = vertices[0]
 
-        try:
-            line = Line(p1, p2)
+        line = Line(p1, p2)
 
-            return best_index, best_distance, line.distance_from_point(best_support), best_support_index
-        except Exception as e:
-            print(p1, p2, vertices, self, self.com_position, self.vertices_unrotated)
-            raise e
+        return best_index, best_distance, line.distance_from_point(best_support), best_support_index
 
     @staticmethod
     def aabb_to_vertices(rect: pg.Rect):
@@ -209,13 +205,11 @@ class RigidCube(base_sprites.RigidBody):
         face_a_index, penetration_a, distance_a, support_point_a = cls.find_axis_of_lease_penetration(sprite_a,
                                                                                                       sprite_b)
         if penetration_a >= 0:
-            # print("no coll")
             return cls.no_collision(sprite_a, sprite_b)
 
         face_b_index, penetration_b, distance_b, support_point_b = cls.find_axis_of_lease_penetration(sprite_b,
                                                                                                       sprite_a)
         if penetration_b >= 0:
-            # print("no coll")
             return cls.no_collision(sprite_a, sprite_b)
 
         if cls.bias_greater_than(penetration_a, penetration_b):
@@ -249,13 +243,10 @@ class RigidCube(base_sprites.RigidBody):
 
         normal = ref_normals[reference_index]
 
-        if flip:
-            normal = -normal
         p1 = ref_vertices[reference_index]
         p2 = ref_vertices[(reference_index + 1) % len(ref_vertices)]
 
         support_points = [structures.Vector2.Point(v) for v in [inc_vertices[support_index_inc]]]
-        # support_points = []
 
         return pygame_structures.collision_manifold(
             sprite_a, sprite_b, reference_distance,
@@ -280,34 +271,26 @@ class RigidCube(base_sprites.RigidBody):
 
     def draw(self, draw_health=False):
         super(RigidCube, self).draw(draw_health)
-        # for vertex in self.vertices:
-        #     pg.draw.circle(pygame_structures.Camera.screen, pg.Color('black'), vertex, 5)
-        # pg.draw.circle(pygame_structures.Camera.screen, pg.Color('white'), tuple(self.com_position), 10)
-        # pg.draw.circle(pygame_structures.Camera.screen, pg.Color('white'), tuple(self.position), 10)
-        # self.draw_rect()
+        for vertex in self.vertices:
+            pg.draw.circle(pygame_structures.Camera.screen, pg.Color('black'), vertex, 5)
 
     def collision(self, other, collision):
         self.sprite_collide_func(other, collision)
         return True
 
     def sprite_collide_func(self, _sprite, collision):
-        if not collision:
-            return True
-
         relative_velocity = _sprite.velocity - self.velocity
         velocity_among_normal = relative_velocity * collision.normal
 
         pg.draw.circle(pygame_structures.Camera.screen, pg.Color('white'), tuple(self.com_position), 10)
 
-        # if velocity_among_normal > 0:
-        #     return True
+        if velocity_among_normal > 0:
+            return
 
         j = -(1 + self.restitution) * velocity_among_normal
         j /= 1 / float('inf') + 1 / _sprite.mass
 
         impulse = j * collision.normal
-
-        self.friction(_sprite, collision, j)
 
         if collision.contact_count > 0:
             for point in collision.contact_points:
@@ -315,52 +298,21 @@ class RigidCube(base_sprites.RigidBody):
                     _sprite.apply_impulse(1 / _sprite.mass * impulse / collision.contact_count, point)
                     self.apply_impulse(-1 / self.mass * impulse / collision.contact_count, point)
         else:
-            _sprite.apply_impulse(1 / _sprite.mass * impulse)
+            _sprite.apply_impulse(1 / self.mass * impulse)
             self.apply_impulse(-1 / self.mass * impulse)
 
-        try:
-            non_infinite = next(filter(lambda x: x.mass < 50000, [_sprite, self]))
-            percent = 0.2
-            slop = 0.01
-            correction = max(collision.penetration - slop, 0.0) / (1 / non_infinite.mass) * percent * collision.normal
-            non_infinite.position += 1 / non_infinite.mass * correction
-            non_infinite.set_position()
-        except StopIteration:
-            pass
-
-    def friction(self, _sprite, collision, j):
-        t = _sprite.velocity - (_sprite.velocity * collision.normal) * collision.normal
-        if t:
-            t.normalize()
-
-        jt = - (_sprite.velocity * t)
-        jt *= _sprite.mass
-
-        mu = math.hypot(self.static_friction, _sprite.static_friction)
-        if abs(jt) < j * mu:
-            frictionImpulse = - jt * t
-        else:
-            dynamic_friction = math.hypot(self.dynamic_friction, _sprite.dynamic_friction)
-            frictionImpulse = -jt * t * dynamic_friction
-
-        _sprite.velocity -= (1 / _sprite.mass) * frictionImpulse
-        self.velocity += (1 / self.mass) * frictionImpulse
-        _sprite.update_velocity_and_acceleration(base_sprites.BaseSprite.game_states['dtime'])
+        non_infinite = next(filter(lambda x: x.mass < 50000, [_sprite, self]))
+        percent = 0.2
+        slop = 0.01
+        correction = max(collision.penetration - slop, 0.0) / (1 / non_infinite.mass) * percent * collision.normal
+        _sprite.position += 1 / non_infinite.mass * correction
+        _sprite.set_position()
 
 
 class c2(RigidCube):
     def __init__(self, *args, **kwargs):
         super(c2, self).__init__(*args, **kwargs)
         self.mass = 999999999999999999999999999999999999999999999
-
-    def operate_gravity(self):
-        return
-
-
-class c3(RigidCube):
-    def __init__(self, *args, **kwargs):
-        super(c3, self).__init__(*args, **kwargs)
-        self.control = base_control.AllDirectionMovement(self)
 
     def operate_gravity(self):
         return
@@ -384,7 +336,6 @@ def main():
 
     pygame_structures.Map(tile_list, [], [], [], size)
     fps = 1000
-    fps = 60
     elapsed = 1 / fps
     running = True
     while running:
@@ -400,12 +351,9 @@ def main():
             elif event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     cube = RigidCube(50, *event.pos)
-                elif event.button in (5, 4):
-                    cube = c3(50, *event.pos)
                 else:
                     cube = c2(50, *event.pos)
-
-                pygame_structures.Camera.set_scroller_position(cube, True)
+                    pygame_structures.Camera.set_scroller_position(cube, True)
 
         keys = pg.key.get_pressed()
         base_sprites.tick(elapsed, keys)

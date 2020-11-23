@@ -131,6 +131,15 @@ class Direction:
 
 
 class DegTrigo:
+
+    @staticmethod
+    def deg_to_rad(deg):
+        return math.radians(deg)
+
+    @staticmethod
+    def rad_to_deg(rad):
+        return math.radians(rad)
+
     @staticmethod
     def atan(value):
         return math.degrees(math.atan(value))
@@ -199,7 +208,7 @@ class Vector2:
 
     @property
     def r(self):
-        return math.sqrt(self.x ** 2 + self.y ** 2)
+        return math.hypot(self.x, self.y)
 
     @r.setter
     def r(self, value):
@@ -474,6 +483,18 @@ class Default:
     pass
 
 
+class OrientedBoundingBox:
+    def __init__(self, width_extent: Vector2, height_extent: Vector2):
+        pass
+
+    @classmethod
+    def by_extent(cls, width_extent: Vector2, height_extent: Vector2):
+        pass
+
+    def by_size_and_orientation(self):
+        pass
+
+
 class IfCondition:
     def __init__(self, condition, reverse=False):
         self.reversed = reverse
@@ -688,26 +709,9 @@ direction = {eval(f'Direction.{i}'): i for i in members}
 
 if __name__ == '__main__':
     v = Vector2.Cartesian(30, 30)
-    n = Vector2.Cartesian(y=1)
-    t = v - (v*n)*n
+    n = Vector2.Cartesian(1, 0)
 
-    t.normalize()
-
-    jt = - (v * t)
-
-    massA = massB = 2
-    staticFrictionA = staticFrictionB = 1
-    dynamicFrictionA = dynamicFrictionB = 0.5
-
-    jt /= (1 / massA + 1 / massB)
-
-    mu = math.hypot(staticFrictionA, staticFrictionB)
-    if abs(jt) < jt * mu:
-        frictionImpulse = jt * t
-    else:
-        dynamicFriction = math.hypot(dynamicFrictionA, dynamicFrictionB)
-        frictionImpulse = -j * t * dynamicFriction
-
+    print(v * n * n)
     # A->velocity -= (1 / A->mass) * frictionImpulse
     # B->velocity += (1 / B->mass) * frictionImpulse
 

@@ -1,6 +1,7 @@
 from Engine.structures import Vector2, Direction
 from Engine.Sound import Sounds
 import Engine.pygame_structures as pg_structs
+import pygame as pg
 from numpy import sign
 from pymaybe import maybe
 
@@ -97,6 +98,31 @@ class LeftRightMovement(BaseControl):
                 self.direction = Direction.idle_left
 
 
+class UpDownMovement:
+    def __init__(self, moving_speed, sprite):
+        self.moving_speed = moving_speed
+        self.sprite = sprite
+
+    def can_move(self):
+        return True
+        # return (not hasattr(self.sprite, 'on_platform') or bool(self.sprite.on_platform)) or (
+        #         isinstance(self, JumpControl) and self.jumping)
+
+    def move_up(self):
+        self.sprite.add_force(Vector2.Cartesian(y=(-self.moving_speed - self.sprite.velocity.y) * self.sprite.mass),
+                              'walking')
+
+    def move_down(self):
+        self.sprite.add_force(Vector2.Cartesian(y=(self.moving_speed - self.sprite.velocity.y) * self.sprite.mass),
+                              'walking')
+
+    def stop(self):
+        self.sprite.add_force(Vector2.Cartesian(y=-sign(self.sprite.velocity.y) *
+                                                min(abs(self.sprite.velocity.y),
+                                                    maybe(self.sprite.on_platform).max_stopping_friction.
+                                                    or_else(float('inf')))) * self.sprite.mass, 'stop movement')
+
+
 class JumpControl(BaseControl):
     def __init__(self, jump_delay, sprite, direction, jump_force):
         BaseControl.__init__(self, sprite, direction)
@@ -125,3 +151,37 @@ class NoMoveControl(BaseControl):
 
     def reset(self):
         pass
+
+
+class AllDirectionMovement(LeftRightMovement):
+    MOVING_SPEED = 350  # p/s
+
+    def __init__(self, sprite):
+        LeftRightMovement.__init__(self, AllDirectionMovement.MOVING_SPEED, sprite, Direction.idle_left)
+        self.up_down_movement = UpDownMovement(self.MOVING_SPEED, sprite)
+    def reset(self):
+        BaseControl.reset(self)
+
+    def move(self, **kwargs):
+        if not self.in_control:
+            return
+        pressed_keys = kwargs['keys']
+        if pressed_keys[pg.K_RIGHT]:  # moving right
+            self.direction = Direction.right
+
+        elif pressed_keys[pg.K_LEFT]:  # moving left
+            self.direction = Direction.left
+
+        else:  # the user is pressing both right and left buttons or he is not pressing neither right or left
+            self.stop()
+
+        LeftRightMovement.move(self, **kwargs)
+
+        if pressed_keys[pg.K_UP]:
+            self.up_down_movement.move_up()
+        elif pressed_keys[pg.K_DOWN]:
+            self.up_down_movement.move_down()
+        else:
+            self.up_down_movement.stop()
+
+        # self.sprite.update_ve

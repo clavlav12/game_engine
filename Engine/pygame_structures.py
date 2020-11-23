@@ -12,6 +12,7 @@ Sprite: type = type
 Air: type = type
 clock: type = type
 
+
 def init(TileClass, AirClass, SpriteClass, clockInstance):
     global Tile
     global Sprite
@@ -62,15 +63,19 @@ def singleton_classmethod(function):
 
 
 class collision_manifold:
-    def __init__(self, sprite1, sprite2, penetration, normal, n, collision, x_collision, y_collision):
+    def __init__(self, sprite1, sprite2, penetration, normal, collision, x_collision,
+                 contact_points=None, contact_count=0):
+        if contact_points is None:
+            contact_points = [None, None]
+            contact_count = 0
+        self.contact_points = contact_points
+        self.contact_count = contact_count
         self.sprite1 = sprite1
         self.sprite2 = sprite2
         self.penetration = penetration
         self.normal = normal
-        self.n = n
         self.collision = collision
-        self.y_collision = x_collision
-        self.x_collision = y_collision
+        self.x_collision = x_collision
 
     def __str__(self):
         return str(self.collision)
@@ -106,19 +111,24 @@ class collision_manifold:
                     penetration = y_overlap
                     y_collision = True
 
-                return cls(obj1, obj2, penetration, normal_normalized, normal, True, x_collision, y_collision)
+                return cls(obj1, obj2, penetration, normal_normalized, True, x_collision)
 
-        return cls(obj1, obj2, None, None, None, False, False, False)
+        return cls(obj1, obj2, None, None, False, False)
 
     @staticmethod
     def get_mid(obj):
         if isinstance(obj, Sprite):
             return obj.position + (structures.Vector2.Point(obj.rect.size) / 2)
-        else:  # Tile
+        else:  # Rect only no float position
             return obj.rect.topleft + (structures.Vector2.Point(obj.rect.size) / 2)
 
     def __bool__(self):
         return self.collision
+
+
+def remove_id(dictionary: dict):
+    dictionary.pop('id')
+    return dictionary
 
 
 class Map:
@@ -136,17 +146,17 @@ class Map:
         """
         :param mp: 2 dimensional list
         """
-        self.first_quadrant = [[Tile.get_tile(tile_id)(*args, x=x * tile_size, y=y * tile_size)
-                                for x, (tile_id, *args) in enumerate(row)] for y, row in enumerate(first_quadrant)]
+        self.first_quadrant = [[Tile.get_tile(kwargs['id'])(**remove_id(kwargs), x=x * tile_size, y=y * tile_size)
+                                for x, kwargs in enumerate(row)] for y, row in enumerate(first_quadrant)]
 
-        self.second_quadrant = [[Tile.get_tile(tile_id)(*args, x=-x * tile_size, y=y * tile_size)
-                                 for x, (tile_id, *args) in enumerate(reversed(row))]
+        self.second_quadrant = [[Tile.get_tile(kwargs['id'])(**remove_id(kwargs), x=-x * tile_size, y=y * tile_size)
+                                 for x, kwargs in enumerate(reversed(row))]
                                 for y, row in enumerate(second_quadrant)]
-        self.third_quadrant = [[Tile.get_tile(tile_id)(*args, x=-x * tile_size, y=-y * tile_size)
-                                for x, (tile_id, *args) in enumerate(reversed(row))]
+        self.third_quadrant = [[Tile.get_tile(kwargs['id'])(**remove_id(kwargs), x=-x * tile_size, y=-y * tile_size)
+                                for x, kwargs in enumerate(reversed(row))]
                                for y, row in enumerate(reversed(third_quadrant))]
-        self.forth_quadrant = [[Tile.get_tile(tile_id)(*args, x=x * tile_size, y=-y * tile_size)
-                                for x, (tile_id, *args) in enumerate(row)] for y, row in
+        self.forth_quadrant = [[Tile.get_tile(kwargs['id'])(**remove_id(kwargs), x=x * tile_size, y=-y * tile_size)
+                                for x, kwargs in enumerate(row)] for y, row in
                                enumerate(reversed(forth_quadrant))]
         # for i in self.first_quadrant:
         #     for a in i:
@@ -182,7 +192,7 @@ class Map:
         return self.map_maps[(int(math.copysign(1, x)), int(math.copysign(1, y)))]
 
     @singleton_classmethod
-    def check_platform_collision(self, sprite, axis, time_delta):
+    def check_platform_collision(self, sprite, time_delta):
         if self.empty:
             return None, None
 
@@ -212,11 +222,21 @@ class Map:
                     if not isinstance(tile, Air):
                         if sprite.rect_collision or \
                                 pygame.sprite.collide_mask(tile, sprite):  # mask
-                            before = tile.sprite_collide(sprite, axis,
-                                                         collision_manifold.by_two_objects(tile, sprite),
-                                                         called)
-                            sprite.update_velocity_and_acceleration(time_delta)
-                            called.append(tile)
+                            collection = tile.group
+                            if collection is not tile and collection in called:
+                                continue
+                            elif collection is not tile:
+                                called.append(collection)
+
+                            if callable(sprite.collision_manifold_generator):
+                                collision = sprite.collision_manifold_generator(collection, sprite)
+                            else:
+                                collision = collision_manifold.by_two_objects(collection, sprite)
+                            if collision:
+                                before = tile.sprite_collide(sprite,
+                                                             collision
+                                                             )
+                                sprite.update_velocity_and_acceleration(time_delta)
                 except IndexError:  # no collision
                     pass
 
@@ -384,6 +404,28 @@ class Animation:
         return len(self.images_list)
 
 
+class TileCollection:
+    def __init__(self):
+        self.rect = None
+
+    def add_tile(self, tile):
+        if self.rect is None:
+            self.rect = pygame.Rect(*tile.rect)
+        else:
+            rect = tile.rect
+            if rect.x == self.rect.x:
+                self.rect.height += rect.height
+            elif rect.x < self.rect.x:
+                self.rect.left -= rect.width
+            if rect.y == self.rect.y:
+                self.rect.width += rect.width
+            elif rect.y < self.rect.y:
+                self.rect.top -= rect.top
+
+    def sprite_collide(self, _sprite, collision):
+        pass
+
+
 class Timer:
     """Used to time stuff eg. jump, fire etc."""
 
@@ -419,7 +461,7 @@ class Timer:
         return bool(self)
 
 
-class RotatableImage:
+class RotatableImageOld:
     def __init__(self, img: pygame.Surface, init_angle, center_offset, position: callable):
         if callable(position):
             self.position = position  # center position
@@ -428,15 +470,18 @@ class RotatableImage:
                 self.position = lambda: position  # center position
         self.original_img = img
         self.edited_img = img.copy()
-        self.init_angle = init_angle
+        self.angle = None
         self.original_center_offset = structures.Vector2.Cartesian(*center_offset)
         self.edited_center_offset = self.original_center_offset.copy()
         self.rect = self.edited_img.get_rect(center=structures.add_tuples(self.position(), self.edited_center_offset))
+        self.rotate(init_angle)
 
     def rotate(self, angle):
-        self.edited_img = pygame.transform.rotate(self.original_img, -angle).convert_alpha()
-        self.edited_center_offset = self.original_center_offset.rotated(angle)
-        self.rect = self.edited_img.get_rect(center=structures.add_tuples(self.position(), self.edited_center_offset))
+        if not angle == self.angle:
+            self.angle = angle
+            self.edited_img = pygame.transform.rotate(self.original_img, -angle).convert_alpha()
+            self.edited_center_offset = self.original_center_offset.rotated(angle)
+            self.rect = self.edited_img.get_rect(center=structures.add_tuples(self.position(), self.edited_center_offset))
 
     def blit_image(self):
         self.rect.center = structures.add_tuples(self.position(), self.edited_center_offset)
@@ -446,6 +491,41 @@ class RotatableImage:
                     structures.add_tuples(self.rect.topleft, self.edited_center_offset) - Camera.scroller)
         # pygame.draw.rect(Camera.screen, Color('red'), r, 5)
         return self.edited_img
+
+
+class RotatableImage:
+    def __init__(self, img, init_angle, center_offset):
+        self.original_img = img
+        self.edited_img = img.copy()
+        self.pivot = pygame.math.Vector2(center_offset[0], -center_offset[1])
+        self.center_offset = center_offset
+
+        w, h = self.original_img.get_size()
+        self.box = [pygame.math.Vector2(p) for p in [(0, 0), (w, 0), (w, -h), (0, -h)]]
+
+        self.angle = None
+
+        self.rotate(init_angle)
+        self.angle = init_angle
+
+    def rotate(self, angle):
+        if not angle == self.angle:
+            self.angle = angle
+            self.box_rotate = box_rotate = [p.rotate(angle) for p in self.box]
+            self.min_box = (min(box_rotate, key=lambda p: p[0])[0], min(box_rotate, key=lambda p: p[1])[1])
+            self.max_box = (max(box_rotate, key=lambda p: p[0])[0], max(box_rotate, key=lambda p: p[1])[1])
+            pivot_rotate = self.pivot.rotate(angle)
+            self.pivot_move = pivot_rotate - self.pivot
+            self.edited_img = pygame.transform.rotate(self.original_img, angle)
+
+    def blit_image(self, center_position):
+        origin = (center_position[0] - self.center_offset[0] + self.min_box[0] - self.pivot_move[0],
+                  center_position[1] - self.center_offset[1] - self.max_box[1] + self.pivot_move[1])
+        Camera.blit(self.edited_img,
+                    origin - Camera.scroller)
+
+        # pygame.draw.rect(Camera.screen, Color('red'), r, 5)
+        return self.edited_img, origin
 
 
 class FlippableRotatedImage:
@@ -463,19 +543,19 @@ class FlippableRotatedImage:
         self.sprite_rect = sprite_rect
         self.original_direction = original_direction
         if original_direction == structures.Direction.right:
-            self.right_image = RotatableImage(img, init_angle, pivot_offset,
+            self.right_image = RotatableImageOld(img, init_angle, pivot_offset,
                                               lambda: structures.add_tuples(sprite_rect.topleft, sprite_rect_offset))
             new_position = sprite_rect.width - sprite_rect_offset[0], sprite_rect_offset[1]
             new_offset = structures.mul_tuple(pivot_offset, -1)
-            self.left_image = RotatableImage(pygame.transform.flip(img, True, False).convert_alpha(), init_angle,
+            self.left_image = RotatableImageOld(pygame.transform.flip(img, True, False).convert_alpha(), init_angle,
                                              new_offset,
                                              lambda: structures.add_tuples(sprite_rect.topleft, new_position))
         elif original_direction == structures.Direction.left:
-            self.left_image = RotatableImage(img, init_angle, pivot_offset,
+            self.left_image = RotatableImageOld(img, init_angle, pivot_offset,
                                              lambda: structures.add_tuples(sprite_rect.topleft, sprite_rect_offset))
             new_position = sprite_rect.width - sprite_rect_offset[0], sprite_rect_offset[1]
             new_offset = structures.mul_tuple(pivot_offset, -1)
-            self.right_image = RotatableImage(pygame.transform.flip(img, True, False).convert_alpha(), init_angle,
+            self.right_image = RotatableImageOld(pygame.transform.flip(img, True, False).convert_alpha(), init_angle,
                                               new_offset,
                                               lambda: structures.add_tuples(sprite_rect.topleft, new_position))
 

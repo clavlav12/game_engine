@@ -198,7 +198,7 @@ class Missile(base_sprites.Bullet):
             elif turret_angle <= 0:
                 r.topright = turret_rect.bottomleft
         super(Missile, self).__init__(r, Missile.DAMAGE, Missile.TRAVEL_DISTANCE)
-        self.missile_image = pygame_structures.RotatableImage(Missile.MISSILE_IMAGE, 0, (0, 0), lambda: self.rect.topleft)
+        self.missile_image = pygame_structures.RotatableImageOld(Missile.MISSILE_IMAGE, 0, (0, 0), lambda: self.rect.topleft)
         self.killed = False
         self.shoot_force = shoot_force
         self.rect_collision = False

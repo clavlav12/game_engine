@@ -1,6 +1,6 @@
 import os
 import pygame
-from Engine.pygame_structures import DisplayMods, Camera, Map, Timer
+from Engine.pygame_structures import DisplayMods, Camera, Map, Timer, TileCollection
 W = 1000
 H = 700
 screen = DisplayMods.Windowed((W, H))
@@ -47,11 +47,13 @@ def Main():
     sur2 = pygame.Surface((50, 50))
     sur2.fill((255, 0, 0))
     tile_list = [
-        [(3,) for _ in range(50)] for __ in range(50)
+        [{'id': 3} for _ in range(50)] for __ in range(50)
     ]
     size = 50
+
+    collection = TileCollection()
     for i in range(0, W//size):
-        tile_list[(H-size)//size][i] = (1, sur)
+        tile_list[(H-size)//size][i] = ({'id': 1, 'img': sur, 'group': collection})
 
     Map(tile_list, [], [], [], size)
     # Map(tile_list, tile_list, tile_list, tile_list, size)
