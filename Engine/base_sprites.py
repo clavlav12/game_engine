@@ -89,40 +89,43 @@ class BlockingTile(Tile):
         if not isinstance(_sprite, AdvancedSprite):
             return before
         try:
-            relative_velocity = _sprite.get_future_velocity(BaseSprite.game_states['dtime'])
-            # relative_velocity = - _sprite.calculate_relative_velocity(BaseSprite.game_states['dtime'])
-
-            velocity_among_normal = relative_velocity * collision.normal
-
-            if velocity_among_normal > 0:
-                return before
-
-            if collision.x_collision:
-                was_on = _sprite.on_platform
-                _sprite.on_platform = self
-
-            j = -(1 + self.restitution) * velocity_among_normal
-            j /= 1 / float('inf') + 1 / _sprite.mass
-
-            impulse = j * collision.normal
-
-            self.friction(_sprite, collision, j)
-            if not impulse:
-                return
-
             if collision.contact_count > 0:
-                for point in collision.contact_points:
-                    if point is not None:
-                        _sprite.apply_impulse(1 / _sprite.mass * impulse / collision.contact_count, point)
+                contacts = collision.contact_points
             else:
-                _sprite.apply_impulse(1 / _sprite.mass * impulse)
+                contacts = [None]
 
-            # _sprite.add_force(impulse, 'normal', TrueSA)
+            for point in contacts:
+                relative_velocity = _sprite.get_future_velocity(BaseSprite.game_states['dtime'])
+                # relative_velocity = - _sprite.calculate_relative_velocity(self, point)
 
-            percent = 0.2
-            slop = 0.01
-            correction = max(collision.penetration - slop, 0.0) / (1 / _sprite.mass) * percent * collision.normal
-            _sprite.position += 1 / _sprite.mass * correction
+                velocity_among_normal = relative_velocity * collision.normal
+
+                if velocity_among_normal > 0:
+                    return before
+
+                if collision.x_collision:
+                    was_on = _sprite.on_platform
+                    _sprite.on_platform = self
+
+                j = -(1 + self.restitution) * velocity_among_normal
+                j /= 1 / float('inf') + 1 / _sprite.mass
+
+                impulse = j * collision.normal
+
+                self.friction(_sprite, collision, j)
+                if not impulse:
+                    return
+
+                number_of_points = 1 if not collision.contact_count else collision.contact_count
+
+                _sprite.apply_impulse(1 / _sprite.mass * impulse / number_of_points, point)
+
+                # _sprite.add_force(impulse, 'normal', TrueSA)
+
+                percent = 0.2
+                slop = 0.01
+                correction = max(collision.penetration - slop, 0.0) / (1 / _sprite.mass) * percent * collision.normal
+                _sprite.position += 1 / _sprite.mass * correction
 
         except Exception as e:
             # pass
@@ -267,6 +270,8 @@ class BaseSprite(pygame.sprite.Sprite):
 
         self.control = control
 
+        self.collide_check_by_rect = False
+
         self.collision_manifold_generator = None
         BaseSprite.sprites_list.add(self)
 
@@ -386,7 +391,9 @@ class BaseSprite(pygame.sprite.Sprite):
                         skip -= 1
                         continue
 
-                    if pygame.sprite.collide_rect(sprite1, sprite2) and pygame.sprite.collide_mask(sprite1, sprite2):
+                    if pygame.sprite.collide_rect(sprite1, sprite2) and\
+                            (sprite1.collide_check_by_rect or sprite2.collide_check_by_rect or \
+                            pygame.sprite.collide_mask(sprite1, sprite2)):
 
                         if sprite1.generate_collision_manifold or sprite2.generate_collision_manifold:
                             if callable(sprite1.collision_manifold_generator):
@@ -582,6 +589,8 @@ class RigidBody(AdvancedSprite):
         self.com_position = self.position + structures.Vector2.Point(self.rect.size) / 2
 
     def calculate_relative_velocity(self, other, contact_point):
+        if contact_point:
+            contact_point = structures.Vector2.Zero()
         radii_self = contact_point - self.com_position
         if isinstance(other, RigidBody):
             radii_other = contact_point - other.com_position

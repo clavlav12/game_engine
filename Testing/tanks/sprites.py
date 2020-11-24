@@ -146,7 +146,8 @@ class Tank(base_sprites.Vehicle):
                                                   Tank.position_offset,
                                                   self.rect, structures.Direction.left)
 
-        self.mass = 1
+        self.mass = 1000
+        self.collide_check_by_rect = True
         # self.rect_collision = False
 
     def set_turret_angle(self, angle):

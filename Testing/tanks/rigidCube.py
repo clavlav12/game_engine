@@ -249,8 +249,10 @@ class RigidCube(base_sprites.RigidBody):
 
         normal = ref_normals[reference_index]
 
+        print(ref_poly, inc_poly
+              )
         if flip:
-            normal = -normal
+            normal *= -1
         p1 = ref_vertices[reference_index]
         p2 = ref_vertices[(reference_index + 1) % len(ref_vertices)]
 
@@ -294,19 +296,21 @@ class RigidCube(base_sprites.RigidBody):
         if not collision:
             return True
 
+        # collision.normal *= -1
         relative_velocity = _sprite.velocity - self.velocity
         velocity_among_normal = relative_velocity * collision.normal
 
         pg.draw.circle(pygame_structures.Camera.screen, pg.Color('white'), tuple(self.com_position), 10)
 
-        # if velocity_among_normal > 0:
-        #     return True
+        if velocity_among_normal > 0:
+            return True
 
         j = -(1 + self.restitution) * velocity_among_normal
         j /= 1 / float('inf') + 1 / _sprite.mass
 
         impulse = j * collision.normal
 
+        print(impulse, velocity_among_normal)
         self.friction(_sprite, collision, j)
 
         if collision.contact_count > 0:
@@ -371,6 +375,10 @@ def main():
     H = 700
     screen = pygame_structures.DisplayMods.Windowed((W, H))
     pygame_structures.Camera.init(screen, "static", None)
+
+    from sprites import Tank
+    tank1 = Tank(structures.Direction.right, (600, 550), shoot_key=pg.K_KP_ENTER,
+                 health_bar_color=(pg.Color('green'), pg.Color('red')))
 
     sur = pg.Surface((50, 50)).convert()
     sur.fill((0, 255, 255))
