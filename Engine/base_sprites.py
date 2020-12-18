@@ -74,8 +74,8 @@ class BlockingTile(Tile):
 
         self.dynamic_friction = 0  # not how real life friction works, but feels nice.
         self.static_friction = 0  # not how real life friction works, but feels nice.
-        self.dynamic_friction = 0.5  # not how real life friction works, but feels nice.
-        self.static_friction = 0.5  # not how real life friction works, but feels nice.
+        self.dynamic_friction = 0.15  # not how real life friction works, but feels nice.
+        self.static_friction = 0.2  # not how real life friction works, but feels nice.
         self.restitution = restitution  # how "bouncy" the tile is, from zero to one
 
         self.normal = structures.Vector2.Zero()
@@ -256,12 +256,12 @@ class BaseSprite(pygame.sprite.Sprite):
         self.currently_colliding = []
 
         # physics
+        self.on_platform = None
         self.position = structures.Vector2.Cartesian(*rect.topleft)
         self.velocity = structures.Vector2.Zero()
         self.acceleration = structures.Vector2.Zero()
         self.force = structures.Vector2.Zero()
         self.force_document = {}
-        self.rect_collision = rect_collision
         self.generate_collision_manifold = generate_collision_manifold
         self.mass = mass
 
@@ -270,10 +270,28 @@ class BaseSprite(pygame.sprite.Sprite):
 
         self.control = control
 
-        self.collide_check_by_rect = False
+        self.collide_check_by_rect = rect_collision
 
         self.collision_manifold_generator = None
+
+        self.restitution = 0
         BaseSprite.sprites_list.add(self)
+
+    @property
+    def com_position(self):
+        return self.position + (structures.Vector2.Point(self.rect.size) / 2)
+
+    @property
+    def elasticity(self):
+        return 1 - self.restitution
+
+    @elasticity.setter
+    def elasticity(self, value):
+        self.restitution = 1 - value
+
+    @property
+    def inv_mass(self):
+        return 1 / self.mass
 
     def apply_impulse(self, impulse, contact_point=None):
         self.velocity += impulse
@@ -328,8 +346,8 @@ class BaseSprite(pygame.sprite.Sprite):
     def _update(self, control_dict):
         """A method to control sprite behavior. Called ones per frame"""
         self.control.move(**control_dict)
-        self.update(control_dict)
         self.update_kinematics(control_dict['dtime'])
+        self.update(control_dict)
         self.draw()
         self.force_document = {}
 
@@ -542,65 +560,84 @@ class AdvancedSprite(BaseSprite):
         return False
 
 
-class RigidBody(AdvancedSprite):
-    def __init__(self, image, rect, mass, moment_of_inertia, orientation, control=controls.NoMoveControl(),
-                 *, hit_points=50, health_bar_colors=None):
-        super(RigidBody, self).__init__(rect, control, mass, hit_points=hit_points, health_bar_colors=health_bar_colors)
+class BaseRigidBody(BaseSprite):
+    def __init__(self, rect, mass, moment_of_inertia, orientation, control=controls.NoMoveControl()):
+        # super(BaseRigidBody, self).__init__(rect, control, mass, hit_points=hit_points,
+        #                                     health_bar_colors=health_bar_colors)
+        super(BaseRigidBody, self).__init__(rect, control, mass)
         self.moment_of_inertia = moment_of_inertia
         self.orientation = orientation
         self.angular_velocity = 0
         self.torque = 0
-        self.generate_collision_manifold = True
-
-        self.com_position = structures.Vector2.Point(rect.center)
-        self.real_image = pygame_structures.RotatableImage(image, orientation,
-                                                           tuple(structures.Vector2.Point(image.get_size()) / 2))
 
     def update_velocity_and_acceleration(self, time_delta):
-        super(RigidBody, self).update_velocity_and_acceleration(time_delta)
-        self.angular_velocity += self.torque * time_delta / self.moment_of_inertia
+        super(BaseRigidBody, self).update_velocity_and_acceleration(time_delta)
+        self.angular_velocity += self.torque / self.moment_of_inertia
         self.orientation += self.angular_velocity * time_delta
 
-    def draw(self, draw_health=False):
-        if draw_health:
-            self.draw_health_bar()
-        self.real_image.rotate(self.orientation)
-        self.image, origin = self.real_image.blit_image(self.com_position.floor())
-
-        self.rect.size = self.real_image.edited_img.get_size()
-        self.rect.topleft = origin
-
-    def generate_manifold(self, other: Union[Tile, BaseSprite, pygame.sprite.Sprite]):
-        pass
-
     def apply_impulse(self, impulse, contact_point=None):
-        super(RigidBody, self).apply_impulse(impulse, contact_point)
+        super(BaseRigidBody, self).apply_impulse(impulse, contact_point)
         if contact_point is not None:
             self.angular_velocity += ((self.com_position - contact_point) ** impulse) / self.moment_of_inertia
 
-    def set_position(self, x=None, y=None):
-        self.position.set_values(x, y)
+    def add_to_position(self, vec):
+        self.position += vec
         self.rect.topleft = tuple(self.com_position.floor() - structures.Vector2.Point(self.rect.size) / 2)
-        self.com_position = self.position + structures.Vector2.Point(self.rect.size) / 2
 
     def update_position(self, time_delta):
         self.position += self.velocity * time_delta
         self.rect.topleft = tuple(self.com_position.floor() - structures.Vector2.Point(self.rect.size) / 2)
-        self.com_position = self.position + structures.Vector2.Point(self.rect.size) / 2
 
     def calculate_relative_velocity(self, other, contact_point):
         if contact_point:
             contact_point = structures.Vector2.Zero()
         radii_self = contact_point - self.com_position
-        if isinstance(other, RigidBody):
+        if isinstance(other, ImagedRigidBody):
             radii_other = contact_point - other.com_position
             other_angular_velocity = other.angular_velocity
         else:
             other_angular_velocity = 0
             radii_other = structures.Vector2.Zero()
-        return super(RigidBody, self).calculate_relative_velocity(other, contact_point) + \
+        return super(BaseRigidBody, self).calculate_relative_velocity(other, contact_point) + \
                (math.radians(other_angular_velocity) ** radii_other) - \
                (math.radians(self.angular_velocity) ** radii_self)
+
+
+class ImagedRigidBody(BaseRigidBody):
+    def __init__(self, image, rect, mass, moment_of_inertia, orientation, control=controls.NoMoveControl()):
+        super(ImagedRigidBody, self).__init__(rect, mass, moment_of_inertia, orientation, control)
+        self.generate_collision_manifold = True
+
+        self.real_image = pygame_structures.RotatableImage(image, orientation,
+                                                           tuple(structures.Vector2.Point(image.get_size()) / 2))
+
+
+    def draw(self, draw_health=False):
+        if draw_health:
+            self.draw_health_bar()
+        self.real_image.rotate(int(self.orientation))
+        self.image, origin = self.real_image.blit_image(self.com_position.floor())
+        # try:
+        #     pygame.draw.circle(pygame_structures.Camera.screen, pygame.Color('red'), tuple(self.com_position.floor()), 2)
+        #     pygame.draw.circle(pygame_structures.Camera.screen, pygame.Color('red'), tuple(self.position.floor()), 2)
+        # except Exception as e:
+        #     print(self.com_position)
+        #     raise e
+        # center = self.rect.center
+
+        new = self.rect.copy()
+        new.size = self.real_image.edited_img.get_size()
+        new.center = self.rect.center
+        # self.rect.size = self.real_image.edited_img.get_size()
+        # self.rect.center = center
+
+        self.position -= (structures.Vector2.Point(new.size) - structures.Vector2.Point(self.rect.size))/2
+        self.rect.size = new.size
+        # self.draw_rect()
+
+    def generate_manifold(self, other: Union[Tile, BaseSprite, pygame.sprite.Sprite]):
+        pass
+
 
 
 class DrivableSprite(AdvancedSprite):

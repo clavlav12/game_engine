@@ -56,7 +56,7 @@ class Line:
         pass
 
 
-class RigidCube(base_sprites.RigidBody):
+class RigidCube(base_sprites.ImagedRigidBody):
     def __init__(self, size, x, y):
         rect = pg.Rect(
             x - size // 2,

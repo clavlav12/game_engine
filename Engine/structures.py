@@ -276,8 +276,12 @@ class Vector2:
         return Vector2.Cartesian(self.x / self.magnitude(), self.y / self.magnitude())
 
     def normalize(self):
-        self.x /= self.magnitude()
-        self.y /= self.magnitude()
+        mag = self.magnitude()
+        self.x /= mag
+        self.y /= mag
+    
+    def normal(self):
+        return Vector2.Cartesian(-self.y, self.x)
 
     def floor(self):
         return Vector2.Cartesian(int(self.x), int(self.y))
@@ -709,9 +713,9 @@ direction = {eval(f'Direction.{i}'): i for i in members}
 
 if __name__ == '__main__':
     v = Vector2.Cartesian(30, 30)
-    n = Vector2.Cartesian(1, 0)
+    v.normalize()
 
-    print(v * n * n)
+    print(v, v.magnitude())
     # A->velocity -= (1 / A->mass) * frictionImpulse
     # B->velocity += (1 / B->mass) * frictionImpulse
 

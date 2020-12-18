@@ -508,8 +508,8 @@ class RotatableImage:
         self.rotate(init_angle)
         self.angle = init_angle
 
-    def rotate(self, angle):
-        if not angle == self.angle:
+    def rotate(self, angle, skip_optimisation=False):
+        if not angle == self.angle or skip_optimisation:
             self.angle = angle
             self.box_rotate = box_rotate = [p.rotate(angle) for p in self.box]
             self.min_box = (min(box_rotate, key=lambda p: p[0])[0], min(box_rotate, key=lambda p: p[1])[1])

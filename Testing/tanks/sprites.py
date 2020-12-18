@@ -147,7 +147,7 @@ class Tank(base_sprites.Vehicle):
                                                   self.rect, structures.Direction.left)
 
         self.mass = 1000
-        self.collide_check_by_rect = True
+        self.collide_check_by_rect = False
         # self.rect_collision = False
 
     def set_turret_angle(self, angle):
@@ -162,6 +162,7 @@ class Tank(base_sprites.Vehicle):
         if signature == 'normal' and force.x > 0:
             print("shouldn't happend!", force)
         return force
+
     def draw(self):
         if self.hit_points > 0:
             self.turret_image.blit_image(self.control.direction)
