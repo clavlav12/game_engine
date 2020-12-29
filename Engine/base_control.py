@@ -4,6 +4,9 @@ import Engine.pygame_structures as pg_structs
 import pygame as pg
 from numpy import sign
 from pymaybe import maybe
+from collections import namedtuple
+
+controls = namedtuple('keys', ('up', 'down', 'left', 'right', 'cw', 'ccw'), defaults=(None, ) * 6)
 
 
 def init(sound_player, MagazineClass, GunBulletClass):
@@ -156,9 +159,17 @@ class NoMoveControl(BaseControl):
 class AllDirectionMovement(LeftRightMovement):
     MOVING_SPEED = 350  # p/s
 
-    def __init__(self, sprite):
+    def __init__(self, sprite, key_up=pg.K_UP,
+                 key_down=pg.K_DOWN,
+                 key_right=pg.K_RIGHT,
+                 key_left=pg.K_LEFT):
         LeftRightMovement.__init__(self, AllDirectionMovement.MOVING_SPEED, sprite, Direction.idle_left)
         self.up_down_movement = UpDownMovement(self.MOVING_SPEED, sprite)
+        self.key_left = key_left
+        self.key_right = key_right
+        self.key_down = key_down
+        self.key_up = key_up
+
     def reset(self):
         BaseControl.reset(self)
 
@@ -166,10 +177,10 @@ class AllDirectionMovement(LeftRightMovement):
         if not self.in_control:
             return
         pressed_keys = kwargs['keys']
-        if pressed_keys[pg.K_RIGHT]:  # moving right
+        if pressed_keys[self.key_right]:  # moving right
             self.direction = Direction.right
 
-        elif pressed_keys[pg.K_LEFT]:  # moving left
+        elif pressed_keys[self.key_left]:  # moving left
             self.direction = Direction.left
 
         else:  # the user is pressing both right and left buttons or he is not pressing neither right or left
@@ -177,11 +188,80 @@ class AllDirectionMovement(LeftRightMovement):
 
         LeftRightMovement.move(self, **kwargs)
 
-        if pressed_keys[pg.K_UP]:
+        if pressed_keys[self.key_up]:
             self.up_down_movement.move_up()
-        elif pressed_keys[pg.K_DOWN]:
+        elif pressed_keys[self.key_down]:
             self.up_down_movement.move_down()
         else:
             self.up_down_movement.stop()
 
-        # self.sprite.update_ve
+
+class Key:
+    def __init__(self, key, is_pressed=False):
+        self.key = key
+        self.pressed = is_pressed
+
+    def press(self):
+        self.pressed = True
+
+    def release(self):
+        self.pressed = False
+
+    def first_pressed(self):
+        was_pressed = self.pressed
+        self.press()
+        return not was_pressed
+
+    def set_pressed(self, value):
+        self.pressed = value
+
+    def set_pressed_auto(self, keys):
+        was_pressed = self.pressed
+        self.pressed = keys[self.key]
+        return (not was_pressed) and self.pressed
+
+    def __str__(self):
+        return str(self.key)
+
+
+class AllDirectionSpeed(LeftRightMovement):
+    MOVING_SPEED = 350  # p/s
+
+    def __init__(self, sprite,
+                 key_up=pg.K_UP,
+                 key_down=pg.K_DOWN,
+                 key_right=pg.K_RIGHT,
+                 key_left=pg.K_LEFT):
+        LeftRightMovement.__init__(self, self.MOVING_SPEED, sprite, Direction.idle_left)
+        self.up_down_movement = UpDownMovement(self.MOVING_SPEED, sprite)
+        self.set_controls(key_up, key_down, key_left, key_right)
+
+    def set_controls(self, key_up, key_down, key_left, key_right):
+        self.controls = controls(*(Key(x) for x in (key_up, key_down, key_left, key_right)))
+
+    def reset(self):
+        BaseControl.reset(self)
+
+    def move(self, **kwargs):
+        if not self.in_control:
+            return
+        pressed_keys = kwargs['keys']
+
+        direction = Direction.idle_right
+        new_press = self.controls.right.set_pressed_auto(pressed_keys)
+        if new_press:  # moving right
+            direction = Direction.right
+        new_press = self.controls.left.set_pressed_auto(pressed_keys)
+        if new_press:  # moving right
+            direction = Direction.left
+
+        self.direction = direction
+        LeftRightMovement.move(self, **kwargs)
+
+        new_press = self.controls.up.set_pressed_auto(pressed_keys)
+        if new_press:  # moving up
+            self.up_down_movement.move_up()
+        new_press = self.controls.down.set_pressed_auto(pressed_keys)
+        if new_press:  # moving up
+            self.up_down_movement.move_down()
+

@@ -582,7 +582,7 @@ class Camera:
     """Static class to handle scroller out of this file"""
     fnt = pygame.font.SysFont('comicsansms', 45)
     Text = namedtuple('Text', ['text', 'position', 'signature'])
-    displayed_text = []  # Text(text, position, signature)
+    displayed_text = {}  # signature: Text(text, position, signature)
     scroller = None
     screen = None
     real_screen = None
@@ -591,6 +591,7 @@ class Camera:
     save = False
     display_fps = True
     fps_font = pygame.font.SysFont('comicsansms', 12)
+    default_font = pygame.font.SysFont('Arial', 24)
 
     @classmethod
     def init(cls, display_mode, scroller_type='static', scroller_edges=None,
@@ -632,21 +633,25 @@ class Camera:
         particle(*args, **kwargs)
 
     @classmethod
-    def display_text(cls, font, text: str, position, signature):
-        sur = font.render(text)
+    def display_text(cls, text: str, position, signature, font=None,
+                     antialais=True, color=pygame.Color('red'), bg=None):
+        if font is None:
+            font = cls.default_font
+        sur = font.render(text, antialais, color, bg)
         if position == 'center':
             r = sur.get_rect(center=structures.mul_tuple(cls.screen.get_size(), 0.5))
             position = r.topleftdw
-        cls.displayed_text.append(cls.Text(sur, position, signature))
+
+        cls.displayed_text[signature] = cls.Text(sur, position, signature)
 
     @classmethod
     def remove_text(cls, signature):
-        for txt in cls.displayed_text:
+        for txt in cls.displayed_text.values():
             if txt.signature == signature:
                 break
         else:  # if not break
             raise AttributeError(f"Signature {signature} not found")
-        cls.displayed_text.remove(txt)
+        cls.displayed_text.pop(signature)
 
     @classmethod
     def shake(cls):
@@ -676,7 +681,7 @@ class Camera:
 
     @classmethod
     def post_process(cls, sprites_list):
-        for txt in cls.displayed_text:
+        for txt in cls.displayed_text.values():
             cls.blit(txt.text, txt.position)
         if cls.display_fps:
             fps_surface = cls.fps_font.render(str(round(clock.get_fps())) + ', ' + str(len(sprites_list)),

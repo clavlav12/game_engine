@@ -28,29 +28,45 @@ class RotationMatrix:
         return self * other
 
 
+class Ball:
+    def __init__(self, r, center):
+        self.center = structures.Vector2.Point(center)
+        self.r = r
+
+    def is_colliding(self, other):
+        return math.hypot(*(self.center - other.center)) < self.r + other.r
+
+    def draw(self):
+        draw_circle(self.center, self.r, 2)
+
+
 class RigidBall(base_sprites.ImagedRigidBody):
-    def __init__(self, radius, x, y, control=False):
+    def __init__(self, radius, x, y, control=False, *, color=pg.Color('red')):
         """
         :param radius:
         :param x: center x position
         :param y: center y position
         """
         image = pg.Surface((radius * 2, radius * 2), pg.SRCALPHA)
-        pg.draw.circle(image, pg.Color("red"), (radius, radius), radius)
+        pg.draw.circle(image, color, (radius, radius), radius)
         rect = pg.Rect(x - radius, y - radius, radius * 2, radius * 2)
 
         density = 1
+        mass = radius ** 2 * math.pi * density
+        if control:
+            mass = 500000
+
         if not control:
-            super(RigidBall, self).__init__(image, rect, radius ** 2 * math.pi * density, math.pi * radius ** 4 / 4, 0)
+            super(RigidBall, self).__init__(image, rect, mass, math.pi * radius ** 4 / 4, 0)
         else:
-            super(RigidBall, self).__init__(image, rect, radius ** 2 * math.pi * density, math.pi * radius ** 4 / 4, 0,
+            super(RigidBall, self).__init__(image, rect, mass, math.pi * radius ** 4 / 4, 0,
                                             control=base_control.AllDirectionMovement(self))
 
         self.generate_collision_manifold = False
         self.collision_manifold_generator = self.ball2ball
         self.radius = radius
 
-        self.restitution = 0.5
+        self.restitution = .2
 
     def operate_gravity(self):
         pass
@@ -90,6 +106,13 @@ class RigidBall(base_sprites.ImagedRigidBody):
         other.add_to_position(-pen_res * other.inv_mass)
         return True
 
+    def update(self, control_dict):
+        friction = 0
+        self.velocity.x -= min(friction * control_dict['dtime'] * structures.sign(self.velocity.x),
+                               self.velocity.x, key=abs)
+        self.velocity.y -= min(friction * control_dict['dtime'] * structures.sign(self.velocity.y),
+                               self.velocity.y, key=abs)
+
     def ball2ball(self, other: Union[base_sprites.Tile,
                                      base_sprites.BaseSprite,
                                      pg.sprite.Sprite]):
@@ -112,18 +135,335 @@ class WallControl(base_control.BaseControl):
             self.sprite.update_attributes()
 
 
+class RigidControl(base_control.AllDirectionSpeed):
+    def __init__(self, sprite: base_sprites.BaseRigidBody, key_up, key_down, key_right, key_left,
+                 roll_cw, roll_ccw):
+        super(RigidControl, self).__init__(sprite, key_up, key_down, key_right, key_left)
+        self.set_controls(key_up, key_down, key_left, key_right, roll_cw, roll_ccw)
+
+    def set_controls(self, key_up, key_down, key_left, key_right, key_cw=None, key_ccw=None):
+        self.controls = base_control.controls(*(base_control.Key(x) for x in
+                                                (key_up, key_down, key_left, key_right, key_cw, key_ccw)))
+
+    def move(self, **kwargs):  # {'sprites' : sprite_list, 'dtime': delta time, 'keys': keys}
+        super(RigidControl, self).move(**kwargs)
+        keys = kwargs['keys']
+        new_press = self.controls.cw.set_pressed_auto(keys)
+        if new_press:  # moving right
+            self.sprite.angular_velocity = 150
+        new_press = self.controls.ccw.set_pressed_auto(keys)
+        if new_press:  # moving right
+            self.sprite.angular_velocity = - 150
+
+
+class OOB(base_sprites.BaseRigidBody):
+    def __init__(self, p1, p2):
+
+        self.vertex = [
+            structures.Vector2.Point(p1),
+            structures.Vector2.Point(p2)
+        ]
+        super(OOB, self).__init__(pg.Rect(tl.x, tl.y, w, h), )
+
+
 class Capsule(base_sprites.BaseRigidBody):
-    def __init__(self, p1, p2, radius):
+    def __init__(self, p1, p2, radius, controls=None, density=1):
         self.p1 = structures.Vector2.Point(p1)
         self.p2 = structures.Vector2.Point(p2)
-        rect =
+        self.r = radius
+
+        self.color = pg.Color('white')
+        self.width = 2
+
+        self.ref_dir = (self.p2 - self.p1).normalized()
+        self.ref_angle = math.acos(self.ref_dir * structures.Vector2.Cartesian(1, 0))
+        self.dir = self.ref_dir.copy()
+        if self.ref_dir ** structures.Vector2.Cartesian(1, 0) > 0:
+            self.ref_angle *= -1
+        self.length = (self.p1 - self.p2).magnitude()
+        rect = self.get_rect()
+        if controls is not None:
+            control = RigidControl(self, controls.up, controls.down, controls.right, controls.left, controls.cw,
+                                   controls.ccw)
+
+        else:
+            control = base_control.NoMoveControl()
+
+        mass = density * ((radius ** 2 * math.pi) + (self.r * 2 * self.length))
+        # mass = h
+        super(Capsule, self).__init__(rect,
+                                      mass,
+                                      mass * (self.r ** 2 * 4 + (self.length + 2*self.r)**2) / 12,
+                                      0,
+                                      control
+                                      )
+        print('mass:', self.mass)
+        print('inertia: ', self.moment_of_inertia)
+
+        self.elasticity = .2
+        self.redraw_image()
+
+    @property
+    def com_position(self):
+        return (self.p1 + self.p2) / 2
+
+    def redraw_image(self):
+        image = pg.Surface(structures.add_tuples(self.get_rect().size, (self.width, self.width)), pg.SRCALPHA)
+        angle = math.radians(self.orientation)
+
+        a1 = self.ref_angle + angle + math.pi / 2
+        a2 = self.ref_angle + angle + 3 * math.pi / 2
+
+        a1 *= -1
+        a2 *= -1
+        modulo_360 = lambda x: x % (math.pi * 2)
+
+        left = min(self.p1, self.p2, key=lambda v: v.x)
+        right = max(self.p1, self.p2, key=lambda v: v.x)
+        # print(math.degrees(a1), math.degrees(a2))
+        pg.draw.arc(image, self.color, self.rect_of_circle(left - self.rect.topleft, self.r),
+                    min(a1, a2, key=modulo_360),
+                    max(a1, a2, key=modulo_360),
+                    self.width
+                    )
+
+        pg.draw.arc(image, self.color, self.rect_of_circle(right - self.rect.topleft, self.r),
+                    max(a1, a2, key=modulo_360),
+                    min(a1, a2, key=modulo_360),
+                    self.width
+                    )
+
+        v = self.dir.normal()
+        pg.draw.line(image, self.color,
+                     tuple(self.p1 - self.rect.topleft + v * self.r),
+                     tuple(self.p2 - self.rect.topleft + v * self.r),
+                     self.width
+                     )
+        pg.draw.line(image, self.color,
+                     tuple(self.p1 - self.rect.topleft - v * self.r),
+                     tuple(self.p2 - self.rect.topleft - v * self.r),
+                     self.width
+                     )
+
+        self.image = image
+
+    def update_velocity_and_acceleration(self, time_delta):
+        super(Capsule, self).update_velocity_and_acceleration(time_delta)
+        rot_mat = RotationMatrix(self.orientation)
+        self.dir = rot_mat * self.ref_dir
+
+        com = self.com_position
+        self.p1 = com + (self.dir * (-self.length / 2))
+        self.p2 = com + (self.dir * (self.length / 2))
+
+        c = self.rect.center
+        self.rect = self.get_rect()
+        self.rect.center = c
+
+        # self.set_position(*self.rect.topleft)
+        left = min(self.p1.x, self.p2.x) - self.r
+        top = min(self.p1.y, self.p2.y) - self.r
+        self.position.values = left, top
+
+    def draw(self):
+        # self.draw_rect()
+        # draw_circle(self.p1)
+        # draw_circle(self.p2)
+        # draw_circle(self.rect.center)
+        self.redraw_image()
+        super(Capsule, self).draw()
+
+    def segment_length(self):
+        return (self.p1 - self.p2).magnitude()
 
     def get_rect(self):
-        left = min(self.p1.x, self.p2.x)
-        top = min(self.p1.y, self.p2.y)
-        width = max(abs(self.p1.x - self.p2.x), 1)
-        height = max(abs(self.p1.y - self.p2.y), 1)
+        left = min(self.p1.x, self.p2.x) - self.r
+        top = min(self.p1.y, self.p2.y) - self.r
+        width = abs(self.p1.x - self.p2.x) + self.r * 2
+        height = abs(self.p1.y - self.p2.y) + self.r * 2
         return pg.Rect(left, top, width, height)
+
+    @staticmethod
+    def rect_of_circle(center, radius):
+        r = pg.Rect(0, 0, radius * 2, radius * 2)
+        r.center = tuple(center)
+        return r
+
+    def update(self, control_dict):
+        self.operate_gravity()
+        friction = 0
+        self.angular_velocity -= min(friction * control_dict['dtime'] * structures.sign(self.angular_velocity),
+                                     self.angular_velocity, key=abs)
+
+        self.velocity.r -= min(friction * control_dict['dtime'] * structures.sign(self.velocity.r),
+                               self.velocity.r, key=abs)
+
+    def update_position(self, time_delta):
+        change = super(Capsule, self).update_position(time_delta)
+        self.p1 += change
+        self.p2 += change
+
+    def shortest_line(self, point):
+        ball_to_start = self.p1 - point
+        if self.dir * ball_to_start > 0:
+            return self.p1
+
+        ball_to_end = point - self.p2
+        if self.dir * ball_to_end > 0:
+            return self.p2
+
+        closest_distance = self.dir * ball_to_start
+        closest_vector = self.dir * closest_distance
+        return self.p1 - closest_vector
+
+    def shortest_point(self, other):
+        shortest_distance = (other.shortest_line(self.p1) - self.p1).magnitude()
+        closest_points = [self.p1, other.shortest_line(self.p1)]
+        if (other.shortest_line(self.p2) - self.p2).magnitude() < shortest_distance:
+            shortest_distance = (other.shortest_line(self.p2) - self.p2).magnitude()
+            closest_points = [self.p2, other.shortest_line(self.p2)]
+
+        if (self.shortest_line(other.p1) - other.p1).magnitude() < shortest_distance:
+            shortest_distance = (self.shortest_line(other.p1) - other.p1).magnitude()
+            closest_points = [self.shortest_line(other.p1), other.p1]
+
+        if (self.shortest_line(other.p2) - other.p2).magnitude() < shortest_distance:
+            shortest_distance = (self.shortest_line(other.p2) - other.p2).magnitude()
+            closest_points = [self.shortest_line(other.p2), other.p2]
+
+        # pg.draw.line(pygame_structures.Camera.screen, pg.Color('red'), tuple(closest_points[0]),
+        #              tuple(closest_points[1]))
+        b1 = Ball(self.r, closest_points[0])
+        b2 = Ball(other.r, closest_points[1])
+        # b1.draw()
+        # b2.draw()
+        # print(b1.is_colliding(b2))
+
+        return closest_points
+
+    def collision_detection(self, other):
+        closest_points = self.shortest_point(other)
+        b1 = Ball(self.r, closest_points[0])
+        b2 = Ball(other.r, closest_points[1])
+        yield b1.is_colliding(b2)
+        yield b1, b2
+
+    def penetration_resolution(self, other, b1, b2):
+        distance = b1.center - b2.center
+        pen = b1.r + b2.r - abs(distance)
+        if pen < 0:
+            return False
+
+        if (not distance) or not (self.inv_mass + other.inv_mass):
+            return
+
+        pen_res = distance.normalized() * pen / (self.inv_mass + other.inv_mass)
+
+        percent = 0.4
+        slop = 0.05
+        pen_res = max(pen - slop, 0.0) / (self.inv_mass + other.inv_mass) * percent * distance.normalized()
+
+        self.p1 += pen_res * self.inv_mass
+        self.p2 += pen_res * self.inv_mass
+
+        other.p1 += - pen_res * other.inv_mass
+        other.p2 += - pen_res * other.inv_mass
+
+        return True
+
+    def collision_response(self, other, b1, b2):
+        normal = (b1.center - b2.center).normalized()
+
+
+        # closing velocities
+        arm1 = b1.center - self.com_position + normal * self.r
+        rot_vel1 = math.radians(self.angular_velocity) ** arm1
+        close_vel1 = self.velocity + rot_vel1
+        arm2 = b2.center - other.com_position - normal * other.r
+
+        # draw_arrow(self.com_position, arm1, scale=1)
+        # if not isinstance(other, floor):
+        draw_arrow(self.com_position, normal, scale=50)
+        draw_arrow(other.com_position, -normal, scale=50)
+        # draw_arrow(other.com_position, normal, scale=1)
+        # draw_circle(arm2 + other.com_position)
+        # draw_circle(arm1 + self.com_position)
+        # pg.image.save(pygame_structures.Camera.screen, 'lolimg.png')
+
+        rot_vel2 = math.radians(other.angular_velocity) ** arm2
+        close_vel2 = other.velocity + rot_vel2
+
+        # impulse augmentation
+        imp_aug1 = arm1 ** normal
+        imp_aug1 = imp_aug1 * self.inv_moment_of_inertia * imp_aug1
+        imp_aug2 = arm2 ** normal
+        imp_aug2 = imp_aug2 * other.inv_moment_of_inertia * imp_aug2
+
+        relative_velocity = close_vel1 - close_vel2
+        separating_velocity = relative_velocity * normal
+
+        if separating_velocity > 0:
+            return
+        new_separating_velocity = - separating_velocity * min(self.elasticity, other.elasticity)
+
+        vel_sep_diff = new_separating_velocity - separating_velocity
+
+        if not (self.inv_mass + other.inv_mass + imp_aug1 + imp_aug2):
+            return
+        impulse = vel_sep_diff / (self.inv_mass + other.inv_mass + imp_aug1 + imp_aug2)
+        impulse_vector = normal * impulse
+
+        self.velocity += impulse_vector * self.inv_mass
+        other.velocity += impulse_vector * -other.inv_mass
+
+        self.angular_velocity += math.degrees(
+            self.inv_moment_of_inertia * (arm1 ** impulse_vector)
+        )
+        other.angular_velocity -= math.degrees(
+            other.inv_moment_of_inertia * (arm2 ** impulse_vector)
+        )
+
+        dynamic_friction = .5
+        dynamic_friction = 100
+        tang = normal.tangent()
+        vel_among_tang = relative_velocity * tang
+        friction_impulse = dynamic_friction * vel_among_tang / (self.inv_mass + other.inv_mass + imp_aug1 + imp_aug2)
+        impulse_vector = -tang * friction_impulse * base_sprites.BaseSprite.game_states['dtime'] * 10
+
+        self.velocity += max(impulse_vector * self.inv_mass, self.velocity, key=lambda x: abs(x*tang))
+        other.velocity += max(impulse_vector * -other.inv_mass, other.velocity, key=lambda x: abs(x*tang))
+
+        self.angular_velocity += math.degrees(
+            self.inv_moment_of_inertia * (arm1 ** impulse_vector)
+        )
+        other.angular_velocity -= math.degrees(
+            other.inv_moment_of_inertia * (arm2 ** impulse_vector)
+        )
+
+    def collision(self, other, collision):
+        if not isinstance(other, Capsule):
+            return False
+
+        detection = self.collision_detection(other)
+        if not next(detection):
+            try:
+                pygame_structures.Camera.remove_text('collision')
+            except AttributeError:
+                pass
+
+            return False
+
+        b1: Ball
+        b2: Ball
+        b1, b2 = next(detection)
+
+        pygame_structures.Camera.display_text('collision!', (50, 50), 'collision')
+
+        self.penetration_resolution(other, b1, b2)
+        self.collision_response(other, b1, b2)
+
+        return True
+
 
 class Wall(base_sprites.BaseRigidBody):
     def __init__(self, start: Union[structures.Vector2, tuple, list], end: Union[structures.Vector2, tuple, list]):
@@ -151,7 +491,6 @@ class Wall(base_sprites.BaseRigidBody):
         self.start = self.ref_center + (new_dir * (-self.length / 2))
         self.end = self.ref_center + (new_dir * (self.length / 2))
 
-        print(self.angular_velocity)
         self.angular_velocity -= min(200 * control_dict['dtime'] * structures.sign(self.angular_velocity),
                                      self.angular_velocity, key=lambda x: abs(x))
         # self.angular_velocity *= 0.01 ** control_dict['dtime']
@@ -201,7 +540,7 @@ class Wall(base_sprites.BaseRigidBody):
         closest_distance = self.unit() * ball_to_start
         closest_vector = self.unit() * closest_distance
         return self.start - closest_vector
-    
+
     def collision(self, other, collision):
         if not isinstance(other, RigidBall):
             return False
@@ -221,15 +560,46 @@ class Wall(base_sprites.BaseRigidBody):
     def collide_with(self, other: RigidBall):
         ball_to_closest = self.closest_point(other) - other.com_position
         return ball_to_closest.magnitude() <= other.radius
-    
+
     # def draw(self, draw_health=False):
     #     self.draw_rect()
     #     super(Wall, self).draw()
 
 
-def draw_circle(p):
-    pg.draw.circle(pygame_structures.Camera.screen, pg.Color('red'), tuple(p), 2)
+class floor(Capsule):
+    def __init__(self, p1, p2):
+        super(floor, self).__init__(p1, p2, 10)
+        self.mass = 999999999999999999999999999999999
+        self.moment_of_inertia = 999999999999999999999999999999999
 
+    @property
+    def inv_mass(self):
+        return 0
+
+    @property
+    def inv_moment_of_inertia(self):
+        return 0
+
+    def update(self, _):
+        pass
+
+
+def draw_circle(p, r=2, w=0):
+    pg.draw.circle(pygame_structures.Camera.screen, pg.Color('red'), tuple(p), r, w)
+
+
+def draw_arrow(start, vec, lcolor=pg.Color('red'), tricolor=pg.Color('green'), trirad=3, thickness=2, scale=1):
+    end = tuple(start + vec * scale)
+    start = tuple(start)
+    rad = math.pi/180
+    pg.draw.line(pygame_structures.Camera.screen, lcolor, start, end, thickness)
+    rotation = (math.atan2(start[1] - end[1], end[0] - start[0])) + math.pi/2
+    pg.draw.polygon(pygame_structures.Camera.screen, tricolor, ((end[0] + trirad * math.sin(rotation),
+                                        end[1] + trirad * math.cos(rotation)),
+                                       (end[0] + trirad * math.sin(rotation - 120*rad),
+                                        end[1] + trirad * math.cos(rotation - 120*rad)),
+                                       (end[0] + trirad * math.sin(rotation + 120*rad),
+                                        end[1] + trirad * math.cos(rotation + 120*rad))))
 
 def Main():
     W = 1000
@@ -246,16 +616,51 @@ def Main():
     fps = 1000
     elapsed = 1 / fps
 
-    RigidBall(50, 500, 500, False)
-    RigidBall(20, 200, 450, True)
+    from random import randrange
 
-    p1, p2 = (250, 400), (600, 400)
-    # wall = Wall(p1, p2)
-    # Wall((0, 0), (600, 1))
+    # RigidBall(20, randrange(0, W), randrange(0, H), True, color=pg.Color('dark green'))
+    # for i in range(200):
+    #     RigidBall(randrange(10, 40), randrange(0, W), randrange(0, H), False)
     Wall((0, 0), (W, 0))
     Wall((0, 0), (0, H))
     Wall((0, H), (W, H))
     Wall((W, 0), (W, H))
+    # Wall((200, 200), (600, 400))
+
+    p5, p6 = (150, 50), (151, 300)
+    p7, p8 = [300, 200], [400, 300]
+
+    p1, p2 = [296.17624, 203.80806], [395.21399, 304.76114]
+    p3, p4 = [588.96370, 190.26225], [686.61919, 292.55304]
+
+    p1, p2, v1, a1 = [353.41526, 532.55373], [240.04085, 448.01827], [348.20000, -320.20000], 0.0
+    p3, p4, v2, a2 = [371.86566, 383.41364], [501.65894, 327.25579], [0.00000, 0.00000], 0.0
+
+    c1 = Capsule(p1, p2, 40,
+                 base_control.controls(pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_e, pg.K_q)
+                 )
+
+    # c1.velocity.values = v1
+    # c1.angular_velocity = a1
+    #
+    # c2 = Capsule(p3, p4, 40,
+    #              base_control.controls(pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_KP0, pg.K_RCTRL)
+    #              )
+
+    floor((0, H), (W, H))
+    floor((0, 0), (0, H))
+    floor((0, 0), (W, 0))
+    floor((W, 0), (W, H))
+    floor((0, H-200), (W, H))
+    # c2.velocity.values = v2
+    # c2.angular_velocity = a2
+
+    # c2 = Capsule(p5, p6, 10, density=5)
+    # c2 = Capsule(p7, p8, 10, density=5)
+    #
+    # rand_point = lambda: ((randrange(50, W-50), randrange(50, H-50)), (randrange(100, 600), randrange(100, 400)))
+    # c2 = Capsule(*rand_point(), randrange(10, 20), density=5)
+    # c2 = Capsule(*rand_point(), randrange(10, 20), density=5)
 
     while running:
         events = pg.event.get()
@@ -266,7 +671,8 @@ def Main():
             if event.type == pg.QUIT:
                 running = 0
             elif event.type == pg.KEYDOWN:
-                pass
+                if event.key == pg.K_y:
+                    base_sprites.GRAVITY *= -1
             elif event.type == pg.MOUSEBUTTONDOWN:
                 pass
                 # if event.button == 1:
@@ -281,6 +687,9 @@ def Main():
             base_sprites.BaseSprite.sprites_list.empty()
         base_sprites.tick(elapsed, keys)
 
+        # print("c1: ", c1.p1, c1.p2, c1.velocity, c1.angular_velocity, sep=', ')
+        # print("c2: ", c2.p1, c2.p2, c2.velocity, c2.angular_velocity, sep=', ')
+        # c1.shortest_point(c2)
         # vec = wall.closest_point(ball) - ball.com_position
         # pg.draw.line(pygame_structures.Camera.screen,
         #              pg.Color('red'),
@@ -289,7 +698,8 @@ def Main():
         #              2)
         pygame_structures.Camera.post_process(base_sprites.BaseSprite.sprites_list)
         pg.display.flip()
-        elapsed = min(base_sprites.clock.tick(fps) / 1000.0, 5 / fps)
+        elapsed = min(base_sprites.clock.tick(fps) / 1000.0, 1 / 15)
+        # elapsed = 1/800
 
 
 if __name__ == '__main__':
@@ -299,4 +709,3 @@ if __name__ == '__main__':
     #
     # vec2 = vec.copy()
     # vec2.theta += 30
-    # print(mat * vec, vec2)

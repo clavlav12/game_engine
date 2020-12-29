@@ -273,15 +273,26 @@ class Vector2:
         return new
 
     def normalized(self):
+        if not self:
+            return Vector2.Zero()
         return Vector2.Cartesian(self.x / self.magnitude(), self.y / self.magnitude())
 
     def normalize(self):
         mag = self.magnitude()
         self.x /= mag
         self.y /= mag
-    
+
+    def sign(self):
+        return Vector2.Cartesian(sign(self.x), sign(self.y))
+
     def normal(self):
         return Vector2.Cartesian(-self.y, self.x)
+
+    def perpendicular(self):
+        return self.normal()
+
+    def tangent(self):
+        return self.normal()
 
     def floor(self):
         return Vector2.Cartesian(int(self.x), int(self.y))

@@ -367,8 +367,10 @@ class BaseSprite(pygame.sprite.Sprite):
 
     def update_position(self, time_delta):
         # print(self.velocity)
-        self.position += self.velocity * time_delta
+        change = self.velocity * time_delta
+        self.position += change
         self.rect.topleft = tuple(self.position.floor())
+        return change
 
     def set_position(self, x=None, y=None):
         self.position.set_values(x, y)
@@ -585,8 +587,10 @@ class BaseRigidBody(BaseSprite):
         self.rect.topleft = tuple(self.com_position.floor() - structures.Vector2.Point(self.rect.size) / 2)
 
     def update_position(self, time_delta):
-        self.position += self.velocity * time_delta
+        change = self.velocity * time_delta
+        self.position += change
         self.rect.topleft = tuple(self.com_position.floor() - structures.Vector2.Point(self.rect.size) / 2)
+        return change
 
     def calculate_relative_velocity(self, other, contact_point):
         if contact_point:
@@ -601,6 +605,10 @@ class BaseRigidBody(BaseSprite):
         return super(BaseRigidBody, self).calculate_relative_velocity(other, contact_point) + \
                (math.radians(other_angular_velocity) ** radii_other) - \
                (math.radians(self.angular_velocity) ** radii_self)
+
+    @property
+    def inv_moment_of_inertia(self):
+        return 1/self.moment_of_inertia
 
 
 class ImagedRigidBody(BaseRigidBody):
