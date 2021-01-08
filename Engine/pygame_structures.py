@@ -118,7 +118,7 @@ class collision_manifold:
     @staticmethod
     def get_mid(obj):
         if isinstance(obj, Sprite):
-            return obj.position + (structures.Vector2.Point(obj.rect.size) / 2)
+            return obj.position
         else:  # Rect only no float position
             return obj.rect.topleft + (structures.Vector2.Point(obj.rect.size) / 2)
 
@@ -197,6 +197,8 @@ class Map:
             return None, None
 
         x, y, width, height = sprite.position.x, sprite.position.y, sprite.rect.width, sprite.rect.height
+        x -= width / 2
+        y -= height / 2
         left = int(x // self.tile_size)
         right = int((x + width) // self.tile_size)
         top = int(y // self.tile_size)

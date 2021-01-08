@@ -68,8 +68,8 @@ class RigidCube(base_sprites.AdvancedSprite):
             before['jumping'] = self.jumping
         return before
 
-    def operate_gravity(self):
-        super(RigidCube, self).operate_gravity()
+    def apply_gravity(self):
+        super(RigidCube, self).apply_gravity()
 
     def on_platform_collision(self, direction, platform, before):
         super(RigidCube, self).on_platform_collision(direction, platform, before)

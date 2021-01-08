@@ -3,6 +3,8 @@ from Engine import base_sprites
 from Engine import base_control
 from typing import Optional, Tuple
 from Engine import structures
+from Engine import Geometry
+
 import pygame as pg
 import math
 import random
@@ -87,6 +89,18 @@ class Edge:
             self.v1 = v
             self.v2 = v1
 
+def draw_arrow(start, vec, lcolor=pg.Color('red'), tricolor=pg.Color('green'), trirad=3, thickness=2, scale=1):
+    end = tuple(start + vec * scale)
+    start = tuple(start)
+    rad = math.pi/180
+    pg.draw.line(pygame_structures.Camera.screen, lcolor, start, end, thickness)
+    rotation = (math.atan2(start[1] - end[1], end[0] - start[0])) + math.pi/2
+    pg.draw.polygon(pygame_structures.Camera.screen, tricolor, ((end[0] + trirad * math.sin(rotation),
+                                                                 end[1] + trirad * math.cos(rotation)),
+                                                                (end[0] + trirad * math.sin(rotation - 120*rad),
+                                                                 end[1] + trirad * math.cos(rotation - 120*rad)),
+                                                                (end[0] + trirad * math.sin(rotation + 120*rad),
+                                                                 end[1] + trirad * math.cos(rotation + 120*rad))))
 
 class RotatableImage:
     def __init__(self, img, init_angle, center_offset):
@@ -124,14 +138,15 @@ class RotatableImage:
 
 
 class RigidCube(base_sprites.ImagedRigidBody):
-    def __init__(self, size, x, y):
+    def __init__(self, size, x, y, density=1):
         rect = pg.Rect(
             x - size // 2,
             y - size // 2,
             size, size
         )
+
         image = pg.transform.smoothscale(base_sprites.Slime.sur, [size] * 2).convert_alpha()
-        super(RigidCube, self).__init__(image, rect, 500, 10 ** 2, random.randrange(90))
+        super(RigidCube, self).__init__(image, rect, 500, 1/12 * 500 * 2 * size ** 2, random.randrange(90))
 
         self.size = size
         self.generate_collision_manifold = True
@@ -157,6 +172,13 @@ class RigidCube(base_sprites.ImagedRigidBody):
         # self.normals = self.normals_unrotated
         self.real_image = RotatableImage(image, self.orientation,
                                                            (25, 25))
+        polygon = Geometry.Polygon(self.vertices, density)
+        self.moment_of_inertia = polygon.moment_of_inertia
+        self.mass = polygon.mass
+
+    def _update(self, _):
+        super(RigidCube, self)._update(_)
+        self.apply_gravity()
 
     def rotate(self, da):
         self.orientation += da
@@ -175,7 +197,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
 
     @property
     def vertices(self):
-        position = pg.math.Vector2(*self.com_position)
+        position = pg.math.Vector2(*self.position)
         return [vertex + position for vertex in self.vertices_rotated]
 
     @classmethod
@@ -248,7 +270,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
 
             return best_index, best_distance, line.distance_from_point(best_support), best_support_index
         except Exception as e:
-            print(p1, p2, vertices, self, self.com_position, self.vertices_unrotated)
+            print(p1, p2, vertices, self, self.position, self.vertices_unrotated)
             raise e
 
     @staticmethod
@@ -325,6 +347,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
         normal = ref_normals[reference_index]
 
         support_points = cls.contact_points(ref_poly, inc_poly, normal)
+
         if support_points:
             for i in support_points:
                 pg.draw.circle(Camera.screen, pg.Color('red'), i, 2)
@@ -332,11 +355,12 @@ class RigidCube(base_sprites.ImagedRigidBody):
         if flip:
             normal *= -1
 
-        support_points = [inc_vertices[support_index_inc]]
-        support_points = []
+        # support_points = [inc_vertices[support_index_inc]]
+        # support_points = []
 
         support_points = [structures.Vector2.Point(v) for v in support_points]
 
+        print(support_points)
         return pygame_structures.collision_manifold(
             ref_poly, inc_poly, reference_distance,
             structures.Vector2.Point(normal),
@@ -397,9 +421,9 @@ class RigidCube(base_sprites.ImagedRigidBody):
     @staticmethod
     def get_position(sprite):
         if isinstance(sprite, RigidCube):
-            return pg.math.Vector2(*sprite.com_position)
+            return pg.math.Vector2(*sprite.position)
         elif isinstance(sprite, base_sprites.BaseSprite):
-            return pg.math.Vector2(*sprite.position) + pg.math.Vector2(sprite.rect.size) / 2
+            return pg.math.Vector2(*sprite.position)
         else:  # tile
             return pg.math.Vector2(*sprite.rect.center)
 
@@ -419,7 +443,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
         # self.draw_rect()
 
     def collision(self, other, collision):
-        self.sprite_collide_func(other, collision)
+        self.sprite_collide_func2(other, collision)
         return True
 
     def sprite_collide_func(self, _sprite, collision):
@@ -430,7 +454,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
         relative_velocity = _sprite.velocity - self.velocity
         velocity_among_normal = relative_velocity * collision.normal
 
-        pg.draw.circle(pygame_structures.Camera.screen, pg.Color('white'), tuple(self.com_position), 10)
+        pg.draw.circle(pygame_structures.Camera.screen, pg.Color('white'), tuple(self.position), 10)
 
         if velocity_among_normal > 0:
             return True
@@ -462,6 +486,77 @@ class RigidCube(base_sprites.ImagedRigidBody):
         except StopIteration:
             pass
 
+    def sprite_collide_func2(self, sprite, collision):
+        if not collision:
+            return True
+
+        collision.normal *= -1
+        for point in collision.contact_points:
+            arm1 = point - self.position
+            rot_vel1 = math.radians(self.angular_velocity) ** arm1
+            close_vel1 = self.velocity + rot_vel1
+
+            draw_arrow(
+                self.position,
+                close_vel1,
+                scale=10
+            )
+
+            arm2 = point - sprite.position
+            rot_vel2 = math.radians(sprite.angular_velocity) ** arm2
+            close_vel2 = sprite.velocity + rot_vel2
+
+            # impulse augmentation
+            imp_aug1 = arm1 ** collision.normal
+            imp_aug1 = imp_aug1 * self.inv_moment_of_inertia * imp_aug1
+            imp_aug2 = arm2 ** collision.normal
+            imp_aug2 = imp_aug2 * sprite.inv_moment_of_inertia * imp_aug2
+
+            relative_velocity = close_vel1 - close_vel2
+
+            separating_velocity = relative_velocity * collision.normal
+
+            if separating_velocity > 0:
+                return
+
+            new_separating_velocity = -separating_velocity * min(self.elasticity, sprite.elasticity)
+
+            vel_sep_diff = new_separating_velocity - separating_velocity
+
+            if not (self.inv_mass + sprite.inv_mass + imp_aug1 + imp_aug2):
+                return
+
+            impulse = vel_sep_diff / (self.inv_mass + sprite.inv_mass + imp_aug1 + imp_aug2)
+            impulse_vector = collision.normal * impulse
+            impulse_vector /= collision.contact_count
+
+            self.velocity += impulse_vector * self.inv_mass
+            sprite.velocity += impulse_vector * -sprite.inv_mass
+
+            self.angular_velocity += math.degrees(
+                self.inv_moment_of_inertia * (arm1 ** impulse_vector)
+            )
+            sprite.angular_velocity -= math.degrees(
+                sprite.inv_moment_of_inertia * (arm2 ** impulse_vector)
+            )
+
+        try:
+            distance = self.position - sprite.position
+            pen = collision.penetration
+            if (not distance) or not (self.inv_mass + sprite.inv_mass):
+                return
+            pen_res = distance.normalized() * pen / (self.inv_mass + sprite.inv_mass)
+
+            # percent = 0.4
+            # slop = 0.05
+            # pen_res = max(pen - slop, 0.0) / (self.inv_mass + sprite.inv_mass) * percent * distance.normalized()
+
+            self.position += pen_res * self.inv_mass
+            sprite.position += - pen_res * sprite.inv_mass
+
+        except StopIteration:
+            pass
+
     def friction(self, _sprite, collision, j):
         t = _sprite.velocity - (_sprite.velocity * collision.normal) * collision.normal
         if t:
@@ -484,23 +579,20 @@ class RigidCube(base_sprites.ImagedRigidBody):
 
 class c2(RigidCube):
     def __init__(self, *args, **kwargs):
-        super(c2, self).__init__(*args, **kwargs)
-        self.mass = 500000000000
+        super(c2, self).__init__(*args, **kwargs, density=999999999)
         self.static_friction = 0
         self.dynamic_friction = 0
 
-    def operate_gravity(self):
+    def apply_gravity(self):
         return
 
 
 class c3(RigidCube):
     def __init__(self, *args, **kwargs):
-        super(c3, self).__init__(*args, **kwargs)
-        self.mass = 500000000000
-
+        super(c3, self).__init__(*args, **kwargs, density=1)
         self.control = base_control.AllDirectionMovement(self)
 
-    def operate_gravity(self):
+    def apply_gravity(self):
         return
 
     def collision(self, other, collision):
@@ -545,6 +637,7 @@ def main():
             elif event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     cube = RigidCube(50, *event.pos)
+                    print("here")
                     if cube is not None:
                         pygame_structures.Camera.set_scroller_position(cube, True)
 
@@ -558,7 +651,6 @@ def main():
                         cube.rotate(-3)
                 else:
                     cube = c2(50, *event.pos)
-
 
         keys = pg.key.get_pressed()
         base_sprites.tick(elapsed, keys)

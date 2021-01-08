@@ -211,8 +211,8 @@ class Missile(base_sprites.Bullet):
         self.torque = 0
         pygame_structures.Camera.set_scroller_position(self)
 
-    def operate_gravity(self):
-        super(Missile, self).operate_gravity()
+    def apply_gravity(self):
+        super(Missile, self).apply_gravity()
         self.torque = structures.DegTrigo.cos(self.angle) * 2  # mass differences
 
     def update_kinematics(self, time_delta):
@@ -232,7 +232,7 @@ class Missile(base_sprites.Bullet):
     def _update(self, control_dict):
         if self.first_frame:
             self.add_force(self.shoot_force, "shoot", True)
-        self.operate_gravity()
+        self.apply_gravity()
         super(Missile, self)._update(control_dict)
         self.first_frame = False
 

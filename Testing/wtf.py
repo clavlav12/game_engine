@@ -314,7 +314,7 @@ class c2(RigidCube):
         super(c2, self).__init__(*args, **kwargs)
         self.mass = 999999999999999999999999999999999999999999999
 
-    def operate_gravity(self):
+    def apply_gravity(self):
         return
 
 

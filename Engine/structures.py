@@ -237,6 +237,9 @@ class Vector2:
     def magnitude(self):
         return abs(self.r)
 
+    def square_magnitude(self):
+        return self * self
+
     @classmethod
     def Cartesian(cls, x=0.0, y=0.0):
         return cls(cls.__key, (x, y), VectorType.cartesian)
@@ -379,7 +382,7 @@ class Vector2:
         if isinstance(other, (list, tuple)) and len(other) >= 2:
             other = Vector2.Cartesian(other[0], other[1])
         if isinstance(other, (int, float)):
-            return self.__class__.Polar(self.r / other, self.theta)
+            return self.Cartesian(self.x / other, self.y / other)
         elif isinstance(other, self.__class__):
             "Returns the inverse of the dot product of the vectors"
             return self.x / other.x + self.y / other.y
@@ -387,7 +390,8 @@ class Vector2:
 
     def __itruediv__(self, other):
         if isinstance(other, (int, float)):
-            self.r /= other
+            self.x /= other
+            self.y /= other
             return self
         return NotImplemented
 
@@ -398,7 +402,7 @@ class Vector2:
         if isinstance(other, (list, tuple)) and len(other) >= 2:
             other = Vector2.Cartesian(other[0], other[1])
         if isinstance(other, (int, float)):
-            return self.__class__.Polar(self.r // other, self.theta)
+            self.Cartesian(self.x // other, self.y // other)
         elif isinstance(other, self.__class__):
             "Returns the inverse of the dot product of the vectors"
             return self.x // other.x + self.y // other.y
@@ -406,7 +410,8 @@ class Vector2:
 
     def __ifloordiv__(self, other):
         if isinstance(other, int):
-            self.r //= other
+            self.x //= other
+            self.y //= other
             return self
         return NotImplemented
 

@@ -14,6 +14,7 @@ import os
 player = Sound.Player()
 clock = pygame.time.Clock()
 GRAVITY = 3_000
+# GRAVITY = 1_500
 GRAVITY = 500
 
 
@@ -257,7 +258,7 @@ class BaseSprite(pygame.sprite.Sprite):
 
         # physics
         self.on_platform = None
-        self.position = structures.Vector2.Cartesian(*rect.topleft)
+        self.position = structures.Vector2.Point(rect.center)
         self.velocity = structures.Vector2.Zero()
         self.acceleration = structures.Vector2.Zero()
         self.force = structures.Vector2.Zero()
@@ -271,15 +272,12 @@ class BaseSprite(pygame.sprite.Sprite):
         self.control = control
 
         self.collide_check_by_rect = rect_collision
+        self.rect_collision = rect_collision
 
         self.collision_manifold_generator = None
 
         self.restitution = 0
         BaseSprite.sprites_list.add(self)
-
-    @property
-    def com_position(self):
-        return self.position + (structures.Vector2.Point(self.rect.size) / 2)
 
     @property
     def elasticity(self):
@@ -299,7 +297,7 @@ class BaseSprite(pygame.sprite.Sprite):
     def to_dict(self):
         return {}
 
-    def operate_gravity(self):
+    def apply_gravity(self):
         self.add_force(structures.Vector2.Cartesian(0, GRAVITY * self.mass), 'gravity', False)
 
     def __call__(self):
@@ -369,12 +367,12 @@ class BaseSprite(pygame.sprite.Sprite):
         # print(self.velocity)
         change = self.velocity * time_delta
         self.position += change
-        self.rect.topleft = tuple(self.position.floor())
+        self.rect.topleft = tuple(self.position.floor() - structures.Vector2.Point(self.rect.size) / 2)
         return change
 
     def set_position(self, x=None, y=None):
         self.position.set_values(x, y)
-        self.rect.topleft = tuple(self.position.floor())
+        self.rect.topleft = tuple(self.position.floor() - structures.Vector2.Point(self.rect.size) / 2)
 
     def on_platform_collision(self, direction, platform, before):
         """Called when the sprite collides with a platform"""
@@ -389,6 +387,7 @@ class BaseSprite(pygame.sprite.Sprite):
 
         # print(self.force)
         self.update_velocity_and_acceleration(time_delta)
+
         self.update_position(time_delta)
 
         return platform
@@ -543,7 +542,7 @@ class AdvancedSprite(BaseSprite):
         self.dead_check()
         self.control.move(**controls_dict)
         self.update(controls_dict)
-        self.operate_gravity()
+        self.apply_gravity()
         self.update_kinematics(controls_dict['dtime'])
         self.draw()
         self.force_document = {}
@@ -563,6 +562,9 @@ class AdvancedSprite(BaseSprite):
 
 
 class BaseRigidBody(BaseSprite):
+
+    collision_jump_table = {}
+
     def __init__(self, rect, mass, moment_of_inertia, orientation, control=controls.NoMoveControl()):
         # super(BaseRigidBody, self).__init__(rect, control, mass, hit_points=hit_points,
         #                                     health_bar_colors=health_bar_colors)
@@ -575,29 +577,18 @@ class BaseRigidBody(BaseSprite):
     def update_velocity_and_acceleration(self, time_delta):
         super(BaseRigidBody, self).update_velocity_and_acceleration(time_delta)
         self.angular_velocity += self.torque / self.moment_of_inertia
-        self.orientation += self.angular_velocity * time_delta
 
     def apply_impulse(self, impulse, contact_point=None):
         super(BaseRigidBody, self).apply_impulse(impulse, contact_point)
         if contact_point is not None:
-            self.angular_velocity += ((self.com_position - contact_point) ** impulse) / self.moment_of_inertia
-
-    def add_to_position(self, vec):
-        self.position += vec
-        self.rect.topleft = tuple(self.com_position.floor() - structures.Vector2.Point(self.rect.size) / 2)
-
-    def update_position(self, time_delta):
-        change = self.velocity * time_delta
-        self.position += change
-        self.rect.topleft = tuple(self.com_position.floor() - structures.Vector2.Point(self.rect.size) / 2)
-        return change
+            self.angular_velocity += ((self.position - contact_point) ** impulse) / self.moment_of_inertia
 
     def calculate_relative_velocity(self, other, contact_point):
         if contact_point:
             contact_point = structures.Vector2.Zero()
-        radii_self = contact_point - self.com_position
+        radii_self = contact_point - self.position
         if isinstance(other, ImagedRigidBody):
-            radii_other = contact_point - other.com_position
+            radii_other = contact_point - other.position
             other_angular_velocity = other.angular_velocity
         else:
             other_angular_velocity = 0
@@ -610,6 +601,11 @@ class BaseRigidBody(BaseSprite):
     def inv_moment_of_inertia(self):
         return 1/self.moment_of_inertia
 
+    def update_position(self, time_delta):
+        change = super(BaseRigidBody, self).update_position(time_delta)
+        self.orientation += self.angular_velocity * time_delta
+        return change
+
 
 class ImagedRigidBody(BaseRigidBody):
     def __init__(self, image, rect, mass, moment_of_inertia, orientation, control=controls.NoMoveControl()):
@@ -619,12 +615,11 @@ class ImagedRigidBody(BaseRigidBody):
         self.real_image = pygame_structures.RotatableImage(image, orientation,
                                                            tuple(structures.Vector2.Point(image.get_size()) / 2))
 
-
     def draw(self, draw_health=False):
         if draw_health:
             self.draw_health_bar()
         self.real_image.rotate(int(self.orientation))
-        self.image, origin = self.real_image.blit_image(self.com_position.floor())
+        self.image, origin = self.real_image.blit_image(self.position.floor())
         # try:
         #     pygame.draw.circle(pygame_structures.Camera.screen, pygame.Color('red'), tuple(self.com_position.floor()), 2)
         #     pygame.draw.circle(pygame_structures.Camera.screen, pygame.Color('red'), tuple(self.position.floor()), 2)
@@ -645,7 +640,6 @@ class ImagedRigidBody(BaseRigidBody):
 
     def generate_manifold(self, other: Union[Tile, BaseSprite, pygame.sprite.Sprite]):
         pass
-
 
 
 class DrivableSprite(AdvancedSprite):
