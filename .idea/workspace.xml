@@ -2,16 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="71a335b9-b6e5-4148-a18b-ae04a242155c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Engine/Geometry.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engine/Debug.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/aviro.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/aviro.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/Geometry.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Geometry.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/base_control.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/base_control.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/base_sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/base_sprites.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/pygame_structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/pygame_structures.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/structures.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Testing/Collision Time/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/Collision Time/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/GUI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/dialogs.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/dialogs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/draw_shapes.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/draw_shapes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PyIgnition_beta_2/Bubbles!.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PyIgnition_beta_2/Catherine wheel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PyIgnition_beta_2/Controlled Eruption.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PyIgnition_beta_2/PyIgnition test - fire.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PyIgnition_beta_2/PyIgnition.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PyIgnition_beta_2/Spark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PyIgnition_beta_2/Water.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PyIgnition_beta_2/Wind.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PyIgnition_beta_2/courbd.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PyIgnition_beta_2/euphemia.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PyIgnition_beta_2/gravity.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PyIgnition_beta_2/interpolate.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PyIgnition_beta_2/keyframes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PyIgnition_beta_2/obstacles.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PyIgnition_beta_2/particles.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PyIgnition_beta_2/wx test.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Testing/new_rigid.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/new_rigid.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/tanks/n.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/n.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Testing/tanks/rigidCube.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/rigidCube.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Testing/tanks/sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/sprites.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Testing/wtf.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/wtf.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +70,7 @@
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python&#10;TEXT" />
     <property name="last.edited.regexp" value="Sample Text" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -61,15 +81,15 @@
       <recent name="E:\platform_game-online" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\aviro\Desktop\game_engine\Testing" />
       <recent name="C:\Users\aviro\Desktop\game_engine\Engine" />
       <recent name="C:\Users\aviro\Desktop\game_engine\Testing\tanks" />
       <recent name="C:\Users\aviro\Desktop\game_engine\Engine\images" />
       <recent name="C:\Users\aviro\Desktop\game_engine\" />
-      <recent name="C:\Users\aviro\Desktop\game_engine\Testing\gravity" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.new_rigid">
-    <configuration name="Geometry" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.AdvancedRigidBody">
+    <configuration name="AdvancedRigidBody" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -77,11 +97,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Engine/sounds effects" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\aviro\Desktop\game_engine\Engine\Geometry.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/AdvancedRigidBody.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -111,7 +131,49 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="new_rigid" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="friction_torque" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="platform_game-online" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/friction_torque.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="gravity simulation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="platform_game-online" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/gravity" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/gravity/gravity simulation.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="new_rigid" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -153,48 +215,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="scratch_50" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="platform_game-online" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch_50.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="simple test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="platform_game-online" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/tanks" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/tanks/simple test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="tes" type="PythonConfigurationType" factoryName="Python">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -219,19 +239,19 @@
     <list>
       <item itemvalue="Python.Unnamed" />
       <item itemvalue="Python.tes" />
-      <item itemvalue="Python.Geometry" />
       <item itemvalue="Python.new_rigid" />
+      <item itemvalue="Python.AdvancedRigidBody" />
+      <item itemvalue="Python.friction_torque" />
       <item itemvalue="Python.rigidCube" />
-      <item itemvalue="Python.scratch_50" />
-      <item itemvalue="Python.simple test" />
+      <item itemvalue="Python.gravity simulation" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.new_rigid" />
+        <item itemvalue="Python.AdvancedRigidBody" />
+        <item itemvalue="Python.gravity simulation" />
         <item itemvalue="Python.rigidCube" />
-        <item itemvalue="Python.Geometry" />
-        <item itemvalue="Python.scratch_50" />
-        <item itemvalue="Python.simple test" />
+        <item itemvalue="Python.friction_torque" />
+        <item itemvalue="Python.new_rigid" />
       </list>
     </recent_temporary>
   </component>
@@ -290,5 +310,21 @@
     <MESSAGE value="bad rigidCube" />
     <MESSAGE value="friction and impulses" />
     <option name="LAST_COMMIT_MESSAGE" value="friction and impulses" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Engine/structures.py</url>
+          <line>255</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Engine/structures.py</url>
+          <line>313</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

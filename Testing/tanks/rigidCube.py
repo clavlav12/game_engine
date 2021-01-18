@@ -270,7 +270,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
 
             return best_index, best_distance, line.distance_from_point(best_support), best_support_index
         except Exception as e:
-            print(p1, p2, vertices, self, self.position, self.vertices_unrotated)
+            # print(p1, p2, vertices, self, self.                                       , self.vertices_unrotated)
             raise e
 
     @staticmethod
@@ -352,7 +352,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
             for i in support_points:
                 pg.draw.circle(Camera.screen, pg.Color('red'), i, 2)
 
-        if flip:
+        if not flip:
             normal *= -1
 
         # support_points = [inc_vertices[support_index_inc]]
@@ -360,7 +360,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
 
         support_points = [structures.Vector2.Point(v) for v in support_points]
 
-        print(support_points)
+        # print(support_points)
         return pygame_structures.collision_manifold(
             ref_poly, inc_poly, reference_distance,
             structures.Vector2.Point(normal),
@@ -490,7 +490,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
         if not collision:
             return True
 
-        collision.normal *= -1
+        # collision.normal *= -1
         for point in collision.contact_points:
             arm1 = point - self.position
             rot_vel1 = math.radians(self.angular_velocity) ** arm1
@@ -597,6 +597,7 @@ class c3(RigidCube):
 
     def collision(self, other, collision):
         return True
+
 
 def main():
     W = 1000

@@ -4,6 +4,7 @@ from collections import namedtuple
 from win32api import GetSystemMetrics
 from itertools import repeat
 from time import time
+from Engine.Debug import *
 import pygame
 import math
 
@@ -196,7 +197,7 @@ class Map:
         if self.empty:
             return None, None
 
-        x, y, width, height = sprite.position.x, sprite.position.y, sprite.rect.width, sprite.rect.height
+        x, y, width, height = sprite.rect.x, sprite.rect.y, sprite.rect.width, sprite.rect.height
         x -= width / 2
         y -= height / 2
         left = int(x // self.tile_size)
@@ -584,6 +585,8 @@ class Camera:
     """Static class to handle scroller out of this file"""
     fnt = pygame.font.SysFont('comicsansms', 45)
     Text = namedtuple('Text', ['text', 'position', 'signature'])
+    Image = namedtuple('Image', ['image', 'position', 'blit_time', 'start_time'])
+    BlitOrder = namedtuple('BlitOrder', ['order', 'blit_time', 'start_time'])
     displayed_text = {}  # signature: Text(text, position, signature)
     scroller = None
     screen = None
@@ -594,6 +597,9 @@ class Camera:
     display_fps = True
     fps_font = pygame.font.SysFont('comicsansms', 12)
     default_font = pygame.font.SysFont('Arial', 24)
+
+    images = []
+    blits = []
 
     @classmethod
     def init(cls, display_mode, scroller_type='static', scroller_edges=None,
@@ -621,6 +627,14 @@ class Camera:
 
         cls.real_screen = display_mode
         cls.screen = cls.real_screen.copy()
+
+    @classmethod
+    def blit_continuous_image(cls, image, position, time_to_blit):
+        cls.images.append(cls.Image(image, position, time_to_blit, time()))
+
+    @classmethod
+    def add_blit_order(cls, function, time_to_blit):
+        cls.blits.append(cls.BlitOrder(function, time_to_blit, time()))
 
     @classmethod
     def set_scroller_position(cls, position, smooth_move=False):
@@ -670,12 +684,12 @@ class Camera:
         s = -1
         for _ in range(0, 8):
             for x in range(0, 20, 5):
-                yield (x * s, 0)
+                yield x * s, 0
             for x in range(20, 0, 5):
-                yield (x * s, 0)
+                yield x * s, 0
             s *= -1
         while True:
-            yield (0, 0)
+            yield 0, 0
 
     @classmethod
     def blit(cls, surface, position):
@@ -689,6 +703,22 @@ class Camera:
             fps_surface = cls.fps_font.render(str(round(clock.get_fps())) + ', ' + str(len(sprites_list)),
                                               True, pygame.Color('white'))
             cls.blit(fps_surface, (5, 5))
+        if cls.images:
+            new = cls.images.copy()
+            for image in new:
+                if image.start_time - time() > image.blit_time:
+                    cls.images.remove(image)
+                else:
+                    cls.blit(image.image, image.position)
+
+        if cls.blits:
+            new = cls.blits.copy()
+            for image in new:
+                if time() - image.start_time > image.blit_time:
+                    cls.blits.remove(image)
+                else:
+                    image.order()
+
         cls.real_screen.blit(cls.screen, next(cls.shake_offset))
         if cls.save:
             pygame.image.save(cls.screen, 'saved.png')

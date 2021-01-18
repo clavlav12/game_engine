@@ -1,17 +1,15 @@
+class TwoEdgeHammer(...):
+    def __init__(self):
+        self.components = [
+            OBB()
+        ]
 
+    def update(self):
+        for comp in self.components:
+            comp.update(self.position,
+                    self.orientation)
+class OBB:
+    def __init__(self, center, hh, hw):
+       pass
 
-
-
-
-
-
-
-// clip the incident edge’s points by the first vertex in the reference edge:
-// This is done by comparing the offset of the first vertex along
-// the reference vector with the incident edge’s offsets.
-
-// the result of the previous clipping operation on the incident edge is
-// clipped again using the second vertex of the reference edge.
-
-// Finally, we check if the remaining points are past the reference edge along the reference edge’s normal.
-// In all, we perform three clipping operations.
+    def rotate(angle,)

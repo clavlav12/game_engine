@@ -18,8 +18,8 @@ class PopUpMessage:
         self.surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
         self.main_rounded_rect = GUI.Rectangle(pygame.Rect(0, 0, meters(400), meters(200)), color)
         self.main_rounded_rect.surface.blit(self.text,
-                                            (self.main_rounded_rect.rect.width//2-self.text.get_width()//2,
-                                             self.main_rounded_rect.rect.height//2-self.text.get_height()//2))
+                                            (self.main_rounded_rect.rect.width // 2 - self.text.get_width() // 2,
+                                             self.main_rounded_rect.rect.height // 2 - self.text.get_height() // 2))
 
     def draw(self):
         self.main_rounded_rect.draw(self.surface)

@@ -70,12 +70,9 @@ class RigidBall(base_sprites.ImagedRigidBody):
         self.radius = radius
         self.vertices = [None, None]
 
-        self.restitution = .2
+        self.elasticity = .2
 
         self.normals_length = 1
-
-    def apply_gravity(self):
-        pass
 
     def collision(self, other, collision):
         if not isinstance(other, RigidBall):
@@ -124,6 +121,7 @@ class RigidBall(base_sprites.ImagedRigidBody):
                                self.velocity.x, key=abs)
         self.velocity.y -= min(friction * control_dict['dtime'] * structures.sign(self.velocity.y),
                                self.velocity.y, key=abs)
+        self.apply_gravity()
 
     def ball2ball(self, other: Union[base_sprites.Tile,
                                      base_sprites.BaseSprite,
@@ -173,13 +171,87 @@ class RigidControl(base_control.AllDirectionSpeed):
 
 
 class RigidConvexPolygon(base_sprites.BaseRigidBody):
+    def penetration_resolution(self, pen, normal, other):
+        # if (not distance) or not (self.inv_mass + other.inv_mass):
+        #     return
+
+        pen_res = normal * pen / (self.inv_mass + other.inv_mass)
+
+        # percent = 0.4
+        # slop = 0.05
+        # pen_res = max(pen - slop, 0.0) / (self.inv_mass + other.inv_mass) * percent * distance.normalized()
+
+        self.position += pen_res * self.inv_mass
+        other.position += - pen_res * other.inv_mass
+
+    def collision_response(self, other, normal, contact):
+        # closing velocities
+        arm1 = contact - self.position
+        rot_vel1 = math.radians(self.angular_velocity) ** arm1
+        close_vel1 = self.velocity + rot_vel1
+        arm2 = contact - other.position
+
+        # draw_arrow(self.position, normal, scale=50)
+        # draw_arrow(other.position, -normal, scale=50)
+        rot_vel2 = math.radians(other.angular_velocity) ** arm2
+        close_vel2 = other.velocity + rot_vel2
+
+        # impulse augmentation
+        imp_aug1 = arm1 ** normal
+        imp_aug1 = imp_aug1 * self.inv_moment_of_inertia * imp_aug1
+        imp_aug2 = arm2 ** normal
+        imp_aug2 = imp_aug2 * other.inv_moment_of_inertia * imp_aug2
+
+        relative_velocity = close_vel1 - close_vel2
+        separating_velocity = relative_velocity * normal
+
+        if separating_velocity > 0:
+            return
+        new_separating_velocity = - separating_velocity * min(self.elasticity, other.elasticity)
+
+        vel_sep_diff = new_separating_velocity - separating_velocity
+
+        if not (self.inv_mass + other.inv_mass + imp_aug1 + imp_aug2):
+            return
+        impulse = vel_sep_diff / (self.inv_mass + other.inv_mass + imp_aug1 + imp_aug2)
+        impulse_vector = normal * impulse
+
+        self.velocity += impulse_vector * self.inv_mass
+        other.velocity += impulse_vector * -other.inv_mass
+
+        self.angular_velocity += math.degrees(
+            self.inv_moment_of_inertia * (arm1 ** impulse_vector)
+        )
+        other.angular_velocity -= math.degrees(
+            other.inv_moment_of_inertia * (arm2 ** impulse_vector)
+        )
+
+        # dynamic_friction = .5
+        # dynamic_friction = .2
+        dynamic_friction = 0
+        tang = normal.tangent()
+        vel_among_tang = relative_velocity * tang
+        friction_impulse = dynamic_friction * vel_among_tang / (self.inv_mass + other.inv_mass + imp_aug1 + imp_aug2)
+        impulse_vector = -tang * friction_impulse * base_sprites.BaseSprite.game_states['dtime'] * 10
+
+        self.velocity += impulse_vector * self.inv_mass
+        other.velocity += impulse_vector * -other.inv_mass
+
+        self.angular_velocity += math.degrees(
+            self.inv_moment_of_inertia * (arm1 ** impulse_vector)
+        )
+        other.angular_velocity -= math.degrees(
+            other.inv_moment_of_inertia * (arm2 ** impulse_vector)
+        )
+
     def __init__(self,
                  density,
                  vertices: List[Union[Vector2, Tuple, List]],
-                 controls=base_control.NoMoveControl()):
+                 controls=base_control.NoMoveControl(),
+                 *, gravity_times_mu=None):
 
         self.color = pg.Color('white')
-        self.polygon = Geometry.Polygon(vertices, density)
+        self.polygon = Geometry.Polygon(vertices, density, gravity_times_mu=gravity_times_mu)
 
         super(RigidConvexPolygon, self).__init__(
             self.polygon.rect,
@@ -189,8 +261,21 @@ class RigidConvexPolygon(base_sprites.BaseRigidBody):
             controls
         )
 
-        self.position = self.polygon.centroid.copy()
+        print(self.position)
+        print(self.polygon.centroid)
+        print(self.polygon.rect.center)
+        # self.position = self.polygon.centroid.copy()
         self.normals_length = len(self.vertices)
+
+    def update_position(self, time_delta):
+        super(RigidConvexPolygon, self).update_position(time_delta)
+        # self.polygon.update_centroid(self.position)
+
+        # print('1: ', self.position, self.rect.center)
+        self.polygon.rotate(self.orientation, self.position)
+        self.rect = self.polygon.rect
+
+        # print('2: ', self.position, self.rect.center)
 
     @property
     def vertices(self):
@@ -200,7 +285,8 @@ class RigidConvexPolygon(base_sprites.BaseRigidBody):
         # if not isinstance(other, RigidConvexPolygon):
         #     return False
 
-        detection = self.collision_detection(self, other)
+        detection, contact, normal, depth = self.collision_detection(self, other)
+
         if not detection:
             try:
                 pygame_structures.Camera.remove_text('collision')
@@ -208,12 +294,16 @@ class RigidConvexPolygon(base_sprites.BaseRigidBody):
                 pass
 
             return False
+
         pygame_structures.Camera.display_text('collision!', (50, 50), 'collision')
+        self.penetration_resolution(depth, normal, other)
+        self.collision_response(other, normal, contact)
 
         return True
 
     def get_axes(self, _):
-        return [v.normalize().normal() for v in self.vertices]
+        return [(self.vertices[i + 1] - self.vertices[i]).normalized().normal()
+                for i in range(len(self.vertices) - 1)]
 
     @classmethod
     def collision_detection(cls, self, other):
@@ -233,12 +323,12 @@ class RigidConvexPolygon(base_sprites.BaseRigidBody):
             proj1 = cls.projection_onto_axis(self, axis)
 
             proj2 = cls.projection_onto_axis(other, axis)
-            
+
             # draw_circle(other.vertices[0], 10, 2)
             # draw_circle(other.vertices[1], 10, 2)
             overlap = min(proj1.max, proj2.max) - max(proj1.min, proj2.min)
             if overlap < 0:
-                return False
+                return False, None, None, None
 
             if (proj1.max > proj2.max and proj1.min < proj2.min) or \
                     (proj1.max < proj2.max and proj1.min > proj2.min):
@@ -263,8 +353,13 @@ class RigidConvexPolygon(base_sprites.BaseRigidBody):
                         smallest_axis *= -1
 
         contact_vertex = cls.projection_onto_axis(vertex_object, smallest_axis).collision_vertex
-        draw_arrow(contact_vertex, smallest_axis, scale=min_overlap)
-        return True
+
+        if vertex_object is other:
+            smallest_axis = smallest_axis * -1
+
+        # draw_arrow(contact_vertex, smallest_axis, scale=min_overlap)
+        # pg.image.save(pygame_structures.Camera.screen, 'image.jpeg')
+        return True, contact_vertex, smallest_axis, min_overlap
 
     @staticmethod
     def projection_onto_axis(obj, axis: Vector2):
@@ -286,15 +381,11 @@ class RigidConvexPolygon(base_sprites.BaseRigidBody):
 
         return manifold(min_projection, max_projection, collision_vertex)
 
-    def update_position(self, time_delta):
-        super(RigidConvexPolygon, self).update_position(time_delta)
-        # self.polygon.update_centroid(self.position)
-        self.polygon.rotate(self.orientation, self.position)
-        self.rect = self.polygon.rect
-
     def draw(self):
-        self.image = pg.Surface(self.rect.size, pg.SRCALPHA)
-        pg.draw.polygon(self.image, self.color, [tuple(v - self.rect.topleft) for v in self.polygon.world_vertices], 3
+        b_size = 3
+        self.image = pg.Surface(tuple(self.rect.size + Vector2.Cartesian(b_size, b_size) * 2), pg.SRCALPHA)
+        pg.draw.polygon(self.image, self.color, [tuple(v - self.rect.topleft) for v in self.polygon.world_vertices],
+                        b_size
                         )
         # self.draw_rect()
         super(RigidConvexPolygon, self).draw()
@@ -318,8 +409,7 @@ def closest_vertex_to_point(vertices, p):
 
 
 class OBB(RigidConvexPolygon):
-    def __init__(self, p1, p2, width, controls: base_control.controls=None):
-
+    def __init__(self, p1, p2, width, controls: base_control.controls = None):
         vertex = [
             structures.Vector2.Point(p1),
             structures.Vector2.Point(p2),
@@ -339,28 +429,82 @@ class OBB(RigidConvexPolygon):
         if controls is not None:
             control = RigidControl(self, *controls)
 
-        super(OBB, self).__init__(1, vertex, control)
+        self.gravity_times_mu = 1000
+        super(OBB, self).__init__(1, vertex, control, gravity_times_mu=self.gravity_times_mu)
 
         self.normals_length = 2
+        self.elasticity = .3
 
     def update_position(self, time_delta):
         super(OBB, self).update_position(time_delta)
 
     def update(self, control_dict):
+        return
         # self.apply_gravity()
         friction = 1000
         # self.angular_velocity -= min( friction/ 2 * control_dict['dtime'] * structures.sign(self.angular_velocity),
         #                              self.angular_velocity, key=abs)
-        self.angular_velocity -= min(friction *
-                                     control_dict['dtime'] * structures.sign(self.angular_velocity),
+        self.angular_velocity -= min(self.polygon.ft *
+                                     control_dict['dtime'] *
+                                     structures.sign(self.angular_velocity) / self.moment_of_inertia,
                                      self.angular_velocity, key=abs)
 
-        self.velocity.r -= min(friction * control_dict['dtime'] * structures.sign(self.velocity.r),
+        self.velocity.r -= min(self.gravity_times_mu * control_dict['dtime'] * structures.sign(self.velocity.r),
                                self.velocity.r, key=abs)
 
     def get_axes(self, _):
         direction = (self.vertices[1] - self.vertices[0]).normalized()
         return [direction, direction.normal()]
+
+
+class RegularPolygon(RigidConvexPolygon):
+    def __init__(self, center, radius, n, controls: base_control.controls = None, density=1):
+        center = Vector2.Point(center)
+
+        vertex = Vector2.Cartesian(radius)
+        internal_angle = 360 / n
+        vertices = [center + vertex.rotated(i * internal_angle) for i in range(n)]
+
+        control = base_control.NoMoveControl()
+        if controls is not None:
+            control = RigidControl(self, *controls)
+
+        self.gravity_times_mu = 1000
+        super(RegularPolygon, self).__init__(density, vertices, control, gravity_times_mu=self.gravity_times_mu)
+
+        self.elasticity = .15
+        self.r = radius
+
+    def update(self, control_dict):
+        # self.apply_gravity()
+        # friction = 1000
+        # self.angular_velocity -= min( friction/ 2 * control_dict['dtime'] * structures.sign(self.angular_velocity),
+        #                              self.angular_velocity, key=abs)
+        actual_friction = self.polygon.ft / self.moment_of_inertia
+
+        circle_friction = 4 / 3 * self.gravity_times_mu / self.r
+
+        # print(circle_friction, actual_friction)
+
+        self.angular_velocity -= min(self.polygon.ft *
+                                     control_dict['dtime'] *
+                                     structures.sign(self.angular_velocity) / self.moment_of_inertia / 1.5,
+                                     self.angular_velocity, key=abs)
+
+        self.velocity.r -= min(self.gravity_times_mu * control_dict['dtime'] * structures.sign(self.velocity.r),
+                               self.velocity.r, key=abs)
+
+    def draw(self):
+        super(RegularPolygon, self).draw()
+        self.draw_rect()
+        draw_circle(self.position)
+        draw_circle(self.rect.center, color=pg.Color('pink'))
+    # def draw(self):
+    #     super(RegularPolygon, self).draw()
+    # vertices = self.polygon.local_vertices
+    # print('n: ', [v.str_polar() for v in ])
+    # for normal in self.get_axes(None):
+    #     draw_arrow(self.position, normal, scale=10)
 
 
 class Capsule(base_sprites.BaseRigidBody):
@@ -390,7 +534,7 @@ class Capsule(base_sprites.BaseRigidBody):
         # mass = h
         super(Capsule, self).__init__(rect,
                                       mass,
-                                      mass * (self.r ** 2 * 4 + (self.length + 2*self.r)**2) / 12,
+                                      mass * (self.r ** 2 * 4 + (self.length + 2 * self.r) ** 2) / 12,
                                       0,
                                       control
                                       )
@@ -476,8 +620,11 @@ class Capsule(base_sprites.BaseRigidBody):
         return r
 
     def update(self, control_dict):
-        self.apply_gravity()
+        # self.apply_gravity()
         friction = 0
+        # self.angular_velocity -= min(friction * control_dict['dtime'] * structures.sign(self.angular_velocity),
+        #                              self.angular_velocity, key=abs)
+
         self.angular_velocity -= min(friction * control_dict['dtime'] * structures.sign(self.angular_velocity),
                                      self.angular_velocity, key=abs)
 
@@ -599,6 +746,7 @@ class Capsule(base_sprites.BaseRigidBody):
         )
 
         dynamic_friction = .5
+        dynamic_friction = .2
         # dynamic_friction = 10
         tang = normal.tangent()
         vel_among_tang = relative_velocity * tang
@@ -638,6 +786,29 @@ class Capsule(base_sprites.BaseRigidBody):
         self.collision_response(other, b1, b2)
 
         return True
+
+
+class FloorOBB(OBB):
+    def __init__(self, start, end):
+        start = Vector2.Point(start)
+        end = Vector2.Point(end)
+        # W, H = pygame_structures.DisplayMods.current_width, pygame_structures.DisplayMods.current_height
+        super(FloorOBB, self).__init__(start, end, 50)
+        direction = (end - start).normalized().tangent()
+        # self.polygon = Geometry.Polygon([start, end, end + direction * 5, start + direction * 5]
+        #                                 , 1)
+        # print([start, end, end + direction * 5, start + direction * 5])
+        # super(FloorOBB, self).__init__(Vector2.Cartesian(W, H), Vector2.Cartesian(W, H + 5), W)
+        self.mass = 999999999999999
+        self.moment_of_inertia = 999999999999999
+
+    def collision(self, other, collision):
+        if isinstance(other, FloorOBB):
+            return True
+        super(FloorOBB, self).collision(other, collision)
+
+    def apply_gravity(self):
+        pass
 
 
 class Wall(base_sprites.BaseRigidBody):
@@ -769,15 +940,16 @@ def draw_circle(p, r=2, w=0, color=pg.Color('red')):
 def draw_arrow(start, vec, lcolor=pg.Color('red'), tricolor=pg.Color('green'), trirad=3, thickness=2, scale=1):
     end = tuple(start + vec * scale)
     start = tuple(start)
-    rad = math.pi/180
+    rad = math.pi / 180
     pg.draw.line(pygame_structures.Camera.screen, lcolor, start, end, thickness)
-    rotation = (math.atan2(start[1] - end[1], end[0] - start[0])) + math.pi/2
+    rotation = (math.atan2(start[1] - end[1], end[0] - start[0])) + math.pi / 2
     pg.draw.polygon(pygame_structures.Camera.screen, tricolor, ((end[0] + trirad * math.sin(rotation),
                                                                  end[1] + trirad * math.cos(rotation)),
-                                                                (end[0] + trirad * math.sin(rotation - 120*rad),
-                                                                 end[1] + trirad * math.cos(rotation - 120*rad)),
-                                                                (end[0] + trirad * math.sin(rotation + 120*rad),
-                                                                 end[1] + trirad * math.cos(rotation + 120*rad))))
+                                                                (end[0] + trirad * math.sin(rotation - 120 * rad),
+                                                                 end[1] + trirad * math.cos(rotation - 120 * rad)),
+                                                                (end[0] + trirad * math.sin(rotation + 120 * rad),
+                                                                 end[1] + trirad * math.cos(rotation + 120 * rad))))
+
 
 def Main():
     W = 1000
@@ -814,7 +986,6 @@ def Main():
     p1, p2, v1, a1 = [353.41526, 532.55373], [240.04085, 448.01827], [348.20000, -320.20000], 0.0
     p3, p4, v2, a2 = [371.86566, 383.41364], [501.65894, 327.25579], [0.00000, 0.00000], 0.0
 
-
     p1, p2 = (150, 150), (300, 150)
 
     # c1 = Capsule(p1, p2, 40,
@@ -829,12 +1000,40 @@ def Main():
     #              base_control.controls(pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_KP0, pg.K_RCTRL)
     #              )
 
-    # OBB((300, 180), (250, 50), 80,
-    #     base_control.controls(pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_e, pg.K_q))
-    # OBB((200, 200), (400, 300), 100,
-    #     base_control.controls(pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_KP0, pg.K_RCTRL))
-    RigidBall(50, randrange(0, W), randrange(0, H), True, color=pg.Color('dark green'))
-    RigidBall(50, randrange(0, W), randrange(0, H), False, color=pg.Color('dark green'))
+    # b1 = OBB((150, 180), (100, 50), 80,
+    #          base_control.controls(pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_e, pg.K_q))
+    # b2 = OBB((200, 200), (400, 300), 100,
+    #          base_control.controls(pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_KP0, pg.K_RCTRL))
+    # RegularPolygon((500, 500), 50, 100,
+    #                base_control.controls(pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_KP0, pg.K_RCTRL))
+
+    # rand_point = lambda: ((randrange(50, W-50), randrange(50, H-50)), (randrange(100, 600), randrange(100, 400)))
+    rand_point = lambda: (randrange(50, W - 50), randrange(50, H - 50))
+
+    # b2.position, b2.velocity, b2.orientation, b2.angular_velocity = Vector2.Point([629.52625, 436.19671]),Vector2.Point([-350.00000, -300.00000]),-25.91202903376158,-20.74758879224693
+    # b1.position, b1.velocity, b1.orientation, b1.angular_velocity = Vector2.Point([385.06969, 344.28306]),Vector2.Point([350.00000, -168.00000]),-55.95698449650105,2.901536543788426
+
+    # ...
+    RegularPolygon(rand_point(), 50, 3,
+                   base_control.controls(pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_KP0, pg.K_RCTRL), 2)
+    # RegularPolygon(rand_point(), 50, 4,
+    #                base_control.controls(pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_KP0, pg.K_RCTRL))
+    # RegularPolygon(rand_point(), 50, 5,
+    #                base_control.controls(pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_KP0, pg.K_RCTRL))
+    # RegularPolygon(rand_point(), 50, 6,
+    #                base_control.controls(pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_KP0, pg.K_RCTRL))
+    # RegularPolygon(rand_point(), 50, 7,
+    #                base_control.controls(pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_KP0, pg.K_RCTRL))
+
+    #
+    # RigidBall(50, 500, 500)
+    # FloorOBB((0, H), (W, H))
+    # FloorOBB((0, 0), (0, H))
+    # FloorOBB((0, 0), (W, 0))
+    # FloorOBB((W, 0), (W, H))
+    # FloorOBB((0, H-200), (W, H))
+
+    # floor((0, H-200), (W, H))
     # floor((0, H), (W, H))
     # floor((0, 0), (0, H))
     # floor((0, 0), (W, 0))
@@ -846,7 +1045,6 @@ def Main():
     # c2 = Capsule(p5, p6, 10, density=5)
     # c2 = Capsule(p7, p8, 10, density=5)
 
-    # rand_point = lambda: ((randrange(50, W-50), randrange(50, H-50)), (randrange(100, 600), randrange(100, 400)))
     # c2 = Capsule(*rand_point(), randrange(10, 20), density=5)
     # c2 = Capsule(*rand_point(), randrange(10, 20), density=5)
 
@@ -869,6 +1067,13 @@ def Main():
                 #                                  (-W // 2, -H // 2)))
                 # elif event.button == 3:
                 #     pygame_structures.Camera.set_scroller_position(next_sprite(), smooth_move=True)
+
+        # p = 'Vector2.Point('
+        # b = '{0}.position, {0}.velocity, {0}.orientation, {0}.angular_velocity = '
+        # print(b.format('b1') + p + str(b1.position) + ')', p + str(b1.velocity) + ')',
+        #       b1.orientation, b1.angular_velocity, sep=',')
+        # print(b.format('b2') + p + str(b2.position) + ')', p + str(b2.velocity) + ')',
+        #       b2.orientation, b2.angular_velocity, sep=',')
 
         keys = pg.key.get_pressed()
         if keys[pg.K_LCTRL] and keys[pg.K_r]:

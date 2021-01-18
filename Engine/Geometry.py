@@ -16,14 +16,14 @@ def triangle_center(a, b):
 
 
 def triangle_moment_of_inertia(a, b, mass):
-    return mass / 6 * (a*a + b*b + a*b)
+    return mass / 6 * (a * a + b * b + a * b)
 
 
 class Polygon:
-
     def __init__(self,
                  vertices: List[Union[Vector2, Tuple, List]],
-                 density: Union[int, float]):
+                 density: Union[int, float],
+                 *, gravity_times_mu=None):
 
         self.world_vertices = [Vector2.Point(v) for v in vertices]
         self.density = density
@@ -35,15 +35,16 @@ class Polygon:
         self.calculate_properties()
         self.update_rect()
 
-        self.ft = self.friction_torque(1000)
+        if gravity_times_mu is not None:
+            self.ft = self.friction_torque(gravity_times_mu)
 
     @property
     def local_vertices(self):
         return [v - self.centroid for v in self.world_vertices]
-    
+
     def update_centroid(self, new_centroid: Vector2):
         c = self.shapely_polygon.centroid
-        offset = (c.x, c.y) - new_centroid
+        offset = new_centroid - (c.x, c.y)
         self.shapely_polygon = shift(self.shapely_polygon, offset.x, offset.y)
         self.update_vertices()
         self.centroid = new_centroid
@@ -60,7 +61,6 @@ class Polygon:
     def update_rect(self):
         bounds = self.shapely_polygon.bounds  # Returns a (minx, miny, maxx, maxy) that bounds the object.
         self.rect = Rect(bounds[0], bounds[1], bounds[2] - bounds[0], bounds[3] - bounds[1])
-        # print(self.world_vertices)
 
     def intersection(self, other):
         assert isinstance(other, Polygon)
@@ -99,27 +99,34 @@ class Polygon:
         self.centroid = center
         self.mass = abs(mass)
 
-    def friction_torque(self, mun):
+    def friction_torque(self, gravity_times_mu):
         torque_sum = 0
 
         vertices = self.local_vertices
-        for i in range(len(vertices)-1):
+
+        for i in range(len(vertices)):
             x1, y1 = vertices[i]
-            x2, y2 = vertices[i+1]
+            x2, y2 = vertices[(i + 1) % len(vertices)]
+
             dx, dy = x2 - x1, y2 - y1
 
-            torque_sum += math.hypot(dx, dy) * (x1 ** 2 + x2 ** 2+ y1 **2 + y2 ** 2 + x1 * x2 + y1 * y2)
+            meters_integral = math.hypot(dx, dy) * (x1 ** 2 + x2 ** 2 + y1 ** 2 + y2 ** 2 + abs(x1 * x2) + abs(y1 * y2))
+            torque = meters_integral * gravity_times_mu * self.density
+            torque_sum += torque
 
         return torque_sum / 6
 
 
 if __name__ == '__main__':
-    p2 = [(0, 0), (50, 0), (50, 100), (0, 100)]
-    p1 = [(50, 50), (100, 50), (100, 100), (50, 100)]
+    p1 = [
+        Vector2.Polar(1, 0) + Vector2.Cartesian(500, 200),
+        Vector2.Polar(1, 120) + Vector2.Cartesian(500, 200),
+        Vector2.Polar(1, 240) + Vector2.Cartesian(500, 200),
+        ]
+
+    # p1 = [[550.00000, 500.00000], [475.00000, 543.30127], [475.00000, 456.69873]]
 
     my_poly = Polygon(p1, 1)
-    my_poly2 = Polygon(p2, 1)
-    import time
-    start = time.time()
-    print(my_poly.intersection(my_poly2))
-    print(time.time()-start)
+    print(my_poly.centroid)
+    print(my_poly.shapely_polygon.centroid)
+    print(my_poly.rect.center)

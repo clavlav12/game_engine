@@ -9,7 +9,7 @@ import pygame.locals as pl
 from re import finditer
 import pyperclip
 sys.path.insert(1, os.path.dirname(os.path.os.getcwd()))
-from structures import *
+from Engine.structures import *
 from Engine.Sound import Player
 image_folder = 'GUI images\\'
 
@@ -802,13 +802,13 @@ class Slider(Widget):
         start_pos = self.get_position_by_value(self.get_value())
 
         if style.style is ShapeStyle.rounded:
-            self.drag_button_shape = RoundedRect(Rect(start_pos[0], self.rect.top + self.rect.height//2,
-                                                      self.rect.width // 10, self.rect.height//2),
+            self.drag_button_shape = RoundedRect(Rect(start_pos[0], self.rect.top + self.rect.height // 2,
+                                                      self.rect.width // 10, self.rect.height // 2),
                                                  style.drag_button_color)
 
         elif style.style is ShapeStyle.sharp:
-            self.drag_button_shape = Rectangle(Rect(start_pos[0], self.rect.top + self.rect.height//2,
-                                                    self.rect.width // 10, self.rect.height//2),
+            self.drag_button_shape = Rectangle(Rect(start_pos[0], self.rect.top + self.rect.height // 2,
+                                                    self.rect.width // 10, self.rect.height // 2),
                                                style.drag_button_color)
 
         elif style.style is ShapeStyle.circular:
@@ -874,9 +874,9 @@ class Slider(Widget):
                 [i - j for i, j in zip(self.drag_button_shape.rect.center, self.drag_button_shape.rect.topleft)],
                 int(self.rect.height / 4), self.non_value_line.color, False)
         else:
-            rect = Rect(self.drag_button_shape.rect.width//8,
-                        self.drag_button.rect.height //8, self.drag_button_shape.rect.width - self.drag_button_shape.rect.width//4,
-                        self.drag_button.rect.height - self.drag_button_shape.rect.height//4)
+            rect = Rect(self.drag_button_shape.rect.width // 8,
+                        self.drag_button.rect.height // 8, self.drag_button_shape.rect.width - self.drag_button_shape.rect.width // 4,
+                        self.drag_button.rect.height - self.drag_button_shape.rect.height // 4)
             if self.style.style is ShapeStyle.rounded:
                 draw_rounded_rect(self.drag_button_shape.surface, self.non_value_line.color, rect)
             elif self.style.style is ShapeStyle.sharp:
@@ -899,30 +899,30 @@ class Slider(Widget):
         text_place = maybe(self.style.displayed_value_place).value.or_else(self.style.displayed_value_place)
         line_height = self.rect.height // 5
         if text_place == PlaceText.bottom_middle:
-            return self.rect.x + self.rect.width//2 - text.get_width()//2,\
-                   self.rect.bottom - self.rect.height//2 + self.drag_button_shape.rect.height//2
+            return self.rect.x + self.rect.width // 2 - text.get_width() // 2, \
+                   self.rect.bottom - self.rect.height // 2 + self.drag_button_shape.rect.height // 2
         elif text_place == PlaceText.bottom_left:
             return self.rect.x, self.rect.bottom - self.rect.height//2 + self.drag_button_shape.rect.height//2
         elif text_place == PlaceText.bottom_right:
             return self.rect.x + self.rect.width - text.get_width(), \
-                   self.rect.bottom - self.rect.height//2 + self.drag_button_shape.rect.height//2
+                   self.rect.bottom - self.rect.height // 2 + self.drag_button_shape.rect.height // 2
 
         elif text_place == PlaceText.top_middle:
-            return self.rect.x + self.rect.width//2 - text.get_width()//2,\
-                   self.rect.y + self.rect.height//2 - self.drag_button_shape.rect.height//2 - text.get_height()
+            return self.rect.x + self.rect.width // 2 - text.get_width() // 2, \
+                   self.rect.y + self.rect.height // 2 - self.drag_button_shape.rect.height // 2 - text.get_height()
         elif text_place == PlaceText.top_left:
             return self.rect.x, \
                    self.rect.y + self.rect.height//2 - self.drag_button_shape.rect.height//2 - text.get_height()
 
         elif text_place == PlaceText.top_right:
-            return self.rect.x + self.rect.width - text.get_width(),\
-                    self.rect.y + self.rect.height // 2 - self.drag_button_shape.rect.height // 2 - text.get_height()
+            return self.rect.x + self.rect.width - text.get_width(), \
+                   self.rect.y + self.rect.height // 2 - self.drag_button_shape.rect.height // 2 - text.get_height()
 
         elif text_place == PlaceText.left:
-            return self.rect.left - 2 - text.get_width() - self.drag_button_shape.rect.width//2,\
+            return self.rect.left - 2 - text.get_width() - self.drag_button_shape.rect.width // 2, \
                    self.rect.y + (2 * line_height) - ((text.get_height() - line_height)//2)
         elif text_place == PlaceText.right:
-            return self.rect.right + 2 + self.drag_button_shape.rect.width//2,\
+            return self.rect.right + 2 + self.drag_button_shape.rect.width // 2, \
                    self.rect.y + (2 * line_height) - ((text.get_height() - line_height)//2)
 
         elif text_place == PlaceText.above_cursor:

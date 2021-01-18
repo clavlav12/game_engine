@@ -1,8 +1,15 @@
 from enum import Enum
 import math
-from numpy import sign
 from pymaybe import maybe
 from time import time
+
+
+def sign(x):
+    if x > 0:
+        return 1
+    elif x < 0:
+        return -1
+    return 0
 
 
 def print_time(func):
@@ -98,7 +105,10 @@ def mul_tuple(tup, num):
 
 
 class PrivateConstructorAccess(Exception):
-    pass
+
+    @classmethod
+    def DefaultMessage(cls, class_):
+        cls(f"Access denied to private constructor of class {class_}")
 
 
 class EmptyStackException(Exception):
@@ -242,6 +252,8 @@ class Vector2:
 
     @classmethod
     def Cartesian(cls, x=0.0, y=0.0):
+        if (str(type(x)) == "<class 'numpy.float64'>"):
+            x = 6
         return cls(cls.__key, (x, y), VectorType.cartesian)
 
     @classmethod
@@ -298,6 +310,8 @@ class Vector2:
         return self.normal()
 
     def floor(self):
+        if math.isnan(self.x):
+            g = 5
         return Vector2.Cartesian(int(self.x), int(self.y))
 
     def set_values(self, x=None, y=None):
@@ -357,7 +371,7 @@ class Vector2:
         return NotImplemented
 
     def __rsub__(self, other):
-        return self - other
+        return (-self) + other
 
     def __mul__(self, other):
         if isinstance(other, (list, tuple)) and len(other) >= 2:
@@ -431,6 +445,9 @@ class Vector2:
     def __repr__(self):
         return str(self)
 
+    def str_polar(self):
+        return f"r={self.r:.2f}, θ={self.theta:.2f}"
+
     def __getitem__(self, item):
         if item in ('x', 0):
             return self.x
@@ -497,6 +514,20 @@ class Vector2:
         y_float, y_num = math.modf(self.y)
         return Vector2.Cartesian(x_float, y_float), \
             Vector2.Cartesian(x_num, y_num)
+
+    def min(self, other):
+        other = Vector2.Point(other)
+        return Vector2.Cartesian(
+            min(self.x, other.x),
+            min(self.y, other.y)
+        )
+
+    def max(self, other):
+        other = Vector2.Point(other)
+        return Vector2.Cartesian(
+            max(self.x, other.x),
+            max(self.y, other.y)
+        )
 
 
 class Default:

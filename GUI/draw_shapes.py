@@ -168,7 +168,7 @@ class Ellipse(Shape):
                                      f'angle is also optional as a keyword\ngot {args}, angle={angle}'
 
         if arguments_type == EllipseArguments.by_rect:
-            self.rx = args[0].width//2-5
+            self.rx = args[0].brush_width // 2 - 5
             self.ry = args[0].height//2-5
             super(Ellipse, self).__init__(args[0], args[1], angle)
 
@@ -220,7 +220,7 @@ class Circle(Shape):
                                            'angle is also optional as a keyword. got ' + str(args)
 
         if arguments_type == EllipseArguments.by_rect:
-            self.radius = maybe(radius)(args[0].width // 4)
+            self.radius = maybe(radius)(args[0].brush_width // 4)
             super(Circle, self).__init__(args[0], args[1], angle)
 
         elif arguments_type == EllipseArguments.by_radius:

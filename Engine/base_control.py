@@ -2,11 +2,20 @@ from Engine.structures import Vector2, Direction
 from Engine.Sound import Sounds
 import Engine.pygame_structures as pg_structs
 import pygame as pg
-from numpy import sign
 from pymaybe import maybe
 from collections import namedtuple
 
 controls = namedtuple('keys', ('up', 'down', 'left', 'right', 'cw', 'ccw'), defaults=(None, ) * 6)
+arrows = controls(pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_KP0, pg.K_RCTRL)
+wasd = controls(pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_e, pg.K_q)
+
+
+def sign(x):
+    if x > 0:
+        return 1
+    elif x < 0:
+        return -1
+    return 0
 
 
 def init(sound_player, MagazineClass, GunBulletClass):
@@ -161,8 +170,8 @@ class AllDirectionMovement(LeftRightMovement):
 
     def __init__(self, sprite, key_up=pg.K_UP,
                  key_down=pg.K_DOWN,
-                 key_right=pg.K_RIGHT,
-                 key_left=pg.K_LEFT):
+                 key_left=pg.K_LEFT,
+                 key_right=pg.K_RIGHT):
         LeftRightMovement.__init__(self, AllDirectionMovement.MOVING_SPEED, sprite, Direction.idle_left)
         self.up_down_movement = UpDownMovement(self.MOVING_SPEED, sprite)
         self.key_left = key_left

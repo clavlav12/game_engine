@@ -6,7 +6,6 @@ from Engine import Sound
 import pygame
 from typing import Tuple, Optional, Union
 from pymaybe import maybe
-from numpy import sign
 from time import time
 import math
 import os
@@ -14,8 +13,8 @@ import os
 player = Sound.Player()
 clock = pygame.time.Clock()
 GRAVITY = 3_000
-# GRAVITY = 1_500
-GRAVITY = 500
+GRAVITY = 1_500
+# GRAVITY = 500
 
 
 class Tile(pygame.sprite.Sprite):
@@ -87,8 +86,8 @@ class BlockingTile(Tile):
         # print(self.rect.topleft)
         before = super(BlockingTile, self).sprite_collide(_sprite, collision)
 
-        if not isinstance(_sprite, AdvancedSprite):
-            return before
+        # if not isinstance(_sprite, AdvancedSprite):
+        #     return before
         try:
             if collision.contact_count > 0:
                 contacts = collision.contact_points
@@ -364,10 +363,9 @@ class BaseSprite(pygame.sprite.Sprite):
             self.velocity.y += self.acceleration.y * time_delta
 
     def update_position(self, time_delta):
-        # print(self.velocity)
         change = self.velocity * time_delta
         self.position += change
-        self.rect.topleft = tuple(self.position.floor() - structures.Vector2.Point(self.rect.size) / 2)
+        self.rect.center = tuple(self.position.floor() - structures.Vector2.Point(self.rect.size) / 2)
         return change
 
     def set_position(self, x=None, y=None):
