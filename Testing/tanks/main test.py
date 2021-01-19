@@ -11,8 +11,8 @@ from Engine.structures import VectorType, Vector2, Direction
 from Engine.base_sprites import clock, tick, BaseSprite
 from sprites import Tank
 
-# Camera.init(screen, "dynamic", None)
-Camera.init(screen, "static", None)
+Camera.init(screen, "dynamic", None)
+# Camera.init(screen, "static", None)
 
 
 def get_color(hitpoints):
@@ -43,7 +43,6 @@ def Main():
     tank2 = Tank(Direction.right, (200, 200), pygame.K_a, pygame.K_d, pygame.K_SPACE, pygame.K_w, pygame.K_s, health_bar_color=(pygame.Color('green'), pygame.Color('red')))
     # man = Man(200, 200, K_t, K_h, K_f, K_g, (Color('blue'), Color('light blue')), 'avi')
     # man = Man(400, 20, K_UP, K_RIGHT, K_LEFT, K_SPACE, (Color('blue'), Color('light blue')), 'avi2')
-    # Camera.set_scroller_position(tank2, smooth_move=True)
     sur = pygame.Surface((50, 50)).convert()
     sur.fill((0, 0, 255))
     sur2 = pygame.Surface((50, 50))
@@ -81,6 +80,8 @@ def Main():
     elapsed = 1/fps
     fnt = pygame.font.SysFont('comicsansms', 12)
     is_zombie = False
+    Camera.set_scroller_position(tank2, smooth_move=True)
+
     while running:
         events = pygame.event.get()
         for event in events:
@@ -108,6 +109,7 @@ def Main():
         tick(elapsed, keys)
         Camera.blit(first, (W - 150, 50))
         Camera.blit(second, (5, 50))
+
         Camera.post_process(BaseSprite.sprites_list)
         pygame.display.flip()
         elapsed = min(clock.tick(fps) / 1000.0, 5 / fps)

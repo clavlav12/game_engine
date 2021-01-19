@@ -147,6 +147,10 @@ class Map:
         """
         :param mp: 2 dimensional list
         """
+        self.tile_size = tile_size
+        self.empty = empty
+        Map.instance = self
+
         self.first_quadrant = [[Tile.get_tile(kwargs['id'])(**remove_id(kwargs), x=x * tile_size, y=y * tile_size)
                                 for x, kwargs in enumerate(row)] for y, row in enumerate(first_quadrant)]
 
@@ -172,10 +176,6 @@ class Map:
             (1, -1): self.forth_quadrant,
 
         }
-        self.tile_size = tile_size
-
-        self.empty = empty
-        Map.instance = self
 
     def get_tile(self, x, y):
         return self.map_maps[(int(math.copysign(1, x)), int(math.copysign(1, y)))][abs(y)][abs(x)]
@@ -198,8 +198,6 @@ class Map:
             return None, None
 
         x, y, width, height = sprite.rect.x, sprite.rect.y, sprite.rect.width, sprite.rect.height
-        x -= width / 2
-        y -= height / 2
         left = int(x // self.tile_size)
         right = int((x + width) // self.tile_size)
         top = int(y // self.tile_size)
@@ -214,7 +212,7 @@ class Map:
         if (x + width) / self.tile_size == right:
             right -= 1
 
-        sprite.update_velocity_and_acceleration(time_delta)
+        # sprite.update_velocity_and_acceleration(time_delta)
 
         row, column = 0, 0
         called = []
@@ -239,7 +237,7 @@ class Map:
                                 before = tile.sprite_collide(sprite,
                                                              collision
                                                              )
-                                sprite.update_velocity_and_acceleration(time_delta)
+                                # sprite.update_velocity_and_acceleration(time_delta)
                 except IndexError:  # no collision
                     pass
 
@@ -656,7 +654,7 @@ class Camera:
         sur = font.render(text, antialais, color, bg)
         if position == 'center':
             r = sur.get_rect(center=structures.mul_tuple(cls.screen.get_size(), 0.5))
-            position = r.topleftdw
+            position = r.topleft
 
         cls.displayed_text[signature] = cls.Text(sur, position, signature)
 

@@ -20,7 +20,7 @@ def draw_arrow(start, vec, lcolor=pg.Color('red'), tricolor=pg.Color('green'), t
 def draw_circle(p, r=2, w=0, color=pg.Color('red')):
     if isinstance(color, str):
         color = pg.Color(color)
-    pg.draw.circle(pygame_structures.Camera.screen, color, tuple(p), r, w)
+    pg.draw.circle(pygame_structures.Camera.screen, color, tuple(p) - pygame_structures.Camera.scroller, r, w)
 
 
 def get_circle(r=2, w=0, color=pg.Color('red')):

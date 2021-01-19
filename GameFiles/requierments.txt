@@ -1,0 +1,9 @@
+2 players Generated as Drone
+
+flag generated randomly
+
+touch flag turns gold
+
+if touch gold - boom
+
+if touch mid, wins!

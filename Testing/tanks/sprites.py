@@ -5,6 +5,7 @@ import Engine.structures as structures
 import Engine.Sound as Sound
 import Engine.Particle as Particle
 import pygame
+from Engine.Debug import draw_circle
 import math
 
 
@@ -139,6 +140,9 @@ class Tank(base_sprites.Vehicle):
                                    TankControl(left_key, right_key, shoot_key, turret_up_key, turret_down_key
                                                         , self, init_direction),
                                    1, (0, 0), Tank.HIT_POINTS, health_bar_color)
+        # super(Tank, self).__init__(self.image.get_rect(),
+        #                            base_controls.AllDirectionMovement(self),
+        #                            1, (0, 0), Tank.HIT_POINTS, health_bar_color)
         self.rect.topleft = position
         self.position.values = self.rect.topleft
         self.turret_angle = 0
@@ -172,7 +176,7 @@ class Tank(base_sprites.Vehicle):
                 self.image = self.moving_left_animation.get_image()
             super(Tank, self).draw()
 
-        # self.draw_rect()
+        draw_circle(self.position)
 
 
 class Missile(base_sprites.Bullet):

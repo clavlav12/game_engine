@@ -170,7 +170,7 @@ def Main():
     # planet1 = Planet(*random_position(), 10000, pygame.Color('blue'), r)
     # planet2 = Planet(*random_position(), 10000, pygame.Color('red'), r)
     # planet3 = Planet(*random_position(), 10000, pygame.Color('green'), r)
-    pygame_structures.Camera.set_scroller_position(lambda: (W // 2, H // 2), smooth_move=False)
+    # pygame_structures.Camera.set_scroller_position(lambda: (W // 2, H // 2), smooth_move=False)
     pygame_structures.Map([], [], [], [], 50)
     running = 1
     fps = 1000

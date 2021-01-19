@@ -98,6 +98,7 @@ class BlockingTile(Tile):
                 relative_velocity = _sprite.get_future_velocity(BaseSprite.game_states['dtime'])
                 # relative_velocity = - _sprite.calculate_relative_velocity(self, point)
 
+                # collision.normal = collision.normal * -1
                 velocity_among_normal = relative_velocity * collision.normal
 
                 if velocity_among_normal > 0:
@@ -365,7 +366,7 @@ class BaseSprite(pygame.sprite.Sprite):
     def update_position(self, time_delta):
         change = self.velocity * time_delta
         self.position += change
-        self.rect.center = tuple(self.position.floor() - structures.Vector2.Point(self.rect.size) / 2)
+        self.rect.center = tuple(self.position.floor())
         return change
 
     def set_position(self, x=None, y=None):

@@ -631,7 +631,7 @@ def Main():
     screen = pygame_structures.DisplayMods.Windowed((W, H))
     W, H = pygame_structures.DisplayMods.current_width, pygame_structures.DisplayMods.current_height
 
-    pygame_structures.Camera.init(screen, "dynamic", None)
+    pygame_structures.Camera.init(screen, "static", None)
 
     os.environ['SDL_VIDEO_CENTERED'] = '1'
     pygame_structures.Map([], [], [], [], 50)
@@ -669,8 +669,9 @@ def Main():
     Wall((W, 0), (W, H))
     Wall((0, H), (W, H))
     Wall((W / 3, H / 2), (2 * W / 3, H / 2))
-    Planet(500, 500, 1, pg.Color('red'), 50)
+    # Planet(500, 500, 1, pg.Color('red'), 50)
     builder = Builder()
+    c = None
     while running:
         events = pg.event.get()
         for event in events:
@@ -687,10 +688,12 @@ def Main():
                     builder.add_point(event.pos)
 
                 elif event.button == 3:
-                    {
+                    c = {
                         0: (lambda: OBB.AxisAligned(event.pos, 25, 25)),
-                        1: (lambda: Ball(event.pos, 25, 25))
-                    }[random.randrange(2)]()
+                        1: (lambda: Ball(event.pos, 25, 1)),
+                        2: (lambda: Star(25, event.pos))
+                    }[1]()
+
                     # Star(25, event.pos)
                     # Ball(event.pos, 25)
 
@@ -698,6 +701,8 @@ def Main():
         if keys[pg.K_LCTRL] and keys[pg.K_r]:
             base_sprites.BaseSprite.sprites_list.empty()
         base_sprites.tick(elapsed, keys)
+        if c is not None:
+            draw_arrow(c.position, c.velocity)
         builder.draw()
         pygame_structures.Camera.post_process(base_sprites.BaseSprite.sprites_list)
         pg.display.flip()
