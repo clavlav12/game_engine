@@ -24,9 +24,9 @@ class Color(Enum):
 
 
 class Drone(base_sprites.BaseSprite):
-    blue = pg.image.load('Arts//drone_grey.png')
-    black = pg.image.load('Arts//drone_black.png')
-    gold = pg.image.load('Arts//drone_gold.png')
+    blue = pg.image.load('Omer')
+    black = pg.image.load('Omer')
+    gold = pg.image.load('Omer')
 
     size = 50
     blue = pg.transform.scale(blue, (size, size))
