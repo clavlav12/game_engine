@@ -36,7 +36,7 @@ class BaseControl:
     def move(self, **kwargs):  # {'sprites' : sprite_list, 'dtime': delta time, 'keys': keys}
         pass
 
-    def sprite_collide(self, sprite, collision):
+    def sprite_collide(self, sprite):
         pass
 
     def platform_collide(self, direction, platform, before):
@@ -203,6 +203,69 @@ class AllDirectionMovement(LeftRightMovement):
             self.up_down_movement.move_down()
         else:
             self.up_down_movement.stop()
+
+
+class BetterAllDirectionMovement(BaseControl):
+    MOVING_SPEED = 350  # p/s
+    DIRECTION_TO_VECTOR = {
+        Direction.left: Vector2.Cartesian(-1),
+        Direction.right: Vector2.Cartesian(1),
+        Direction.up: Vector2.Cartesian(y=-1),
+        Direction.down: Vector2.Cartesian(y=1),
+        Direction.horizontal: Vector2.Cartesian(x=1),
+        Direction.vertical: Vector2.Cartesian(y=1)
+    }
+
+    def __init__(self, sprite, key_up=pg.K_UP,
+                 key_down=pg.K_DOWN,
+                 key_left=pg.K_LEFT,
+                 key_right=pg.K_RIGHT,
+                 moving_speed=MOVING_SPEED,
+                 default_direction=Direction.left):
+
+        BaseControl.__init__(self, sprite, default_direction)
+        # super(BetterAllDirectionMovement, self).__init__(sprite, default_direction)
+
+        self.speed = moving_speed
+        self.moving_direction = self.DIRECTION_TO_VECTOR[self.direction]
+        self.key_left = key_left
+        self.key_right = key_right
+        self.key_down = key_down
+        self.key_up = key_up
+
+    def reset(self):
+        BaseControl.reset(self)
+
+    def move(self, **kwargs):
+        if not self.in_control:
+            return
+        pressed_keys = kwargs['keys']
+        self.moving_direction = Vector2.Zero()
+        if pressed_keys[self.key_right]:  # moving right
+            self.moving_direction += self.DIRECTION_TO_VECTOR[Direction.right]
+        if pressed_keys[self.key_left]:  # moving left
+            self.moving_direction += self.DIRECTION_TO_VECTOR[Direction.left]
+
+        if not self.moving_direction.x:
+            self.stop(Direction.horizontal)
+
+        if pressed_keys[self.key_up]:
+            self.moving_direction += self.DIRECTION_TO_VECTOR[Direction.up]
+        elif pressed_keys[self.key_down]:
+            self.moving_direction += self.DIRECTION_TO_VECTOR[Direction.down]
+
+        if not self.moving_direction.y:
+            self.stop(Direction.horizontal)
+
+        if self.moving_direction:
+            self.moving_direction.normalize()
+            self.sprite.velocity = self.speed * self.moving_direction
+
+    def stop(self, direction):
+        unit = self.DIRECTION_TO_VECTOR[direction]
+        self.sprite.add_force(- unit * unit * self.sprite.velocity, 'stop movement')
+        # Vector2.Cartesian((self.moving_speed - self.sprite.velocity.x) * self.sprite.mass),
+        # 'walking'
 
 
 class Key:

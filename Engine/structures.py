@@ -133,6 +133,8 @@ class Direction:
     jumping_left = 5
     vertical = 6
     horizontal = 7
+    up = 8
+    down = 9
 
     idles = (idle_left, idle_right)
     lefts = (left, idle_left, jumping_left)
@@ -252,8 +254,6 @@ class Vector2:
 
     @classmethod
     def Cartesian(cls, x=0.0, y=0.0):
-        if (str(type(x)) == "<class 'numpy.float64'>"):
-            x = 6
         return cls(cls.__key, (x, y), VectorType.cartesian)
 
     @classmethod
@@ -310,13 +310,19 @@ class Vector2:
         return self.normal()
 
     def floor(self):
-        if math.isnan(self.x):
-            g = 5
         return Vector2.Cartesian(int(self.x), int(self.y))
 
     def set_values(self, x=None, y=None):
         self.x = maybe(x).or_else(self.x)
         self.y = maybe(y).or_else(self.y)
+
+    def multiply_terms(self, other):
+        return Vector2.Cartesian(self.x * other.x, self.y * other.y)
+
+    def reversed(self, term):
+        c = self.copy()
+        c[term] *= -1
+        return c
 
     def __round__(self, n=None):
         return Vector2.Cartesian(round(self.x, n), round(self.y, n))
@@ -416,7 +422,7 @@ class Vector2:
         if isinstance(other, (list, tuple)) and len(other) >= 2:
             other = Vector2.Cartesian(other[0], other[1])
         if isinstance(other, (int, float)):
-            self.Cartesian(self.x // other, self.y // other)
+            return self.Cartesian(self.x // other, self.y // other)
         elif isinstance(other, self.__class__):
             "Returns the inverse of the dot product of the vectors"
             return self.x // other.x + self.y // other.y
@@ -492,6 +498,7 @@ class Vector2:
             return Vector2.Cartesian(other * self.y, -other * self.x)
         elif isinstance(other, Vector2):
             return self.x * other.y - self.y * other.x
+        return NotImplemented
 
     def __rpow__(self, other):
         """returns the cross product of other and the vector self"""
@@ -501,10 +508,12 @@ class Vector2:
             return Vector2.Cartesian(-other * self.y, other * self.x)
         elif isinstance(other, Vector2):
             return other ** self
+        return NotImplemented
 
     def __mod__(self, other):
         if isinstance(other, (float, int)):
             return Vector2.Cartesian(self.x % other, self.y % other)
+        return NotImplemented
 
     def __abs__(self):
         return self.magnitude()
@@ -754,6 +763,29 @@ class Scroller:  # tested
         self.last_dx = dx
         self.last_dy = dy
 
+
+class Layer:
+    num_of_layers = 1
+
+    def __init__(self, *exceptions):
+        """
+        :param exceptions: Layers to exclude the object from
+        """
+        all_layers = 2 ** self.num_of_layers - 1  # Σ(2^(x - 1)) from x=0 to n = 2^n - 1
+
+        for exception in exceptions:
+            all_layers ^= 2 ** (exception - 1)
+
+        self.layers = all_layers
+
+    @classmethod
+    def add_layer(cls):
+        cls.num_of_layers += 1
+
+    def __and__(self, other):
+        if isinstance(other, Layer):
+            return self.layers & other.layers
+        return NotImplemented
 
 members = [attr for attr in dir(Direction) if not callable(getattr(Direction, attr)) and not attr.startswith("__")]
 direction = {eval(f'Direction.{i}'): i for i in members}

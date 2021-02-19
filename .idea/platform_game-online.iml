@@ -5,7 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GUI" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Testing/tanks" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Omer's Project/GameFiles" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Testing/Omer's Project/Drone/GameFiles" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/PyIgnition" />
       <excludeFolder url="file://$MODULE_DIR$/particle" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />

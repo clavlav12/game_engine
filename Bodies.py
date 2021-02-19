@@ -88,7 +88,7 @@ class Body(ABC):
         if position is None:
             position = (self.position - Vector2.Point(self.image.get_size()) / 2)
         position = tuple(position)
-        Camera.screen.blit(self.image, position)
+        Camera.screen.blit(self.image, position - Camera.scroller)
 
     def get_normals(self, other):
         return [(self.vertices[i + 1] - self.vertices[i]).normalized().normal()
@@ -114,12 +114,11 @@ class Line(Body):
             self.vertices[i] += offset
 
     def redraw(self, _=None):
-
         r = self.get_rect()
         self.image = pygame.Surface(r.size, pygame.SRCALPHA)
         pygame.draw.line(self.image, pygame.Color('white'), sub_tuples(self.vertices[0], r.topleft),
-                     sub_tuples(self.vertices[1], r.topleft))
-        pygame.image.save(self.image, 'line.png')
+                         sub_tuples(self.vertices[1], r.topleft))
+        # pygame.image.save(self.image, 'line.png')
         super(Line, self).redraw()
 
     def get_rect(self):
@@ -217,6 +216,51 @@ class Polygon(Body):
         return self.polygon.rect
 
 
+class CheapOBB(Body):
+    def __init__(self,
+                 rect,
+                 orientation,
+                 ):
+        self.rect = rect
+        super(CheapOBB, self).__init__(
+            [
+                self.rect.topleft,
+                self.rect.topright,
+                self.rect.bottomright,
+                self.rect.bottomleft
+            ],
+            Vector2.Zero(), orientation
+        )
+
+    @property
+    def position(self):
+        return self.rect.center
+
+    def update_position(self, parent_position: Point, parent_orientation: Union[int, float]):
+        matrix = RotationMatrix(parent_orientation - self.reference_orientation)
+        for vertex in self.vertices:
+            vertex -= parent_position
+            vertex *= matrix
+            vertex += parent_position
+
+    def redraw(self, _=None):
+        pass
+
+    def get_rect(self):
+        v = self.vertices
+
+        left = min(v, key=lambda x: x.x)
+        top = min(v, key=lambda x: x.y)
+        right = max(v, key=lambda x: x.x)
+        bottom = max(v, key=lambda x: x.y)
+        return pygame.Rect(
+            left, top, right - left, bottom - top
+        )
+
+    def get_normals(self, other):
+        return [(self.vertices[1] - self.vertices[0]).normalized(), (self.vertices[2] - self.vertices[1]).normalized()]
+
+
 class AABB(Body):
     normals = [Vector2.Cartesian(x=1), Vector2.Cartesian(y=1)]
 
@@ -226,10 +270,9 @@ class AABB(Body):
 
     @property
     def vertices(self):
-        return [ Vector2.Point(v) for v in
-            [self.rect.topleft, self.rect.topright, self.rect.bottomright, self.rect.bottomleft]
-        ]
-
+        return [Vector2.Point(v) for v in
+                [self.rect.topleft, self.rect.topright, self.rect.bottomright, self.rect.bottomleft]
+                ]
 
     @vertices.setter
     def vertices(self, _):
@@ -282,7 +325,6 @@ class Rectangle(Polygon):
             center - width_extent - height_extent,
             center + width_extent - height_extent,
         ]
-
         return cls(cls.__key, vertices, center_offset, orientation)
 
     @classmethod
@@ -323,5 +365,3 @@ class RegularPolygon(Polygon):
             center_offset,
             orientation,
         )
-
-

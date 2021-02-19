@@ -442,7 +442,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
         # pg.draw.circle(pygame_structures.Camera.screen, pg.Color('white'), tuple(self.position), 10)
         # self.draw_rect()
 
-    def collision(self, other, collision):
+    def collision(self, other):
         self.sprite_collide_func2(other, collision)
         return True
 
@@ -595,7 +595,7 @@ class c3(RigidCube):
     def apply_gravity(self):
         return
 
-    def collision(self, other, collision):
+    def collision(self, other):
         return True
 
 

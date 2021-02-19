@@ -274,7 +274,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
         for vertex in self.vertices:
             pg.draw.circle(pygame_structures.Camera.screen, pg.Color('black'), vertex, 5)
 
-    def collision(self, other, collision):
+    def collision(self, other):
         self.sprite_collide_func(other, collision)
         return True
 

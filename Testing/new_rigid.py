@@ -74,7 +74,7 @@ class RigidBall(base_sprites.ImagedRigidBody):
 
         self.normals_length = 1
 
-    def collision(self, other, collision):
+    def collision(self, other):
         if not isinstance(other, RigidBall):
             return False
 
@@ -281,7 +281,7 @@ class RigidConvexPolygon(base_sprites.BaseRigidBody):
     def vertices(self):
         return self.polygon.world_vertices
 
-    def collision(self, other, collision):
+    def collision(self, other):
         # if not isinstance(other, RigidConvexPolygon):
         #     return False
 
@@ -763,7 +763,7 @@ class Capsule(base_sprites.BaseRigidBody):
             other.inv_moment_of_inertia * (arm2 ** impulse_vector)
         )
 
-    def collision(self, other, collision):
+    def collision(self, other):
         if not isinstance(other, Capsule):
             return False
 
@@ -802,10 +802,10 @@ class FloorOBB(OBB):
         self.mass = 999999999999999
         self.moment_of_inertia = 999999999999999
 
-    def collision(self, other, collision):
+    def collision(self, other):
         if isinstance(other, FloorOBB):
             return True
-        super(FloorOBB, self).collision(other, collision)
+        super(FloorOBB, self).collision(other)
 
     def apply_gravity(self):
         pass
@@ -888,7 +888,7 @@ class Wall(base_sprites.BaseRigidBody):
         closest_vector = self.unit() * closest_distance
         return self.start - closest_vector
 
-    def collision(self, other, collision):
+    def collision(self, other):
         if not isinstance(other, RigidBall):
             return False
         if not self.collide_with(other):
@@ -1000,8 +1000,8 @@ def Main():
     #              base_control.controls(pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_KP0, pg.K_RCTRL)
     #              )
 
-    # b1 = OBB((150, 180), (100, 50), 80,
-    #          base_control.controls(pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_e, pg.K_q))
+    b1 = OBB((150, 180), (100, 50), 80,
+             base_control.controls(pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_e, pg.K_q))
     # b2 = OBB((200, 200), (400, 300), 100,
     #          base_control.controls(pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_KP0, pg.K_RCTRL))
     # RegularPolygon((500, 500), 50, 100,

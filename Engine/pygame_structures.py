@@ -197,48 +197,51 @@ class Map:
         if self.empty:
             return None, None
 
-        x, y, width, height = sprite.rect.x, sprite.rect.y, sprite.rect.width, sprite.rect.height
-        left = int(x // self.tile_size)
-        right = int((x + width) // self.tile_size)
-        top = int(y // self.tile_size)
-        bottom = int((y + height) // self.tile_size)
+        x, y, width, height = sprite.position.x, sprite.position.y, sprite.rect.width, sprite.rect.height
+        left = int((x - width // 2) // self.tile_size)
+        right = int((x + width // 2) // self.tile_size)
+        top = int((y - height // 2) // self.tile_size)
+        bottom = int((y + height // 2) // self.tile_size)
 
-        if (y + height) / self.tile_size == bottom:
-            bottom -= 1
-        if y / self.tile_size == top:
-            top += 1
-        if x / self.tile_size == left:
-            left += 1
-        if (x + width) / self.tile_size == right:
-            right -= 1
+        # if (y + height) / self.tile_size == bottom:
+        #     bottom -= 1
+        # if y / self.tile_size == top:
+        #     top += 1
+        # if x / self.tile_size == left:
+        #     left += 1
+        # if (x + width) / self.tile_size == right:
+        #     right -= 1
 
         # sprite.update_velocity_and_acceleration(time_delta)
 
-        row, column = 0, 0
         called = []
         for column in range(top, bottom + 1):
             for row in range(left, right + 1):
                 try:
                     tile = self.get_tile(row, column)
                     if not isinstance(tile, Air):
-                        if sprite.rect_collision or \
-                                pygame.sprite.collide_mask(tile, sprite):  # mask
+                        collider = tile.collider & sprite.collider
+
+                        if collider.tile_collision_by_rect or pygame.sprite.collide_mask(sprite, tile):  ## tile group?!
+
                             collection = tile.group
-                            if collection is not tile and collection in called:
+
+                            if collection in called:
                                 continue
-                            elif collection is not tile:
+
+                            tile.group.set_reference(tile)
+                            manifold = collider.manifold_generator(sprite, tile.group)
+
+                            if (manifold is None) or manifold.collision:
                                 called.append(collection)
 
-                            if callable(sprite.collision_manifold_generator):
-                                collision = sprite.collision_manifold_generator(collection, sprite)
-                            else:
-                                collision = collision_manifold.by_two_objects(collection, sprite)
-                            if collision:
-                                before = tile.sprite_collide(sprite,
-                                                             collision
-                                                             )
+                                # t = Timer(
+                                #     0.1, True
+                                # )
+
+                                before = tile.sprite_collide(sprite, manifold)
                                 # sprite.update_velocity_and_acceleration(time_delta)
-                except IndexError:  # no collision
+                except IndexError as e:  # no collision
                     pass
 
         try:
@@ -296,20 +299,25 @@ class HealthBar:
         self.pos_color = pos_color
 
         self.bar_height = round(self.sprite.rect.height * HealthBar.HEIGHT_CONST)
-        bar_width = self.sprite.rect.width
-        self.negative_bar_rect = pygame.Rect(self.sprite.rect.x, self.sprite.rect.y - self.bar_height, bar_width,
+        self.bar_width = self.sprite.rect.width
+        self.negative_bar_rect = pygame.Rect(self.sprite.rect.x, self.sprite.rect.y - self.bar_height, self.bar_width,
                                              self.bar_height)
-        self.positive_bar_rect = pygame.Rect(self.sprite.rect.x, self.sprite.rect.y - self.bar_height, bar_width *
+        self.positive_bar_rect = pygame.Rect(self.sprite.rect.x, self.sprite.rect.y - self.bar_height, self.bar_width *
                                              (self.sprite.base_hit_points // self.sprite.hit_points), self.bar_height)
 
     def draw(self):
-        bar_width = self.sprite.rect.width
-        self.negative_bar_rect.x = self.sprite.rect.x - Camera.scroller['x']
-        self.negative_bar_rect.y = self.sprite.rect.y - self.bar_height - Camera.scroller['y']
-        self.positive_bar_rect.x = self.sprite.rect.x - Camera.scroller['x']
-        self.positive_bar_rect.y = self.sprite.rect.y - self.bar_height - Camera.scroller['y']
+        """
+        negative_bar -> stays the same size
+        positive_bar -> decreases with hp
+        """
+        self.negative_bar_rect.center = self.sprite.rect.center
+        self.negative_bar_rect.bottom = self.sprite.rect.top
+        self.negative_bar_rect.x -= Camera.scroller['x']
+        self.negative_bar_rect.y -= Camera.scroller['y']
+        self.positive_bar_rect.topleft = self.negative_bar_rect.topleft
 
-        self.positive_bar_rect.width = max(round(bar_width * (self.sprite.hit_points / self.sprite.base_hit_points)), 0)
+        self.positive_bar_rect.width = max(
+            round(self.bar_width * (self.sprite.hit_points / self.sprite.base_hit_points)), 0)
 
         pygame.draw.rect(Camera.screen, self.neg_color, self.negative_bar_rect)
         if not self.positive_bar_rect.width == 0:
@@ -406,8 +414,15 @@ class Animation:
 
 
 class TileCollection:
+    collections = []
+
     def __init__(self):
         self.rect = None
+        self.reference = None
+        self.collections.append(self)
+
+    def set_reference(self, tile):
+        self.reference = tile
 
     def add_tile(self, tile):
         if self.rect is None:
@@ -482,7 +497,8 @@ class RotatableImageOld:
             self.angle = angle
             self.edited_img = pygame.transform.rotate(self.original_img, -angle).convert_alpha()
             self.edited_center_offset = self.original_center_offset.rotated(angle)
-            self.rect = self.edited_img.get_rect(center=structures.add_tuples(self.position(), self.edited_center_offset))
+            self.rect = self.edited_img.get_rect(
+                center=structures.add_tuples(self.position(), self.edited_center_offset))
 
     def blit_image(self):
         self.rect.center = structures.add_tuples(self.position(), self.edited_center_offset)
@@ -519,11 +535,13 @@ class RotatableImage:
             self.pivot_move = pivot_rotate - self.pivot
             self.edited_img = pygame.transform.rotate(self.original_img, angle)
 
-    def blit_image(self, center_position):
+    def blit_image(self, center_position, blit_to_camera=True):
         origin = (center_position[0] - self.center_offset[0] + self.min_box[0] - self.pivot_move[0],
                   center_position[1] - self.center_offset[1] - self.max_box[1] + self.pivot_move[1])
-        Camera.blit(self.edited_img,
-                    origin - Camera.scroller)
+
+        if blit_to_camera:
+            Camera.blit(self.edited_img,
+                        origin - Camera.scroller)
 
         # pygame.draw.rect(Camera.screen, Color('red'), r, 5)
         return self.edited_img, origin
@@ -545,20 +563,20 @@ class FlippableRotatedImage:
         self.original_direction = original_direction
         if original_direction == structures.Direction.right:
             self.right_image = RotatableImageOld(img, init_angle, pivot_offset,
-                                              lambda: structures.add_tuples(sprite_rect.topleft, sprite_rect_offset))
+                                                 lambda: structures.add_tuples(sprite_rect.topleft, sprite_rect_offset))
             new_position = sprite_rect.width - sprite_rect_offset[0], sprite_rect_offset[1]
             new_offset = structures.mul_tuple(pivot_offset, -1)
             self.left_image = RotatableImageOld(pygame.transform.flip(img, True, False).convert_alpha(), init_angle,
-                                             new_offset,
-                                             lambda: structures.add_tuples(sprite_rect.topleft, new_position))
+                                                new_offset,
+                                                lambda: structures.add_tuples(sprite_rect.topleft, new_position))
         elif original_direction == structures.Direction.left:
             self.left_image = RotatableImageOld(img, init_angle, pivot_offset,
-                                             lambda: structures.add_tuples(sprite_rect.topleft, sprite_rect_offset))
+                                                lambda: structures.add_tuples(sprite_rect.topleft, sprite_rect_offset))
             new_position = sprite_rect.width - sprite_rect_offset[0], sprite_rect_offset[1]
             new_offset = structures.mul_tuple(pivot_offset, -1)
             self.right_image = RotatableImageOld(pygame.transform.flip(img, True, False).convert_alpha(), init_angle,
-                                              new_offset,
-                                              lambda: structures.add_tuples(sprite_rect.topleft, new_position))
+                                                 new_offset,
+                                                 lambda: structures.add_tuples(sprite_rect.topleft, new_position))
 
     def rotate(self, angle):
         if self.original_direction == structures.Direction.right:
@@ -712,11 +730,16 @@ class Camera:
         if cls.blits:
             new = cls.blits.copy()
             for image in new:
-                if time() - image.start_time > image.blit_time:
+                if image.blit_time is None:
+                    cls.blits.remove(image)
+                    image.order()
+                elif time() - image.start_time > image.blit_time:
                     cls.blits.remove(image)
                 else:
                     image.order()
 
+        for collection in TileCollection.collections:
+            draw_rect(collection.rect)
         cls.real_screen.blit(cls.screen, next(cls.shake_offset))
         if cls.save:
             pygame.image.save(cls.screen, 'saved.png')

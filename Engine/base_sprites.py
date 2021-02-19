@@ -3,18 +3,56 @@ import Engine.Particle as Particles
 import Engine.structures as structures
 import Engine.pygame_structures as pygame_structures
 from Engine import Sound
+from CollisionManifold import ManifoldGenerator, CollisionManifold
 import pygame
 from typing import Tuple, Optional, Union
 from pymaybe import maybe
 from time import time
+from random import shuffle
+from collections import namedtuple
+from Engine.Debug import *
 import math
+import Bodies
 import os
 
+Projection = namedtuple('Projection', ('min', 'max', 'collision_vertex'))
 player = Sound.Player()
 clock = pygame.time.Clock()
 GRAVITY = 3_000
 GRAVITY = 1_500
 # GRAVITY = 500
+
+
+def no_generator(a, b):
+    pass
+
+
+def empty_solver(manifold):
+    pass
+
+
+class Collider:
+
+    empty_generator = ManifoldGenerator(no_generator, -float('inf'))
+
+    def __init__(self,
+                 sprites_collision_by_rect: bool,
+                 tile_collision_by_rect: bool,
+                 manifold_generator: ManifoldGenerator = empty_generator,
+                 ):
+        self.manifold_generator = manifold_generator
+        self.tile_collision_by_rect = tile_collision_by_rect
+        self.sprites_collision_by_rect = sprites_collision_by_rect
+
+    def __and__(self, other):
+        if isinstance(other, Collider):
+            complex_generator_obj = max(self, other, key=lambda x: x.manifold_generator.complexity)
+            return Collider(
+                not (self.sprites_collision_by_rect and other.sprites_collision_by_rect),
+                not (self.tile_collision_by_rect and other.tile_collision_by_rect),  # uses the more complex system
+                complex_generator_obj.manifold_generator,
+            )
+        return NotImplemented
 
 
 class Tile(pygame.sprite.Sprite):
@@ -33,20 +71,32 @@ class Tile(pygame.sprite.Sprite):
     def __init_subclass__(cls, **kwargs):
         Tile.classes[cls.id] = cls
 
-    def __init__(self, img: pygame.Surface, *, x: int, y: int, group: pygame_structures.TileCollection = None):
+    def __init__(self, img: pygame.Surface, group: pygame_structures.TileCollection, *, x: int, y: int,
+                 tile_collision_by_rect=True,
+                 manifold_generator=Collider.empty_generator):
         super(Tile, self).__init__()
         self.image = img
         self.rect = img.get_rect()
         self.rect.topleft = x, y
 
         self.set_group(group)
+        self.collider = Collider(False, tile_collision_by_rect, manifold_generator)
+        self.elasticity = 1
         # self.mask = pygame.mask.from_surface(img)
         Tile.blocks_list.add(self)
 
+    # @property
+    # def position(self):
+    #     return self.rect.center
+
     def set_group(self, group):
-        self.group = maybe(group).or_else(self)
         if group is not None:
+            self.group = group
             group.add_tile(self)
+        else:
+            c = pygame_structures.TileCollection()
+            c.add_tile(self)
+            self.group = c
 
     def sprite_collide(self, _sprite, collision: pygame_structures.collision_manifold):
         return _sprite.to_dict()
@@ -66,9 +116,12 @@ class Tile(pygame.sprite.Sprite):
 class BlockingTile(Tile):
     id = 1
 
-    def __init__(self, img, restitution: float = 0.0, static_friction: float = 0.0, dynamic_friction: float = 0.0,
-                 *, x, y, group):
-        super(BlockingTile, self).__init__(img, x=x, y=y, group=group)
+    def __init__(self, img, group: pygame_structures.TileCollection, restitution: float = 0.0,  static_friction: float = 0.0, dynamic_friction: float = 0.0,
+                 *, x, y,):
+        if group is None:
+            group = self
+
+        super(BlockingTile, self).__init__(img, x=x, y=y, group=group, manifold_generator=BaseSprite.basic_generator)
         self.max_stopping_friction = float('inf')  # change if want to simulate ice or something with low friction coeff
         # self.max_stopping_friction = 0  # change if want to simulate ice or something with low friction coeff
 
@@ -80,10 +133,11 @@ class BlockingTile(Tile):
 
         self.normal = structures.Vector2.Zero()
 
-    def sprite_collide(self, _sprite, collision: pygame_structures.collision_manifold):
+    def sprite_collide(self, _sprite, manifold):
         # if not sprite.collide_mask(self, _sprite):
         #     return
         # print(self.rect.topleft)
+        return
         before = super(BlockingTile, self).sprite_collide(_sprite, collision)
 
         # if not isinstance(_sprite, AdvancedSprite):
@@ -225,7 +279,7 @@ class air(Tile):
     sur = pygame.Surface((0, 0))
 
     def __init__(self, *, x, y):
-        super(air, self).__init__(air.sur, x=x, y=y)
+        super(air, self).__init__(air.sur, group=None, x=x, y=y)
         Tile.blocks_list.remove(self)
 
     def sprite_collide(self, _sprite, axis):
@@ -240,16 +294,67 @@ class air(Tile):
     def __bool__(self):
         return False
 
+    def set_group(self, group):
+        pass
+
+def by_two_objects(obj1, obj2):
+    normal = get_mid(obj2) - get_mid(obj1)
+    obj1_extent_x = obj1.rect.width / 2
+    obj2_extent_x = obj2.rect.width / 2
+
+    x_overlap = obj1_extent_x + obj2_extent_x - abs(normal.x)
+
+    if x_overlap > 0:
+        obj1_extent_y = obj1.rect.height / 2
+        obj2_extent_y = obj2.rect.height / 2
+
+        y_overlap = obj1_extent_y + obj2_extent_y - abs(normal.y)
+        if y_overlap > 0:
+            if x_overlap < y_overlap:
+                if normal.x < 0:
+                    normal_normalized = structures.Vector2.Cartesian(1, 0)
+                else:
+                    normal_normalized = structures.Vector2.Cartesian(-1, 0)
+                penetration = x_overlap
+            else:
+                if normal.y < 0:
+                    normal_normalized = structures.Vector2.Cartesian(0, 1)
+                else:
+                    normal_normalized = structures.Vector2.Cartesian(0, -1)
+                penetration = y_overlap
+
+            return CollisionManifold(None, normal_normalized, penetration, obj1, obj2, True)
+
+    return CollisionManifold(None, None, 0, obj1, obj2, False)
+
+
+def get_mid(obj):
+    if isinstance(obj, BaseSprite):
+        return obj.position
+    else:  # Rect only no float position
+        return obj.rect.center
+
 
 class BaseSprite(pygame.sprite.Sprite):
     sprites_list = pygame.sprite.Group()
     image = pygame.Surface((100, 100))
     game_states = {'sprites': sprites_list, 'keys': [], 'dtime': 0}
+    basic_generator = ManifoldGenerator(by_two_objects, 1)
+    initiated = []
 
-    def __init__(self, rect, control, mass, *, rect_collision=True, generate_collision_manifold=False):
+    def __init__(self, rect, control, mass, *, sprite_collision_by_rect=False, tile_collision_by_rect=True,
+                 manifold_generator=Collider.empty_generator,
+                 ):
         # hit boxes & moving
+        if not self.__class__ in BaseSprite.initiated:
+
         super(BaseSprite, self).__init__()
         #
+        self.collider = Collider(
+            sprite_collision_by_rect,
+            tile_collision_by_rect,
+            manifold_generator
+        )
         self.rect = rect
         if not hasattr(self, 'image'):
             self.image = pygame.Surface(self.rect)
@@ -263,7 +368,6 @@ class BaseSprite(pygame.sprite.Sprite):
         self.acceleration = structures.Vector2.Zero()
         self.force = structures.Vector2.Zero()
         self.force_document = {}
-        self.generate_collision_manifold = generate_collision_manifold
         self.mass = mass
 
         self.static_friction = 0
@@ -271,13 +375,12 @@ class BaseSprite(pygame.sprite.Sprite):
 
         self.control = control
 
-        self.collide_check_by_rect = rect_collision
-        self.rect_collision = rect_collision
-
-        self.collision_manifold_generator = None
-
         self.restitution = 0
         BaseSprite.sprites_list.add(self)
+
+    @classmethod
+    def initiate(cls):
+        pass
 
     @property
     def elasticity(self):
@@ -346,7 +449,6 @@ class BaseSprite(pygame.sprite.Sprite):
         self.control.move(**control_dict)
         self.update_kinematics(control_dict['dtime'])
         self.update(control_dict)
-        self.draw()
         self.force_document = {}
 
     def update(self, control_dict):
@@ -371,7 +473,9 @@ class BaseSprite(pygame.sprite.Sprite):
 
     def set_position(self, x=None, y=None):
         self.position.set_values(x, y)
-        self.rect.topleft = tuple(self.position.floor() - structures.Vector2.Point(self.rect.size) / 2)
+        self.rect.center = tuple(self.position.floor())
+
+    #
 
     def on_platform_collision(self, direction, platform, before):
         """Called when the sprite collides with a platform"""
@@ -385,9 +489,9 @@ class BaseSprite(pygame.sprite.Sprite):
             self.control.platform_collide(structures.Direction.vertical, platform, before)
 
         # print(self.force)
+        self.update_position(time_delta)
         self.update_velocity_and_acceleration(time_delta)
 
-        self.update_position(time_delta)
 
         return platform
 
@@ -400,58 +504,46 @@ class BaseSprite(pygame.sprite.Sprite):
         return self.velocity + (self.force / self.mass) * time_delta
 
     @classmethod
-    def check_sprite_collision(cls, collision_type='mask'):
+    def check_sprite_collision(cls, collision_type='mask', *, lst=None):
+
+        if lst is None:
+            lst = cls.sprites_list
         if collision_type == 'mask':
-            for idx, sprite1 in enumerate(cls.sprites_list):
+            lst = list(lst)
+            shuffle(lst)
+            for idx, sprite1 in enumerate(lst):
                 skip = idx + 1
-                for sprite2 in cls.sprites_list:
+                for sprite2 in lst:
                     if skip > 0:
                         skip -= 1
                         continue
 
-                    if pygame.sprite.collide_rect(sprite1, sprite2) and\
-                            (sprite1.collide_check_by_rect or sprite2.collide_check_by_rect or \
-                            pygame.sprite.collide_mask(sprite1, sprite2)):
+                    collider: Collider = sprite1.collider & sprite2.collider
+                    if pygame.sprite.collide_rect(sprite1, sprite2) and \
+                            (collider.sprites_collision_by_rect or
+                             pygame.sprite.collide_mask(sprite1, sprite2)):
 
-                        if sprite1.generate_collision_manifold or sprite2.generate_collision_manifold:
-                            if callable(sprite1.collision_manifold_generator):
-                                collision = sprite1.collision_manifold_generator(sprite1, sprite2)
-                            elif callable(sprite2.collision_manifold_generator):
-                                collision = sprite2.collision_manifold_generator(sprite1, sprite2)
-                            else:
-                                collision = pygame_structures.collision_manifold.by_two_objects(sprite1, sprite2)
-                        else:
-                            collision = True
-                        if collision:
-                            block_second = sprite1.collision(sprite2, collision)
-                            sprite1.control.sprite_collide(sprite2, collision)
+                        manifold = collider.manifold_generator(sprite1, sprite2)
+                        if (manifold is None) or manifold.collision:
+                            block_second = sprite1.collision(sprite2)
+                            sprite1.control.sprite_collide(sprite2)
 
-                        if collision and not block_second:
-                            sprite2.collision(sprite1, collision)
-                            sprite2.control.sprite_collide(sprite1, collision)
+                            if not block_second:
+                                sprite2.collision(sprite1)
+                                sprite2.control.sprite_collide(sprite1)
 
         elif collision_type == 'rect':
+            raise
             for sprite1 in cls.sprites_list:
                 for sprite2 in pygame.sprite.spritecollide(sprite1, cls.sprites_list, False):
                     if sprite2 is not sprite1:
 
-                        if sprite1.generate_collision_manifold or sprite2.generate_collision_manifold:
-                            if callable(sprite1.collision_manifold_generator):
-                                collision = sprite1.collision_manifold_generator(sprite1, sprite2)
-                            elif callable(sprite2.collision_manifold_generator):
-                                collision = sprite2.collision_manifold_generator(sprite1, sprite2)
-                            else:
-                                collision = pygame_structures.collision_manifold.by_two_objects(sprite1, sprite2)
-                        else:
-                            collision = True
+                        block_second = sprite1.collision(sprite2)
+                        sprite1.control.sprite_collide(sprite2)
 
-                        if collision:
-                            block_second = sprite1.collision(sprite2, collision)
-                            sprite1.control.sprite_collide(sprite2, collision)
-
-                        if collision and not block_second:
-                            sprite2.collision(sprite1, collision)
-                            sprite2.control.sprite_collide(sprite1, collision)
+                        if not block_second:
+                            sprite2.collision(sprite1)
+                            sprite2.control.sprite_collide(sprite1)
 
     @classmethod
     def update_all(cls):
@@ -465,9 +557,8 @@ class BaseSprite(pygame.sprite.Sprite):
         cls.game_states['dtime'] = time_delta
         cls.game_states['keys'] = keys
 
-    def collision(self, other, collision):
+    def collision(self, other):
         """Called when one sprite collides with another
-        :param collision:
         """
         pass
 
@@ -539,39 +630,93 @@ class AdvancedSprite(BaseSprite):
 
     def _update(self, controls_dict):
         self.dead_check()
-        self.control.move(**controls_dict)
-        self.update(controls_dict)
-        self.apply_gravity()
-        self.update_kinematics(controls_dict['dtime'])
-        self.draw()
+        super(AdvancedSprite, self)._update(controls_dict)
         self.force_document = {}
 
     def update_kinematics(self, time_delta):
         self.on_platform = super(AdvancedSprite, self).update_kinematics(time_delta)
 
-    def collision(self, other, collision):
+    def collision(self, other):
         self.sprite_collide = other
 
     def dead_check(self):
         if self.hit_points <= 0 and not self.is_dead:
             self.is_dead = True
+            self.die()
             return True
             # recommended to add a death sound
         return False
 
+    def die(self):
+        pass
+
+
+def rigid_obb_generator(obj1, obj2):
+    if isinstance(obj1, BaseRigidBody):
+        self = obj1
+        other = obj2
+    else:
+        self = obj2
+        other = obj1
+
+    self.obb.update_position(self.position, self.orientation)
+    self_components = self.obb
+    if isinstance(other, BaseRigidBody):
+        other.obb.update_position(other.position, other.orientation)
+        other_components = other.obb
+    else:
+        other_components = Bodies.AABB(other.rect)
+
+    manifold = self.collision_detection(self_components, other_components)
+
+    manifold.obj1 = self
+    manifold.obj2 = other
+
+    if manifold.collision:
+        manifold.add_manifold(manifold)
+    return True
+
 
 class BaseRigidBody(BaseSprite):
-
     collision_jump_table = {}
+    rigid_generator = ManifoldGenerator(rigid_obb_generator, 2)
 
-    def __init__(self, rect, mass, moment_of_inertia, orientation, control=controls.NoMoveControl()):
+    def __init__(self, rect, mass, moment_of_inertia, orientation, control=controls.NoMoveControl(), *,
+                 calculate_attributes=False,
+                 sprite_collision_by_rect=False,
+                 tile_collision_by_rect=True,
+                 manifold_generator=Collider.empty_generator):
+
         # super(BaseRigidBody, self).__init__(rect, control, mass, hit_points=hit_points,
         #                                     health_bar_colors=health_bar_colors)
-        super(BaseRigidBody, self).__init__(rect, control, mass)
+        print("orientation is not one, make ur own obb")
+        self.obb = Bodies.Rectangle.AxisAligned(rect.center, rect.width/2, rect.height/2, (0, 0), 0)
+        if calculate_attributes:
+            mass = self.obb.polygon.mass
+            moment_of_inertia = self.obb.polygon.moment_of_inertia
+
+        super(BaseRigidBody, self).__init__(rect, control, mass,
+                                            sprite_collision_by_rect=sprite_collision_by_rect,
+                                            tile_collision_by_rect=tile_collision_by_rect,
+                                            manifold_generator=manifold_generator
+                                            )
         self.moment_of_inertia = moment_of_inertia
         self.orientation = orientation
         self.angular_velocity = 0
         self.torque = 0
+
+    # @property
+    # def angular_velocity(self):
+    #     return 0
+    #
+    # @angular_velocity.setter
+    # def angular_velocity(self, value):
+    #     if value != 0:
+    #         print()
+
+    def draw_bounding_box(self):
+        self.obb.update_position(self.position, self.orientation)
+        self.obb.redraw()
 
     def update_velocity_and_acceleration(self, time_delta):
         super(BaseRigidBody, self).update_velocity_and_acceleration(time_delta)
@@ -598,25 +743,104 @@ class BaseRigidBody(BaseSprite):
 
     @property
     def inv_moment_of_inertia(self):
-        return 1/self.moment_of_inertia
+        return 1 / self.moment_of_inertia
 
     def update_position(self, time_delta):
         change = super(BaseRigidBody, self).update_position(time_delta)
         self.orientation += self.angular_velocity * time_delta
         return change
 
+    @classmethod
+    def collision_detection(cls, self: Bodies.Body, other: Bodies.Body):
+        """
+        Implemented using the separating axis theorem (SAT)
+        :param self:  RigidConvexPolygon / Circle
+        :param other: another RigidConvexPolygon / Circle
+        :return: ...
+        """
+        min_overlap = float('inf')
+        smallest_axis = None
+
+        first_axes = self.get_normals(other)
+        second_axes = other.get_normals(self)
+        first_shape_axes = len(first_axes)
+
+        axes = first_axes + second_axes
+
+        for i, axis in enumerate(axes):
+            proj1 = cls.projection_onto_axis(self, axis)
+
+            proj2 = cls.projection_onto_axis(other, axis)
+
+            # draw_circle(other.vertices[0], 10, 2)
+            # draw_circle(other.vertices[1], 10, 2)
+            overlap = min(proj1.max, proj2.max) - max(proj1.min, proj2.min)
+            if overlap < 0:
+                return CollisionManifold.NoCollision()
+
+            if (proj1.max > proj2.max and proj1.min < proj2.min) or \
+                    (proj1.max < proj2.max and proj1.min > proj2.min):
+                mins = abs(proj1.min - proj2.min)
+                maxs = abs(proj1.max - proj2.max)
+                if mins < maxs:
+                    overlap += mins
+                else:
+                    overlap += maxs
+                    axis = axis * -1
+
+            if overlap < min_overlap:
+                min_overlap = overlap
+                smallest_axis = axis
+                if i < first_shape_axes:
+                    vertex_object = other
+                    if proj1.max > proj2.max:
+                        smallest_axis = smallest_axis * -1
+                else:
+                    vertex_object = self
+                    if proj1.max < proj2.max:
+                        smallest_axis = smallest_axis * -1
+
+        contact_vertex = cls.projection_onto_axis(vertex_object, smallest_axis).collision_vertex
+
+        if vertex_object is other:
+            smallest_axis = smallest_axis * -1
+
+        # pygame_structures.Camera.add_blit_order(lambda: draw_circle(contact_vertex, 10, 2), .03)
+
+        return CollisionManifold(contact_vertex, smallest_axis, min_overlap, None, None, True, solve=False)
+
+    @staticmethod
+    def projection_onto_axis(obj: Bodies.Body, axis: structures.Vector2):
+        obj.update_floating_vertices(axis)
+        min_projection = float('inf')
+        max_projection = float('-inf')
+
+        collision_vertex = obj.vertices[0]
+        for vertex in obj.vertices:
+            projection = axis * vertex
+
+            if projection < min_projection:
+                min_projection = projection
+                collision_vertex = vertex.copy()
+
+            if projection > max_projection:
+                max_projection = projection
+
+        return Projection(min_projection, max_projection, collision_vertex)
+
 
 class ImagedRigidBody(BaseRigidBody):
-    def __init__(self, image, rect, mass, moment_of_inertia, orientation, control=controls.NoMoveControl()):
+    def __init__(self, image, rect, mass, moment_of_inertia, orientation, control=controls.NoMoveControl(),
+                 rotation_offset=None):
         super(ImagedRigidBody, self).__init__(rect, mass, moment_of_inertia, orientation, control)
         self.generate_collision_manifold = True
 
-        self.real_image = pygame_structures.RotatableImage(image, orientation,
-                                                           tuple(structures.Vector2.Point(image.get_size()) / 2))
+        if rotation_offset is None:
+            rotation_offset = tuple(structures.Vector2.Point(image.get_size()) / 2)
 
-    def draw(self, draw_health=False):
-        if draw_health:
-            self.draw_health_bar()
+        self.real_image = pygame_structures.RotatableImage(image, orientation, rotation_offset)
+
+    def draw(self):
         self.real_image.rotate(int(self.orientation))
         self.image, origin = self.real_image.blit_image(self.position.floor())
         # try:
@@ -633,7 +857,9 @@ class ImagedRigidBody(BaseRigidBody):
         # self.rect.size = self.real_image.edited_img.get_size()
         # self.rect.center = center
 
-        self.position -= (structures.Vector2.Point(new.size) - structures.Vector2.Point(self.rect.size))/2
+        self.rect.topleft = tuple(
+            self.rect.topleft - (structures.Vector2.Point(new.size) - structures.Vector2.Point(self.rect.size)) / 2
+        )
         self.rect.size = new.size
         # self.draw_rect()
 
@@ -654,7 +880,7 @@ class DrivableSprite(AdvancedSprite):
             self.rect.topleft = self.vehicle.get_sprite_position()  # update position to vehicle position
             self.set_position()
 
-    def collision(self, other, collision):
+    def collision(self, other):
         if isinstance(other, Vehicle):
             return True
 
@@ -691,7 +917,7 @@ class Bullet(BaseSprite):
         self.travel_distance -= abs(self.velocity * time_delta)
         super(Bullet, self).update_position(time_delta)
 
-    def collision(self, other, collision):
+    def collision(self, other):
         if self.first_frame:
             self.first_frame = False
             return
@@ -776,6 +1002,27 @@ class GunBullet(Bullet):
                                  'medium or large')
 
 
+def resolve_collisions():
+    for manifold in CollisionManifold.Manifolds:
+        manifold.collision_response()
+
+    for manifold in CollisionManifold.Manifolds:
+        manifold.penetration_resolution()
+    CollisionManifold.Manifolds.clear()
+
+
+def solve_manifolds(n=1):
+    if n > 0:
+        sprites_set = set()
+        for m in CollisionManifold.Manifolds:
+            sprites_set.add(m.obj1)
+            sprites_set.add(m.obj2)
+    resolve_collisions()
+    for i in range(n - 1):
+        BaseSprite.check_sprite_collision(lst=sprites_set)
+        resolve_collisions()
+
+
 def tick(elapsed, keys=pygame.key.get_pressed()):
     # print(len(BaseSprite.sprites_list))
     start = time()
@@ -785,6 +1032,12 @@ def tick(elapsed, keys=pygame.key.get_pressed()):
     Particles.Particle.check_all_collision(BaseSprite.sprites_list)
     BaseSprite.update_all()
     BaseSprite.check_sprite_collision()
+
+    solve_manifolds()
+
+    for s in BaseSprite.sprites_list:
+        s.draw()
+
     Particles.Particle.update_all()
     Tile.update_all()
     pygame_structures.Camera.scroller.update()

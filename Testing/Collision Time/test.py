@@ -102,7 +102,7 @@ class RigidCube(base_sprites.AdvancedSprite):
         # self.draw_rect()
         # print(self.rect.bottom,  "bottom")
 
-    def collision(self, other, collision):
+    def collision(self, other):
         # print(self.velocity.magnitude())
         if round(self.velocity.magnitude()) > 0:
             self.angular_velocity += (self.velocity.magnitude() / 3)

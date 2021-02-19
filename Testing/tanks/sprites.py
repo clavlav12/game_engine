@@ -167,7 +167,7 @@ class Tank(base_sprites.Vehicle):
             print("shouldn't happend!", force)
         return force
 
-    def draw(self):
+    def draw(self, draw_health=True):
         if self.hit_points > 0:
             self.turret_image.blit_image(self.control.direction)
             if self.control.direction == structures.Direction.right:
@@ -254,7 +254,7 @@ class Missile(base_sprites.Bullet):
                 other.hit_points -= self.damage
                 other.resistance_timer.activate()
 
-    def collision(self, other, collision):
+    def collision(self, other):
         if self.first_frame:
             return
         if (isinstance(other, base_sprites.AdvancedSprite)) and not other.is_dead:

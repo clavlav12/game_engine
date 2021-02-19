@@ -1,7 +1,339 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="71a335b9-b6e5-4148-a18b-ae04a242155c" name="Default Changelist" comment="" />
+    <list default="true" id="71a335b9-b6e5-4148-a18b-ae04a242155c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/CollisionManifold.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/Arts/army_tank_body.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/Arts/army_tank_body_black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/Arts/army_tank_turret.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/Arts/army_tank_turret_black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/Tank/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/Tank/2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/Tank/3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/Tank/4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/bullet/large/blue.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/bullet/large/green.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/bullet/large/red.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/bullet/large/yellow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/bullet/medium/blue.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/bullet/medium/green.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/bullet/medium/red.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/bullet/medium/yellow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/bullet/small/blue.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/bullet/small/green.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/bullet/small/red.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/bullet/small/yellow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/explostions/regularExplosion00.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/explostions/regularExplosion01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/explostions/regularExplosion02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/explostions/regularExplosion03.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/explostions/regularExplosion04.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/explostions/regularExplosion05.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/explostions/regularExplosion06.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/explostions/regularExplosion07.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/explostions/regularExplosion08.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_006.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_007.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_008.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_009.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_010.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_011.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_012.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_013.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_014.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_015.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_016.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/Idle/Idle_017.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_006.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_007.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_008.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_009.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_010.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_011.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_012.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_013.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Dying/Dying_014.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_006.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_007.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_008.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_009.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_010.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_011.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_012.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_013.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_014.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing in The Air/Firing in The Air_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing in The Air/Firing in The Air_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing in The Air/Firing in The Air_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing in The Air/Firing in The Air_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_00_delay-0.1s.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_01_delay-0.1s.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_02_delay-0.1s.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_03_delay-0.1s.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_04_delay-0.1s.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_05_delay-0.1s.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_06_delay-0.1s.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_07_delay-0.1s.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_08_delay-0.1s.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_09_delay-0.1s.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_10_delay-0.1s.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_11_delay-0.1s.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_12_delay-0.1s.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_13_delay-0.1s.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing new/frame_14_delay-0.1s.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing old firing/Firing_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing old firing/Firing_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing old firing/Firing_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing old firing/Firing_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing/idle_0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing/idle_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing/idle_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Firing/idle_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_006.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_007.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_008.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_009.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_010.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_011.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_006.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_007.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_008.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_009.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_010.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_011.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_012.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_013.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_014.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_015.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_016.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_017.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 13.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 14.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 15.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 17.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 18.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Run Firing/Background 9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Squat Firing/Squat Firing_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Squat Firing/Squat Firing_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Squat Firing/Squat Firing_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/Squat Firing/Squat Firing_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Firing_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Firing_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Firing_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Firing_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_006.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_007.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_008.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_009.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_010.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_011.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_012.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_013.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_014.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_015.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_016.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_017.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_006.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_007.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_008.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_009.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_010.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_011.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_006.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_007.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_008.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_009.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_010.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_011.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_012.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_013.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_014.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_006.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_007.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_008.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_009.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_010.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_011.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_006.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_007.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_008.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_009.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_010.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_011.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_006.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_007.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_008.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_009.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_010.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_011.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_012.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_013.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_014.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_015.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_016.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_017.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/images/M484BulletCollection1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/images/aa.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/images/background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/images/main-turret.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/images/missile.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/images/platform.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/images/player1 keyboard.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/images/player2 keyboard.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/images/portal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/images/portal2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/images/shot.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/sprites.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/aviro.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/aviro.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/platform_game-online.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/platform_game-online.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bodies.py" beforeDir="false" afterPath="$PROJECT_DIR$/Bodies.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/base_control.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/base_control.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/base_sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/base_sprites.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/pygame_structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/pygame_structures.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/structures.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Omer's Project/GameFiles/Arts/drone_black.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/Omer's Project/Drone/GameFiles/Arts/drone_black.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Omer's Project/GameFiles/Arts/drone_gold.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/Omer's Project/Drone/GameFiles/Arts/drone_gold.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Omer's Project/GameFiles/Arts/drone_grey.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/Omer's Project/Drone/GameFiles/Arts/drone_grey.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Omer's Project/GameFiles/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/Omer's Project/Drone/GameFiles/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Omer's Project/GameFiles/requierments.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/Omer's Project/Drone/GameFiles/requierments.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Omer's Project/GameFiles/sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/Omer's Project/Drone/GameFiles/sprites.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Omer's Project/black_drone.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Omer's Project/golden_drone.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Omer's Project/grey_drone.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/AdvancedRigidBody.py" beforeDir="false" afterPath="$PROJECT_DIR$/AdvancedRigidBody.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/Collision Time/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/Collision Time/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/friction_torque.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/friction_torque.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/gravity/gravity simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/gravity/gravity simulation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/line.png" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/line.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/new_rigid.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/new_rigid.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/tanks/rigidCube.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/rigidCube.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/tanks/sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/sprites.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/wtf.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/wtf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/line.png" beforeDir="false" afterPath="$PROJECT_DIR$/line.png" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,27 +370,27 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python&#10;TEXT" />
     <property name="last.edited.regexp" value="Sample Text" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/GameFiles/Arts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Testing/gravity" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\aviro\Desktop\game_engine\GameFiles\Arts" />
-      <recent name="C:\Users\aviro\Desktop\game_engine\Testing\tanks" />
+      <recent name="C:\Users\aviro\Desktop\game_engine\Testing\gravity" />
       <recent name="C:\Users\aviro\Desktop\game_engine\Testing" />
-      <recent name="C:\Users\aviro\Desktop\game_engine\Engine" />
-      <recent name="C:\Users\aviro\Desktop\platform-game\animation\fighter\PNG\PNG Sequences" />
+      <recent name="C:\Users\aviro\Desktop\game_engine\Omer's Project\Tanks" />
+      <recent name="C:\Users\aviro\Desktop\game_engine\Omer's Project\Tanks\Arts" />
+      <recent name="C:\Users\aviro\Desktop\game_engine\GameFiles\Arts" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\aviro\Desktop\game_engine\GameFiles" />
-      <recent name="C:\Users\aviro\Desktop\game_engine" />
       <recent name="C:\Users\aviro\Desktop\game_engine\Testing" />
-      <recent name="C:\Users\aviro\Desktop\game_engine\Engine" />
-      <recent name="C:\Users\aviro\Desktop\game_engine\Testing\tanks" />
+      <recent name="C:\Users\aviro\Desktop\game_engine" />
+      <recent name="C:\Users\aviro\Desktop\game_engine\Omer's Project" />
+      <recent name="C:\Users\aviro\Desktop\game_engine\Omer's Project\Drone" />
+      <recent name="C:\Users\aviro\Desktop\game_engine\GameFiles" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.AdvancedRigidBody">
-    <configuration name="AdvancedRigidBody" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.scratch_58">
+    <configuration name="AdvancedRigidBody (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -66,11 +398,32 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/AdvancedRigidBody.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/AdvancedRigidBody.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="CollisionManifold" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="platform_game-online" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CollisionManifold.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -100,7 +453,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="gravity simulation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -108,32 +461,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/gravity" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/Omer's Project/Drone/GameFiles" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/gravity/gravity simulation.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="platform_game-online" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/tanks" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/tanks/main test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/Omer's Project/Drone/GameFiles/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -150,11 +482,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/GameFiles" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/Omer's Project/Tanks" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/GameFiles/main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/Omer's Project/Tanks/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -163,7 +495,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="sprites" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="scratch_58" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -171,11 +503,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/GameFiles" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/GameFiles/sprites.py" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch_58.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -206,21 +538,21 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.AdvancedRigidBody (1)" />
+      <item itemvalue="Python.CollisionManifold" />
       <item itemvalue="Python.Unnamed" />
-      <item itemvalue="Python.tes" />
-      <item itemvalue="Python.AdvancedRigidBody" />
-      <item itemvalue="Python.gravity simulation" />
+      <item itemvalue="Python.main (1)" />
       <item itemvalue="Python.main" />
-      <item itemvalue="Python.sprites" />
-      <item itemvalue="Python.main test" />
+      <item itemvalue="Python.scratch_58" />
+      <item itemvalue="Python.tes" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.AdvancedRigidBody" />
+        <item itemvalue="Python.scratch_58" />
+        <item itemvalue="Python.AdvancedRigidBody (1)" />
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.main test" />
-        <item itemvalue="Python.gravity simulation" />
-        <item itemvalue="Python.sprites" />
+        <item itemvalue="Python.main (1)" />
+        <item itemvalue="Python.CollisionManifold" />
       </list>
     </recent_temporary>
   </component>
@@ -279,21 +611,5 @@
     <MESSAGE value="bad rigidCube" />
     <MESSAGE value="friction and impulses" />
     <option name="LAST_COMMIT_MESSAGE" value="friction and impulses" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Engine/structures.py</url>
-          <line>255</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Engine/structures.py</url>
-          <line>313</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

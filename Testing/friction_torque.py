@@ -115,10 +115,9 @@ class RegularPolygon(Polygon):
 
         # print(self.ft / (circle_angular_acceleration * circle_moment_of_inertia))
         print(self.ft)
-
-        # print(circle_angular_acceleration * circle_moment_of_inertia)
+        print(circle_angular_acceleration * circle_moment_of_inertia)
 
 
 if __name__ == '__main__':
-    RegularPolygon(1, 1, (30, 506), 9999999)
+    RegularPolygon(1, 1, (30, 506), 99)
     # RegularPolygon(1, 500, (30, 506), 3)

@@ -56,7 +56,7 @@ class Planet(base_sprites.BaseSprite):
                 except ZeroDivisionError:
                     pass
 
-    def collision(self, other, collision):
+    def collision(self, other):
         radius = int(math.sqrt(self.radius**2 + other.radius**2))
         self.set_mass(self.mass + other.mass)
         self.image = pygame.Surface((radius * 2, radius * 2), pygame.SRCALPHA, 32)
