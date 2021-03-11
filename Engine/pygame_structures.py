@@ -5,6 +5,7 @@ from win32api import GetSystemMetrics
 from itertools import repeat
 from time import time
 from Engine.Debug import *
+import os
 import pygame
 import math
 
@@ -26,7 +27,7 @@ def init(TileClass, AirClass, SpriteClass, clockInstance):
 
 
 def smooth_scale_image(img, scale):
-    return pygame.transform.smoothscale(img, structures.mul_tuple(img.get_size(), scale)).convert_alpha()
+    return pygame.transform.smoothscale(img, structures.mul_tuple(img.get_size(), scale))
 
 
 def smooth_scale_images(lst, scale):
@@ -44,7 +45,7 @@ def get_images_list(path, scale=None, crop_rect=None, sort_key=None):
         wid = img.get_width()
         hei = img.get_height()
         if scale is not None and scale != 1:
-            img = pygame.transform.smoothscale(img, (int(wid * scale), int(hei * scale))).convert_alpha()
+            img = pygame.transform.smoothscale(img, (int(wid * scale), int(hei * scale)))
         if crop_rect:
             img = img.subsurface((crop_rect.x, crop_rect.y, img.get_width - crop_rect.width, img.get_height -
                                   crop_rect.height))
@@ -232,6 +233,8 @@ class Map:
                             tile.group.set_reference(tile)
                             manifold = collider.manifold_generator(sprite, tile.group)
 
+                            # print("collision :(", manifold, manifold.collision, collider.manifold_generator.func)
+
                             if (manifold is None) or manifold.collision:
                                 called.append(collection)
 
@@ -289,6 +292,28 @@ class DisplayMods:
         cls.current_width, cls.current_height = size
         return pygame.display.set_mode((cls.current_width, cls.current_height), pygame.RESIZABLE)
 
+    @classmethod
+    def NoWindow(cls):
+        return EmptyDisplayMod()
+
+
+class EmptyDisplayMod:
+
+    def fill(self, _):
+        pass
+
+    def copy(self):
+        return self
+
+    def blit(self, _, __):
+        pass
+
+    def get_size(self):
+        return DisplayMods.current_width, DisplayMods.current_height
+
+    def __bool__(self):
+        return False
+
 
 class HealthBar:
     HEIGHT_CONST = 0.2
@@ -344,15 +369,15 @@ class Animation:
             self.images_list = [pygame.transform.smoothscale(i, (int(i.get_width() * scale),
                                                                  int(i.get_height() * scale))) for i in
                                 self.images_list]
-        self.convert_alpha()
+        # self.convert_alpha()
         assert bool(self.images_list), "image list is empty"
         self.pointer = 0
         self.frames_per_second = fps
         self.timer = Timer(1 / self.frames_per_second)
         self.repeat = repeat
 
-    def convert_alpha(self):
-        self.images_list = [i.convert_alpha() for i in self.images_list]
+    # def convert_alpha(self):
+    #     self.images_list = ImageList([AutoConvertSurface(i) for i in self.images_list])
 
     @classmethod
     def by_images_list(cls, lst, frames_per_image=1, repeat=True, flip_x=False, flip_y=False, scale=1):
@@ -495,8 +520,10 @@ class RotatableImageOld:
     def rotate(self, angle):
         if not angle == self.angle:
             self.angle = angle
-            self.edited_img = pygame.transform.rotate(self.original_img, -angle).convert_alpha()
-            self.edited_center_offset = self.original_center_offset.rotated(angle)
+            if Camera.screen:
+                self.edited_img = pygame.transform.rotate(self.original_img, -angle).convert_alpha()
+                self.edited_center_offset = self.original_center_offset.rotated(angle)
+
             self.rect = self.edited_img.get_rect(
                 center=structures.add_tuples(self.position(), self.edited_center_offset))
 
@@ -558,7 +585,6 @@ class FlippableRotatedImage:
         :param sprite_rect: rect who will be mirrored (Rect)
         :param original_direction:  the direction which within it the above parameters were given
         """
-        img = img.convert_alpha()
         self.sprite_rect = sprite_rect
         self.original_direction = original_direction
         if original_direction == structures.Direction.right:
@@ -574,7 +600,11 @@ class FlippableRotatedImage:
                                                 lambda: structures.add_tuples(sprite_rect.topleft, sprite_rect_offset))
             new_position = sprite_rect.width - sprite_rect_offset[0], sprite_rect_offset[1]
             new_offset = structures.mul_tuple(pivot_offset, -1)
-            self.right_image = RotatableImageOld(pygame.transform.flip(img, True, False).convert_alpha(), init_angle,
+
+            im = pygame.transform.flip(img, True, False)
+            if Camera.screen:
+                im = im.convert_alpha()
+            self.right_image = RotatableImageOld(im, init_angle,
                                                  new_offset,
                                                  lambda: structures.add_tuples(sprite_rect.topleft, new_position))
 
@@ -643,6 +673,7 @@ class Camera:
 
         cls.real_screen = display_mode
         cls.screen = cls.real_screen.copy()
+        os.environ['SDL_VIDEO_CENTERED'] = '1'
 
     @classmethod
     def blit_continuous_image(cls, image, position, time_to_blit):
@@ -745,6 +776,45 @@ class Camera:
             pygame.image.save(cls.screen, 'saved.png')
             quit()
 
+        if cls.screen:
+            pygame.display.flip()
+
     @classmethod
     def reset_frame(cls):
         cls.screen.fill(cls.background)
+
+
+class AutoConvertSurface:
+
+    def __init__(self, image):
+        self.image = image
+        self.converted = False
+        self.convert()
+
+    def convert(self):
+        try:
+            self.image = self.image.convert_alpha()
+            self.converted = True
+            print("converted")
+        except pygame.error:
+            print("not converted")
+            pass
+
+    def __get__(self, instance, owner):
+        if not self.converted:
+            self.convert()
+        return self.image
+
+    def get_size(self):
+        return self.image.get_size()
+
+
+class ImageList(list):
+    def __init__(self, initlist):
+        super(ImageList, self).__init__(initlist)
+
+    def __getitem__(self, index):
+        return super(ImageList, self).__getitem__(index).__get__(None, type)
+
+    def __setitem__(self, index, value):
+        super(ImageList, self).__getitem__(index).__set__(None, type)

@@ -7,7 +7,8 @@ import Engine.pygame_structures
 pygame_structures.init(Engine.base_sprites.Tile, Engine.base_sprites.air,
                        Engine.base_sprites.BaseSprite, Engine.base_sprites.clock)
 import CollisionManifold
-import AdvancedRigidBody
+from Engine import AdvancedRigidBody
+
 CollisionManifold.initialize(
     Engine.base_sprites.BaseSprite,
     Engine.base_sprites.BaseRigidBody,

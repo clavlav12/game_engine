@@ -145,6 +145,9 @@ class Turret(base_sprites.ImagedRigidBody):
     TURRET_IMAGE_SIZE = TURRET_IMAGE[0].get_size()
     center_offset = tuple(Vector2.Point(TURRET_IMAGE_SIZE)/2 + (0, 20))
 
+    manifold_generator = lambda _, __: None
+    manifold_generator = base_sprites.ManifoldGenerator(manifold_generator, float('inf'))
+
     def __init__(
             self,
             control: base_controls.controls,
@@ -164,6 +167,7 @@ class Turret(base_sprites.ImagedRigidBody):
             TurretControl(self, control.cw, control.ccw, self.TURNING_SPEED),
             self.center_offset
         )
+        self.collider.manifold_generator = self.manifold_generator
         self.collide_check_by_rect = True
 
 
@@ -219,6 +223,8 @@ class Tank(base_sprites.AdvancedSprite):
         if self.control.moving_direction:
             self.current_angle = self.control.moving_direction.reversed(1).theta + 90
             self.rotatable_image.rotate(self.current_angle)
+    # def apply_gravity(self):
+    #     pass
 
     @classmethod
     def closest_angle(cls, myNumber):
@@ -295,6 +301,7 @@ class Missile(base_sprites.Bullet):
 
         self.sprite_collision_check_by_rect = False
         self.collide_check_by_rect = True
+
     def kill(self):
         if not self.killed:
             pygame_structures.Camera.shake()

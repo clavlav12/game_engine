@@ -451,6 +451,14 @@ class Vector2:
     def __repr__(self):
         return str(self)
 
+    def encode(self):
+        return f'{int(self.x)}:{int(self.y)}'
+
+    @classmethod
+    def decode(cls, string):
+        x, y = string.split(':')
+        return cls.Cartesian(int(x), int(y))
+
     def str_polar(self):
         return f"r={self.r:.2f}, θ={self.theta:.2f}"
 

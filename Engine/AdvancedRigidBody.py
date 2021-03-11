@@ -389,7 +389,6 @@ def t(n=1):
 
 def Main():
     import random
-    base_sprites.f = t
 
     class Planet(base_sprites.BaseSprite):
         # GravitationalConstant = .1e-2
@@ -518,7 +517,7 @@ def Main():
                         0: (lambda: OBB.AxisAligned(event.pos, 25, 25)),
                         1: (lambda: Ball(event.pos, 25, 1)),
                         2: (lambda: Star(25, event.pos))
-                    }[0]()
+                    }[2]()
 
                     # Star(25, event.pos)
                     # Ball(event.pos, 25)
@@ -530,6 +529,7 @@ def Main():
         # if c is not None:
         # draw_arrow(c.position, c.velocity)
         builder.draw()
+
         pygame_structures.Camera.post_process(base_sprites.BaseSprite.sprites_list)
         pg.display.flip()
         elapsed = min(base_sprites.clock.tick(fps) / 1000.0, 1 / 60)

@@ -30,6 +30,11 @@ def get_circle(r=2, w=0, color=pg.Color('red')):
     pg.draw.circle(image, color, (r, r), r, w)
     return image
 
+
 def draw_rect(r: pg.Rect, clr=pg.Color('red')):
+    if not pygame_structures.Camera.screen:
+        return
+    r = r.copy()
     r.topleft = r.topleft - pygame_structures.Camera.scroller
     pg.draw.rect(pygame_structures.Camera.screen, clr, r, 1)
+

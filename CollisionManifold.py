@@ -140,7 +140,9 @@ class CollisionManifold:
         beta = 0
 
         b = beta * self.depth
-        impulse = (-separating_velocity * (min(first.elasticity, second.elasticity) + 1) + b) / (
+        # impulse = (-separating_velocity * (min(first.elasticity, second.elasticity) + 1) + b) / (
+        #         first.inv_mass + second.inv_mass + imp_aug1 + imp_aug2)
+        impulse = (-separating_velocity * (0 + 1) + b) / (
                 first.inv_mass + second.inv_mass + imp_aug1 + imp_aug2)
 
         # if impulse < 1000000:

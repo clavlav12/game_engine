@@ -418,7 +418,7 @@ class Capsule(RigidBody):
         self.elasticity = .2
 
     def update(self, _):
-        super(Capsule, self).update(_)
+        super(Capsule, self).update()
         self.apply_gravity()
 
     def draw(self):
@@ -470,7 +470,7 @@ class Star(RigidBody):
         self.elasticity = .2
 
     def update(self, _):
-        super(Star, self).update(_)
+        super(Star, self).update()
         # self.apply_gravity()
 
 
@@ -495,7 +495,7 @@ class Hammer(RigidBody):
         self.elasticity = .2
 
     def update(self, _):
-        super(Hammer, self).update(_)
+        super(Hammer, self).update()
         # self.apply_gravity()
 
 

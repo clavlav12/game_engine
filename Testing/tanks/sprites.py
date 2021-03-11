@@ -9,6 +9,10 @@ from Engine.Debug import draw_circle
 import math
 
 
+AutoConv = pygame_structures.AutoConvertSurface
+ImageList = pygame_structures.ImageList
+
+
 class MissileMagazine(pygame.sprite.Group):
     magazines_list = []
 
@@ -119,12 +123,12 @@ class Tank(base_sprites.Vehicle):
     scale = 0.5
     position_offset = (85 * scale, 98 * scale)
     pivot_offset = (-20 * scale, 0)
-    TURRET_IMAGE = pygame.transform.flip(pygame.image.load('images/main-turret.png'), True, False).convert_alpha()
-    TURRET_IMAGE = pygame_structures.smooth_scale_image(TURRET_IMAGE, scale)
+    TURRET_IMAGE = pygame.transform.flip(pygame.image.load('images/main-turret.png'), True, False)
+    TURRET_IMAGE = AutoConv(pygame_structures.smooth_scale_image(TURRET_IMAGE, scale))
 
     MOVE_LEFT_IMAGES = pygame_structures.get_images_list(r'animation\tank' + '\\[1-9]*.png', scale)
-    pygame_structures.smooth_scale_images(MOVE_LEFT_IMAGES, scale)
-    MOVE_RIGHT_IMAGES = [pygame.transform.flip(x, True, False).convert_alpha() for x in MOVE_LEFT_IMAGES]
+    # pygame_structures.smooth_scale_images(MOVE_LEFT_IMAGES, scale)
+    MOVE_RIGHT_IMAGES = ImageList([AutoConv(pygame.transform.flip(x, True, False)) for x in MOVE_LEFT_IMAGES])
     HIT_POINTS = 2000
 
     def __init__(self, init_direction, position, left_key=pygame.K_LEFT, right_key=pygame.K_RIGHT,
@@ -154,6 +158,9 @@ class Tank(base_sprites.Vehicle):
         self.collide_check_by_rect = False
         # self.rect_collision = False
 
+    def update(self, _):
+        self.apply_gravity()
+
     def set_turret_angle(self, angle):
         self.turret_angle = max(min((abs(angle) % 380) * sign(angle), 116), -45)
         self.turret_image.rotate(self.turret_angle)
@@ -182,8 +189,8 @@ class Tank(base_sprites.Vehicle):
 class Missile(base_sprites.Bullet):
     DAMAGE = 1
     TRAVEL_DISTANCE = 1000
-    MISSILE_IMAGE = pygame.image.load(r'images\missile.png').convert_alpha()
-    MISSILE_IMAGE = pygame_structures.smooth_scale_image(MISSILE_IMAGE, 1.5)
+    MISSILE_IMAGE = pygame.image.load(r'images\missile.png')
+    MISSILE_IMAGE = AutoConv(pygame_structures.smooth_scale_image(MISSILE_IMAGE, 1.5))
 
     def __init__(self, init_direction, tank: Tank, shoot_force):
         turret_angle = tank.turret_angle

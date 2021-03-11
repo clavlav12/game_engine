@@ -20,7 +20,7 @@ player = Sound.Player()
 clock = pygame.time.Clock()
 GRAVITY = 3_000
 GRAVITY = 1_500
-# GRAVITY = 500
+GRAVITY = 20
 
 
 def no_generator(a, b):
@@ -297,6 +297,7 @@ class air(Tile):
     def set_group(self, group):
         pass
 
+
 def by_two_objects(obj1, obj2):
     normal = get_mid(obj2) - get_mid(obj1)
     obj1_extent_x = obj1.rect.width / 2
@@ -325,6 +326,7 @@ def by_two_objects(obj1, obj2):
 
             return CollisionManifold(None, normal_normalized, penetration, obj1, obj2, True)
 
+    print("no coll")
     return CollisionManifold(None, None, 0, obj1, obj2, False)
 
 
@@ -337,16 +339,41 @@ def get_mid(obj):
 
 class BaseSprite(pygame.sprite.Sprite):
     sprites_list = pygame.sprite.Group()
+
+    current_id = 0
+
+    sprites_by_id = {}
+
     image = pygame.Surface((100, 100))
     game_states = {'sprites': sprites_list, 'keys': [], 'dtime': 0}
     basic_generator = ManifoldGenerator(by_two_objects, 1)
     initiated = []
 
+    id = 1
+    blocks_list = pygame.sprite.Group()
+
+    classes = {
+    }
+
+    @classmethod
+    def get_sprite_class(cls, id_):
+        if '0' not in cls.classes:
+            cls.classes['0'] = BaseSprite
+        return cls.classes[id_]
+
+    def __init_subclass__(cls, **kwargs):
+        cls.id = BaseSprite.id
+        BaseSprite.classes[str(cls.id)] = cls
+        BaseSprite.id += 1
+
     def __init__(self, rect, control, mass, *, sprite_collision_by_rect=False, tile_collision_by_rect=True,
                  manifold_generator=Collider.empty_generator,
                  ):
         # hit boxes & moving
-        if not self.__class__ in BaseSprite.initiated:
+
+        if self.__class__ not in BaseSprite.initiated:
+            self.__class__.initiate()
+            BaseSprite.initiated.append(self.__class__)
 
         super(BaseSprite, self).__init__()
         #
@@ -377,6 +404,31 @@ class BaseSprite(pygame.sprite.Sprite):
 
         self.restitution = 0
         BaseSprite.sprites_list.add(self)
+
+        self.id = BaseSprite.current_id
+        BaseSprite.current_id += 1
+        BaseSprite.sprites_by_id[str(self.id)] = self
+
+        self.user = None
+
+    def set_user(self, user):
+        self.user = user
+
+    def set_id(self, id_):
+        BaseSprite.sprites_by_id.pop(str(self.id))
+        self.id = id_
+        BaseSprite.sprites_by_id[str(self.id)] = self
+
+    def encode(self) -> dict:
+        x = self.position.floor()
+        v = self.velocity.floor()
+        return {'x': x.encode(), 'v': v.encode()}
+
+    def decode_update(self, **kwargs):
+        new_position = structures.Vector2.decode(kwargs['x'])
+        new_velocity = structures.Vector2.decode(kwargs['v'])
+        self.position.set_values(*new_position)
+        self.velocity.set_values(*new_velocity)
 
     @classmethod
     def initiate(cls):
@@ -446,6 +498,11 @@ class BaseSprite(pygame.sprite.Sprite):
 
     def _update(self, control_dict):
         """A method to control sprite behavior. Called ones per frame"""
+        if self.user is not None:
+            control_dict = control_dict.copy()
+            control_dict['keys'] = self.user.active_keys
+            # print("setting keys to ", self.user.active_keys)
+
         self.control.move(**control_dict)
         self.update_kinematics(control_dict['dtime'])
         self.update(control_dict)
@@ -468,12 +525,12 @@ class BaseSprite(pygame.sprite.Sprite):
     def update_position(self, time_delta):
         change = self.velocity * time_delta
         self.position += change
-        self.rect.center = tuple(self.position.floor())
+        self.rect.center = tuple(round(self.position))
         return change
 
     def set_position(self, x=None, y=None):
         self.position.set_values(x, y)
-        self.rect.center = tuple(self.position.floor())
+        self.rect.center = tuple(round(self.position))
 
     #
 
@@ -571,7 +628,8 @@ class AdvancedSprite(BaseSprite):
     def __init__(self, rect, control, mass, hit_points,
                  health_bar_colors: Optional[Tuple[tuple, tuple]] = None, resistance_length=0):
         # hit boxes & moving
-        super(AdvancedSprite, self).__init__(rect, control, mass)
+        super(AdvancedSprite, self).__init__(rect, control, mass,
+                                             manifold_generator=BaseSprite.basic_generator)
         #
 
         # jumping & physics
@@ -1035,8 +1093,9 @@ def tick(elapsed, keys=pygame.key.get_pressed()):
 
     solve_manifolds()
 
-    for s in BaseSprite.sprites_list:
-        s.draw()
+    if pygame_structures.Camera.real_screen:
+        for s in BaseSprite.sprites_list:
+            s.draw()
 
     Particles.Particle.update_all()
     Tile.update_all()
