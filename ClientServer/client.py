@@ -169,7 +169,10 @@ class Client(CommandClient):
     @CommandClient.command('Update')
     def update_sprite(self, kwargs):
         id_ = kwargs.pop('id')
-        base_sprites.BaseSprite.sprites_by_id[id_].decode_update(**kwargs)
+        try:
+            base_sprites.BaseSprite.sprites_by_id[id_].decode_update(**kwargs)
+        except KeyError as e:
+            print("sprite is not created yet", e)
 
     @CommandClient.command('Create')
     def create_sprite(self, kwargs):

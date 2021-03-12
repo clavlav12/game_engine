@@ -2,26 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="71a335b9-b6e5-4148-a18b-ae04a242155c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/ClientServer/Protocol.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClientServer/TestServer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClientServer/client.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClientServer/common_sprites.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClientServer/openClient.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClientServer/server.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Excel Test/Non Render Test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/platform_game-online.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/platform_game-online.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AdvancedRigidBody.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/AdvancedRigidBody.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CollisionManifold.py" beforeDir="false" afterPath="$PROJECT_DIR$/CollisionManifold.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/Debug.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Debug.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/base_sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/base_sprites.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/pygame_structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/pygame_structures.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/structures.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Testing/AdvancedRigidBodyOld.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/AdvancedRigidBodyOld.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/Omer's Project/Tanks/sprites.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Testing/tanks/main test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/main test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Testing/tanks/sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/sprites.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +144,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="client" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="main debug" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -171,11 +152,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ClientServer" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/GUI" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ClientServer/client.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/GUI/main debug.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -232,16 +213,16 @@
       <item itemvalue="Python.AdvancedRigidBody" />
       <item itemvalue="Python.TestClient" />
       <item itemvalue="Python.server" />
-      <item itemvalue="Python.client" />
       <item itemvalue="Python.TestServer" />
+      <item itemvalue="Python.main debug" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.TestClient" />
         <item itemvalue="Python.TestServer" />
+        <item itemvalue="Python.main debug" />
         <item itemvalue="Python.AdvancedRigidBody" />
         <item itemvalue="Python.server" />
-        <item itemvalue="Python.client" />
       </list>
     </recent_temporary>
   </component>
