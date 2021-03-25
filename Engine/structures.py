@@ -1,21 +1,21 @@
 from enum import Enum
 import math
 from time import time
+from pymaybe import maybe
 
-
-class Nothing:
-    def __getattr__(self, item):
-        if item == 'or_else':
-            return lambda val: val
-        else:
-            return self
-
-
-def maybe2(value):
-    if value is None:
-        return Nothing()
-    else:
-        return value
+# class Nothing:
+#     def __getattr__(self, item):
+#         if item == 'or_else':
+#             return lambda val: val
+#         else:
+#             return self
+#
+#
+# def maybe(value):
+#     if value is None:
+#         return Nothing()
+#     else:
+#         return value
 
 
 def sign(x):
