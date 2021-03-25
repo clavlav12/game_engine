@@ -214,6 +214,7 @@ class Tank(base_sprites.AdvancedSprite):
         self.current_angle = angle - 90
         self.turret = Turret(control_keys, color, self.get_turret_position(), self.current_angle - 180)
 
+        print(self.health_bar.bar_width, self.health_bar.bar_height)
 
     def get_turret_position(self):
         return structures.add_tuples(self.rect.center,

@@ -38,3 +38,6 @@ def draw_rect(r: pg.Rect, clr=pg.Color('red')):
     r.topleft = r.topleft - pygame_structures.Camera.scroller
     pg.draw.rect(pygame_structures.Camera.screen, clr, r, 1)
 
+
+class WTFError(Exception):
+    pass

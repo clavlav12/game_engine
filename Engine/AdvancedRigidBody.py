@@ -517,11 +517,14 @@ def Main():
                         0: (lambda: OBB.AxisAligned(event.pos, 25, 25)),
                         1: (lambda: Ball(event.pos, 25, 1)),
                         2: (lambda: Star(25, event.pos))
-                    }[2]()
+                    }[random.randint(0, 2)]()
 
                     # Star(25, event.pos)
                     # Ball(event.pos, 25)
-
+        try:
+            print(c.orientation)
+        except UnboundLocalError:
+            pass
         keys = pg.key.get_pressed()
         if keys[pg.K_LCTRL] and keys[pg.K_r]:
             base_sprites.BaseSprite.sprites_list.empty()

@@ -1,7 +1,21 @@
 from enum import Enum
 import math
-from pymaybe import maybe
 from time import time
+
+
+class Nothing:
+    def __getattr__(self, item):
+        if item == 'or_else':
+            return lambda val: val
+        else:
+            return self
+
+
+def maybe2(value):
+    if value is None:
+        return Nothing()
+    else:
+        return value
 
 
 def sign(x):
@@ -265,6 +279,10 @@ class Vector2:
         return cls(cls.__key, (r, theta), VectorType.polar)
 
     @classmethod
+    def Unit(cls, angle):
+        return cls.Polar(1, angle)
+
+    @classmethod
     def Zero(cls):
         return cls.Cartesian(0, 0)
 
@@ -454,10 +472,18 @@ class Vector2:
     def encode(self):
         return f'{int(self.x)}:{int(self.y)}'
 
+    def encode_polar(self):
+        return f'{int(self.r)}:{int(self.theta)}'
+
     @classmethod
     def decode(cls, string):
         x, y = string.split(':')
         return cls.Cartesian(int(x), int(y))
+
+    @classmethod
+    def decode_polar(cls, string):
+        r, theta = string.split(':')
+        return cls.Polar(int(r), int(theta))
 
     def str_polar(self):
         return f"r={self.r:.2f}, θ={self.theta:.2f}"

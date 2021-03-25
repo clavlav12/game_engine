@@ -62,6 +62,8 @@ class Tile(pygame.sprite.Sprite):
     classes = {
     }
 
+    # image = pygame_structures.PrivateAutoConvertSurface(False)
+
     @classmethod
     def get_tile(cls, id_):
         if 0 not in cls.classes:
@@ -105,6 +107,9 @@ class Tile(pygame.sprite.Sprite):
         self.draw()
 
     def draw(self):
+        pygame_structures.Camera.blit(self.image, self.rect.topleft - pygame_structures.Camera.scroller)
+
+    def draw_no_convert(self):
         pygame_structures.Camera.blit(self.image, self.rect.topleft - pygame_structures.Camera.scroller)
 
     @classmethod
@@ -347,7 +352,6 @@ class BaseSprite(pygame.sprite.Sprite):
     image = pygame.Surface((100, 100))
     game_states = {'sprites': sprites_list, 'keys': [], 'dtime': 0}
     basic_generator = ManifoldGenerator(by_two_objects, 1)
-    initiated = []
 
     id = 1
     blocks_list = pygame.sprite.Group()
@@ -355,11 +359,21 @@ class BaseSprite(pygame.sprite.Sprite):
     classes = {
     }
 
+    server = None
+
+    @classmethod
+    def create_from_kwargs(cls, *, id_, **kwargs):
+        return cls(**kwargs)
+
     @classmethod
     def get_sprite_class(cls, id_):
         if '0' not in cls.classes:
             cls.classes['0'] = BaseSprite
         return cls.classes[id_]
+
+    @classmethod
+    def set_server(cls, server):
+        cls.server = server
 
     def __init_subclass__(cls, **kwargs):
         cls.id = BaseSprite.id
@@ -367,13 +381,9 @@ class BaseSprite(pygame.sprite.Sprite):
         BaseSprite.id += 1
 
     def __init__(self, rect, control, mass, *, sprite_collision_by_rect=False, tile_collision_by_rect=True,
-                 manifold_generator=Collider.empty_generator,
+                 manifold_generator=Collider.empty_generator
                  ):
         # hit boxes & moving
-
-        if self.__class__ not in BaseSprite.initiated:
-            self.__class__.initiate()
-            BaseSprite.initiated.append(self.__class__)
 
         super(BaseSprite, self).__init__()
         #
@@ -407,14 +417,37 @@ class BaseSprite(pygame.sprite.Sprite):
 
         self.id = BaseSprite.current_id
         BaseSprite.current_id += 1
+        if str(self.id) in BaseSprite.sprites_by_id:
+            raise WTFError('id occupied?!')
         BaseSprite.sprites_by_id[str(self.id)] = self
 
         self.user = None
+        self.child_sprites = []
+
+    def add_child(self, child):
+        self.child_sprites.append(child)
+        child.set_id(None)
+
+    def add_to_server(self, controller, **kwargs):
+        if self.server is not None:
+            self.server.add_sprite(self, controller, **kwargs)
+
+    @classmethod
+    def create_and_add_to_server(cls, controller, **kwargs):
+        sprite = cls(**kwargs)
+        sprite.add_to_server(controller, **kwargs)
+        return sprite
 
     def set_user(self, user):
         self.user = user
+        for child in self.child_sprites:
+            child.set_user(user)
 
     def set_id(self, id_):
+        if self.id == id_: return
+        # if str(id_) in BaseSprite.sprites_by_id:
+        #     raise WTFError('id occupied?! by ' + str(BaseSprite.sprites_by_id[str(id_)]))
+
         BaseSprite.sprites_by_id.pop(str(self.id))
         self.id = id_
         BaseSprite.sprites_by_id[str(self.id)] = self
@@ -431,8 +464,12 @@ class BaseSprite(pygame.sprite.Sprite):
         self.velocity.set_values(*new_velocity)
 
     @classmethod
-    def initiate(cls):
-        pass
+    def encode_creation(cls, **kwargs):
+        return kwargs
+
+    @classmethod
+    def decode_creation(cls, **kwargs):
+        return kwargs
 
     @property
     def elasticity(self):
@@ -660,6 +697,15 @@ class AdvancedSprite(BaseSprite):
         # used for conditions
         self.sprite_collide = False  # Turn on when collides with sprite - used for conditions
 
+    def encode(self):
+        d = super(AdvancedSprite, self).encode()
+        d['hp'] = str(self.hit_points)
+        return d
+
+    def decode_update(self, **kwargs):
+        super(AdvancedSprite, self).decode_update(**kwargs)
+        self.hit_points = int(kwargs['hp'])
+
     def draw_health_bar(self):
         if self.health_bar:
             self.health_bar.draw()
@@ -699,6 +745,7 @@ class AdvancedSprite(BaseSprite):
 
     def dead_check(self):
         if self.hit_points <= 0 and not self.is_dead:
+            print("dead")
             self.is_dead = True
             self.die()
             return True
@@ -886,12 +933,25 @@ class BaseRigidBody(BaseSprite):
 
         return Projection(min_projection, max_projection, collision_vertex)
 
+    def encode(self):
+        d = super(BaseRigidBody, self).encode()
+        d['av'] = str(int(self.angular_velocity % 360))
+        d['a'] = str(int(self.orientation % 360))
+        return d
+
+    def decode_update(self, **kwargs):
+        super(BaseRigidBody, self).decode_update(**kwargs)
+        # print("av:", kwargs['av'])
+        # print("a:", kwargs['a'])
+        self.angular_velocity = int(kwargs['av'])
+        self.orientation = int(kwargs['a'])
+        # self.orientation = 0
+
 
 class ImagedRigidBody(BaseRigidBody):
     def __init__(self, image, rect, mass, moment_of_inertia, orientation, control=controls.NoMoveControl(),
                  rotation_offset=None):
         super(ImagedRigidBody, self).__init__(rect, mass, moment_of_inertia, orientation, control)
-        self.generate_collision_manifold = True
 
         if rotation_offset is None:
             rotation_offset = tuple(structures.Vector2.Point(image.get_size()) / 2)
@@ -920,9 +980,6 @@ class ImagedRigidBody(BaseRigidBody):
         )
         self.rect.size = new.size
         # self.draw_rect()
-
-    def generate_manifold(self, other: Union[Tile, BaseSprite, pygame.sprite.Sprite]):
-        pass
 
 
 class DrivableSprite(AdvancedSprite):

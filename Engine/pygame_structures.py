@@ -769,8 +769,8 @@ class Camera:
                 else:
                     image.order()
 
-        for collection in TileCollection.collections:
-            draw_rect(collection.rect)
+        # for collection in TileCollection.collections:
+        #     draw_rect(collection.rect)
         cls.real_screen.blit(cls.screen, next(cls.shake_offset))
         if cls.save:
             pygame.image.save(cls.screen, 'saved.png')
@@ -809,7 +809,83 @@ class AutoConvertSurface:
         return self.image.get_size()
 
 
+class ImageHolder:
+    __slots__ = 'image', 'converted'
+
+    def __init__(self, image):
+        self.image = image
+        self.converted = False
+
+    def image_converted(self, new_image):
+        self.image = new_image
+        self.converted = True
+
+    def get_image(self):
+        return self.image
+
+    def __getitem__(self, item):
+        if item == 0:
+            return self.image
+        elif item == 1:
+            return self.converted
+        else:
+            raise IndexError()
+
+
+class PrivateAutoConvertSurface:
+    __slots__ = 'alpha', 'name'
+
+    def __init__(self, alpha=True):
+        self.alpha = alpha
+
+    def __set_name__(self, owner, name):
+        self.name = name
+
+    def __get__(self, instance, owner):
+        # return self.get_image(instance)
+        try:
+            image, converted = self.get_image_converted(instance)
+        except KeyError:
+            raise AttributeError(f"'{type(instance).__name__}' object has no attribute '{self.name}'")
+        if converted or not Camera.screen:
+            return image
+        try:
+            # print("converting...")
+            if self.alpha:
+                converted = image.convert_alpha()
+            else:
+                converted = image.convert()
+
+            self.image_converted(instance, converted)
+
+        except pygame.error:
+            pass
+
+        return self.get_image(instance)
+
+    def set_image(self, instance, image):
+        instance.__dict__[self.name] = ImageHolder(image)
+
+    def get_image(self, instance):
+        return instance.__dict__[self.name].get_image()
+
+    def is_converted(self, instance):
+        return instance.__dict__[self.name].converted
+
+    def get_image_converted(self, instance):
+        return instance.__dict__[self.name]
+
+    def image_converted(self, instance, new_image):
+        instance.__dict__[self.name].image_converted(new_image)
+
+    def __set__(self, instance, value):
+        self.set_image(instance, value)
+
+
 class ImageList(list):
+    """
+    List of descriptors
+    """
     def __init__(self, initlist):
         super(ImageList, self).__init__(initlist)
 
