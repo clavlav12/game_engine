@@ -2,8 +2,15 @@ from Engine.structures import Vector2, Direction
 from Engine.Sound import Sounds
 import Engine.pygame_structures as pg_structs
 import pygame as pg
-from pymaybe import maybe
 from collections import namedtuple
+
+
+def maybe(value, or_else):
+    if value is None:
+        return or_else
+    else:
+        return value
+
 
 controls = namedtuple('keys', ('up', 'down', 'left', 'right', 'cw', 'ccw'), defaults=(None, ) * 6)
 arrows = controls(pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_KP0, pg.K_RCTRL)
@@ -99,10 +106,20 @@ class LeftRightMovement(BaseControl):
         # if self.sprite.on_platform:
         #     self.sprite.on_platform.stop_sprite(self.sprite)
         # else:
+        if self.sprite.on_platform is not None:
+            stopping_friction = self.sprite.on_platform.max_stopping_friction
+        else:
+            stopping_friction = float('inf')
+
+        # print(stopping_friction)
+        # from Engine.base_sprites import BaseSprite
+        # self.sprite: BaseSprite
+        # f = self.sprite.add_force(Vector2.Cartesian(-sign(self.sprite.velocity.x) *
+        #                                         min(abs(self.sprite.velocity.x),
+        #                                             stopping_friction * self.sprite.mass)), 'stop movement', )
         self.sprite.add_force(Vector2.Cartesian(-sign(self.sprite.velocity.x) *
                                                 min(abs(self.sprite.velocity.x),
-                                                    maybe(self.sprite.on_platform).max_stopping_friction.
-                                                    or_else(float('inf')))) * self.sprite.mass, 'stop movement')
+                                                    stopping_friction) * self.sprite.mass), 'stop movement', )
         if self.direction not in Direction.idles:
             if self.direction == Direction.right:
                 self.direction = Direction.idle_right
@@ -129,10 +146,14 @@ class UpDownMovement:
                               'walking')
 
     def stop(self):
+        if self.sprite.on_platform is not None:
+            stopping_friction = self.sprite.on_platform.max_stopping_friction
+        else:
+            stopping_friction = float('inf')
+
         self.sprite.add_force(Vector2.Cartesian(y=-sign(self.sprite.velocity.y) *
                                                 min(abs(self.sprite.velocity.y),
-                                                    maybe(self.sprite.on_platform).max_stopping_friction.
-                                                    or_else(float('inf')))) * self.sprite.mass, 'stop movement')
+                                                    stopping_friction)) * self.sprite.mass, 'stop movement')
 
 
 class JumpControl(BaseControl):

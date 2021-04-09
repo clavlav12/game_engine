@@ -272,7 +272,7 @@ class RigidConvexPolygon(base_sprites.BaseRigidBody):
         # self.polygon.update_centroid(self.position)
 
         # print('1: ', self.position, self.rect.center)
-        self.polygon.rotate(self.orientation, self.position)
+        self.polygon.rotate_and_move(self.orientation, self.position)
         self.rect = self.polygon.rect
 
         # print('2: ', self.position, self.rect.center)

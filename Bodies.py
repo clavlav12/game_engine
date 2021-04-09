@@ -201,7 +201,7 @@ class Polygon(Body):
 
         new_position = parent_position + (self.center_offset * matrix)
 
-        self.polygon.rotate(parent_orientation - self.reference_orientation, new_position)
+        self.polygon.rotate_and_move(parent_orientation - self.reference_orientation, new_position)
 
     def redraw(self, _=None):
         self.image = pygame.Surface(tuple(self.polygon.rect.size +

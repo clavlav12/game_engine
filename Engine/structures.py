@@ -1,21 +1,13 @@
 from enum import Enum
 import math
 from time import time
-from pymaybe import maybe
 
-# class Nothing:
-#     def __getattr__(self, item):
-#         if item == 'or_else':
-#             return lambda val: val
-#         else:
-#             return self
-#
-#
-# def maybe(value):
-#     if value is None:
-#         return Nothing()
-#     else:
-#         return value
+
+def maybe(value, or_else):
+    if value is None:
+        return or_else
+    else:
+        return value
 
 
 def sign(x):
@@ -331,8 +323,8 @@ class Vector2:
         return Vector2.Cartesian(int(self.x), int(self.y))
 
     def set_values(self, x=None, y=None):
-        self.x = maybe(x).or_else(self.x)
-        self.y = maybe(y).or_else(self.y)
+        self.x = maybe(x, self.x)
+        self.y = maybe(y, self.y)
 
     def multiply_terms(self, other):
         return Vector2.Cartesian(self.x * other.x, self.y * other.y)
@@ -719,10 +711,10 @@ class Scroller:  # tested
         self.display_size = display_size
         self.last_dx = 0  # not necessary, makes movement smoother
         self.last_dy = 0  # not necessary, makes movement smoother
-        self.minx = maybe(minx).or_else(float("-inf"))
-        self.maxx = maybe(maxx).or_else(float("inf"))
-        self.miny = maybe(miny).or_else(float("-inf"))
-        self.maxy = maybe(maxy).or_else(float("inf"))
+        self.minx = maybe(minx, float("-inf"))
+        self.maxx = maybe(maxx, float("inf"))
+        self.miny = maybe(miny, float("-inf"))
+        self.maxy = maybe(maxy, float("inf"))
         self.delay = delay
 
         if starting_position:

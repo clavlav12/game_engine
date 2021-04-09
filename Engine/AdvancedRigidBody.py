@@ -521,10 +521,10 @@ def Main():
 
                     # Star(25, event.pos)
                     # Ball(event.pos, 25)
-        try:
-            print(c.orientation)
-        except UnboundLocalError:
-            pass
+        # try:
+        #     print(c.orientation)
+        # except UnboundLocalError:
+        #     pass
         keys = pg.key.get_pressed()
         if keys[pg.K_LCTRL] and keys[pg.K_r]:
             base_sprites.BaseSprite.sprites_list.empty()

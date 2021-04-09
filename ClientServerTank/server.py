@@ -7,8 +7,8 @@ import json
 from Engine.base_sprites import BaseSprite, player
 from common_sprites import Tank, Color, W, H, ts
 from Engine.structures import Vector2
-from Engine.base_control import arrows
-from pygame import K_KP_ENTER
+from Engine.base_control import wasd
+from pygame import K_SPACE
 from pygame import Color as pg_color
 
 player.mute = True
@@ -358,8 +358,8 @@ class Server(CommandServer):
                                          init_direction=Vector2.Unit(random.choice(Tank.possible_angles)),
                                          position=Vector2.Cartesian(random.randint(ts, W - ts),
                                                                     random.randint(ts, H-ts)),
-                                         control_keys=arrows,
-                                         shoot_key=K_KP_ENTER,
+                                         control_keys=wasd,
+                                         shoot_key=K_SPACE,
                                          color=Color.black,
                                          health_bar_positive_color=pg_color('green'),
                                          health_bar_negative_color=pg_color('red'),

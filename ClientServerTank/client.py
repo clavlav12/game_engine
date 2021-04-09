@@ -8,6 +8,12 @@ from Engine import base_sprites
 class CommandClient(Thread):
     SERVER_PORT = 35241
     IP = "127.0.0.1"
+    try:
+        with open('ip.txt', 'r') as file:
+            IP = file.read().strip()
+    except:
+        open('ip.txt', 'w').close()
+    # IP = "212.76.116.100"
     # IP = "31.44.141.250"
     commands = {}
 
@@ -33,7 +39,9 @@ class CommandClient(Thread):
         self.socket.settimeout(10)
         try:
             ip = self.IP
+            print("connecting")
             self.socket.connect((ip, self.SERVER_PORT))
+            print("connected")
             self.connect()
             self.socket.setblocking(False)
             self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -142,6 +150,7 @@ class CommandClient(Thread):
         self.socket.send(self.build_packet(command, **parameters))
 
     def connect(self):
+        print("sent connect")
         self.send_message('Connect')
 
 

@@ -49,10 +49,9 @@ class Polygon:
         self.update_vertices()
         self.centroid = new_centroid
 
-    def rotate(self, new_angle: Union[int, float], centroid, radians=False):
+    def rotate_and_move(self, new_angle: Union[int, float], centroid, radians=False):
         self.shapely_polygon = rotate_polygon(self.reference_shapely_polygon, new_angle, 'centroid', radians)
         self.update_centroid(centroid)
-        self.update_vertices()
 
     def update_vertices(self):
         self.world_vertices = [Vector2.Point(v) for v in self.shapely_polygon.exterior.coords]

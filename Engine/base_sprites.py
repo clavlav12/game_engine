@@ -6,7 +6,7 @@ from Engine import Sound
 from CollisionManifold import ManifoldGenerator, CollisionManifold
 import pygame
 from typing import Tuple, Optional, Union
-from pymaybe import maybe
+from idk import maybe
 from time import time
 from random import shuffle
 from collections import namedtuple
