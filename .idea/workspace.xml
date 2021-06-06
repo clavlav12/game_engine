@@ -2,34 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="71a335b9-b6e5-4148-a18b-ae04a242155c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/ClientServerTank/IP.TXT" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClientServerTank/Networking/Client Tester.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClientServerTank/Networking/Server Tester.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClientServerTank/Networking/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClientServerTank/Networking/client.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClientServerTank/Networking/server.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engine/Networking/Client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engine/Networking/Server.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Pong Example/OnlinePong/ClientPong.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Pong Example/OnlinePong/ServerPong.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Pong Example/OnlinePong/common_sprites.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Pong Example/pong.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/aviro.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/aviro.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/platform_game-online.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/platform_game-online.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bodies.py" beforeDir="false" afterPath="$PROJECT_DIR$/Bodies.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientServerTank/TestServer.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/ClientServerTank/build/TestClient/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/ClientServerTank/build/TestClient/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/PKG-00.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/ClientServerTank/build/TestClient/PKG-00.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/ClientServerTank/build/TestClient/PKG-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/ClientServerTank/build/TestClient/PYZ-00.pyz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/ClientServerTank/build/TestClient/PYZ-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/TestClient.exe.manifest" beforeDir="false" afterPath="$PROJECT_DIR$/ClientServerTank/build/TestClient/TestClient.exe.manifest" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/warn-TestClient.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ClientServerTank/build/TestClient/warn-TestClient.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/xref-TestClient.html" beforeDir="false" afterPath="$PROJECT_DIR$/ClientServerTank/build/TestClient/xref-TestClient.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bodies.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Bodies.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClientServerTank/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/ClientServerTank/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientServerTank/pymaybe/__init__.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ClientServerTank/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/ClientServerTank/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CollisionManifold.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/CollisionManifold.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/AdvancedRigidBody.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/AdvancedRigidBody.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/Geometry.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Geometry.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/Debug.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Debug.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/base_control.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/base_control.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/base_sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/base_sprites.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/pygame_structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/pygame_structures.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/structures.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Testing/new_rigid.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/new_rigid.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/AdvancedRigidBodyOld.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/AdvancedRigidBodyOld.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/Collision Time/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/Collision Time/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/Omer's Project/Drone/GameFiles/sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/Omer's Project/Drone/GameFiles/sprites.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/gravity/gravity simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/gravity/gravity simulation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +54,16 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Engine/structures.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Pong Example/OnlinePong/ClientPong.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/Pong Example/OnlinePong/ServerPong.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Engine/CollisionManifold.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Engine/Geometry.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Engine/Networking/Client.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Engine/pygame_structures.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Engine/Networking/Server.py" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectId" id="1RjdLkiaTpfgRuMvGYEEdL96XoZ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -65,10 +72,15 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python&#10;TEXT" />
     <property name="last.edited.regexp" value="Sample Text" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Backups/Video Player QT5 - No stream/UI" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Video Player QT5" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -79,9 +91,9 @@
       <recent name="C:\Users\aviro\Desktop\game_engine\ClientServerTank\animation\explostions" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\aviro\Desktop\game_engine\Engine" />
       <recent name="C:\Users\aviro\Desktop\game_engine\ClientServerTank" />
       <recent name="C:\Users\aviro\Desktop\game_engine\ClientServer" />
-      <recent name="C:\Users\aviro\Desktop\game_engine\Engine" />
       <recent name="C:\Users\aviro\Desktop\game_engine\Testing" />
       <recent name="C:\Users\aviro\Desktop\game_engine" />
     </key>
@@ -108,7 +120,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="TestClient (1)" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
+    <configuration name="AdvancedRigidBodyOld" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -116,11 +128,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ClientServerTank" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ClientServerTank/TestClient.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/AdvancedRigidBodyOld.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -129,7 +141,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="TestServer (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="DoublePendulum" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -137,11 +149,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ClientServerTank" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/gravity" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ClientServerTank/TestServer.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/gravity/DoublePendulum.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -162,6 +174,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -171,7 +184,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="scratch_68" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -179,11 +192,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/Omer's Project/Tanks" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch_68.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/Omer's Project/Tanks/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -192,7 +205,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="scratch_69" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="scratch_76" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -204,7 +217,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch_69.py" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch_76.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -225,6 +238,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tes.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -235,21 +249,21 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.AdvancedRigidBody" />
-      <item itemvalue="Python.TestClient (1)" />
-      <item itemvalue="Python.TestServer (1)" />
       <item itemvalue="Python.Unnamed" />
-      <item itemvalue="Python.scratch_68" />
-      <item itemvalue="Python.scratch_69" />
       <item itemvalue="Python.tes" />
+      <item itemvalue="Python.AdvancedRigidBody" />
+      <item itemvalue="Python.DoublePendulum" />
+      <item itemvalue="Python.scratch_76" />
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.AdvancedRigidBodyOld" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.AdvancedRigidBody" />
-        <item itemvalue="Python.TestClient (1)" />
-        <item itemvalue="Python.TestServer (1)" />
-        <item itemvalue="Python.scratch_69" />
-        <item itemvalue="Python.scratch_68" />
+        <item itemvalue="Python.AdvancedRigidBodyOld" />
+        <item itemvalue="Python.DoublePendulum" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.scratch_76" />
       </list>
     </recent_temporary>
   </component>
@@ -264,6 +278,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1570184384522</updated>
+      <workItem from="1621537243957" duration="4433000" />
+      <workItem from="1621587873140" duration="5365000" />
     </task>
     <task id="LOCAL‎00001" summary="bad rigidCube">
       <created>1604790254036</created>
@@ -292,6 +308,9 @@
     <option name="localTasksCounter" value="5" />
     <servers />
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -308,5 +327,16 @@
     <MESSAGE value="bad rigidCube" />
     <MESSAGE value="friction and impulses" />
     <option name="LAST_COMMIT_MESSAGE" value="friction and impulses" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Engine/Networking/Client.py</url>
+          <line>225</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

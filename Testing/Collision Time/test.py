@@ -71,8 +71,8 @@ class RigidCube(base_sprites.AdvancedSprite):
     def apply_gravity(self):
         super(RigidCube, self).apply_gravity()
 
-    def on_platform_collision(self, direction, platform, before):
-        super(RigidCube, self).on_platform_collision(direction, platform, before)
+    def on_platform_collision(self, platform):
+        super(RigidCube, self).on_platform_collision(platform, before)
         # print(self.angular_velocity)
         if before['velocity'].magnitude() > 0:
             # return

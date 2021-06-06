@@ -6,6 +6,9 @@ from collections import namedtuple
 
 
 def maybe(value, or_else):
+    """
+    uses value if or_else is not None
+    """
     if value is None:
         return or_else
     else:
@@ -18,6 +21,9 @@ wasd = controls(pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_e, pg.K_q)
 
 
 def sign(x):
+    """
+    Mathematical sign function
+    """
     if x > 0:
         return 1
     elif x < 0:
@@ -26,6 +32,9 @@ def sign(x):
 
 
 def init(sound_player, MagazineClass, GunBulletClass):
+    """
+    Meant to fix recursive importing
+    """
     global player
     player = sound_player
     ShootControl.init(MagazineClass, GunBulletClass)
@@ -35,21 +44,35 @@ player = None
 
 
 class BaseControl:
-    def __init__(self, _sprite, _direction):
+    def __init__(self, _sprite, _direction=None):
         self.sprite = _sprite
         self.direction = _direction
         self.in_control = True
 
     def move(self, **kwargs):  # {'sprites' : sprite_list, 'dtime': delta time, 'keys': keys}
+        """
+        Called on each frame. controls self.sprite movement
+        """
         pass
 
     def sprite_collide(self, sprite):
+        """
+        called on sprite collision
+        :param sprite: other sprite
+        """
         pass
 
-    def platform_collide(self, direction, platform, before):
+    def platform_collide(self, platform):
+        """
+        Called on block collision
+        :param platform: platform sprite had collided with
+        """
         pass
 
     def reset(self):
+        """
+        Resets direction to match animation
+        """
         if self.direction in Direction.lefts:
             self.direction = Direction.idle_left
         elif self.direction in Direction.rights:
@@ -71,6 +94,10 @@ class ShootControl(BaseControl):
         BaseControl.__init__(self, sprite, direction)
 
     def shoot(self, velocity_vector):
+        """
+        Shoots a bullet
+        :param velocity_vector: velocity of bullet (Vector2)
+        """
         final_vector = Vector2.Copy(velocity_vector)
         final_vector.x += self.sprite.velocity.x
 
@@ -89,9 +116,10 @@ class LeftRightMovement(BaseControl):
         super(LeftRightMovement, self).__init__(sprite, direction)
 
     def can_move(self):
+        """
+        Can be used to disable movements
+        """
         return True
-        # return (not hasattr(self.sprite, 'on_platform') or bool(self.sprite.on_platform)) or (
-        #         isinstance(self, JumpControl) and self.jumping)
 
     def move(self, **kwargs):
         if self.direction == Direction.right and self.can_move():
@@ -102,21 +130,10 @@ class LeftRightMovement(BaseControl):
                                   'walking')
         super(LeftRightMovement, self).move(**kwargs)
 
-    def stop(self):
-        # if self.sprite.on_platform:
-        #     self.sprite.on_platform.stop_sprite(self.sprite)
-        # else:
-        if self.sprite.on_platform is not None:
-            stopping_friction = self.sprite.on_platform.max_stopping_friction
-        else:
-            stopping_friction = float('inf')
-
-        # print(stopping_friction)
-        # from Engine.base_sprites import BaseSprite
-        # self.sprite: BaseSprite
-        # f = self.sprite.add_force(Vector2.Cartesian(-sign(self.sprite.velocity.x) *
-        #                                         min(abs(self.sprite.velocity.x),
-        #                                             stopping_friction * self.sprite.mass)), 'stop movement', )
+    def stop(self, stopping_friction=float('inf')):
+        """
+        Stops sprite's current movement
+        """
         self.sprite.add_force(Vector2.Cartesian(-sign(self.sprite.velocity.x) *
                                                 min(abs(self.sprite.velocity.x),
                                                     stopping_friction) * self.sprite.mass), 'stop movement', )
@@ -133,24 +150,25 @@ class UpDownMovement:
         self.sprite = sprite
 
     def can_move(self):
+        """
+        Can be used to disable movements
+        """
         return True
-        # return (not hasattr(self.sprite, 'on_platform') or bool(self.sprite.on_platform)) or (
-        #         isinstance(self, JumpControl) and self.jumping)
 
     def move_up(self):
-        self.sprite.add_force(Vector2.Cartesian(y=(-self.moving_speed - self.sprite.velocity.y) * self.sprite.mass),
-                              'walking')
+        if self.can_move():
+            self.sprite.add_force(Vector2.Cartesian(y=(-self.moving_speed - self.sprite.velocity.y) * self.sprite.mass),
+                                  'walking')
 
     def move_down(self):
-        self.sprite.add_force(Vector2.Cartesian(y=(self.moving_speed - self.sprite.velocity.y) * self.sprite.mass),
-                              'walking')
+        if self.can_move():
+            self.sprite.add_force(Vector2.Cartesian(y=(self.moving_speed - self.sprite.velocity.y) * self.sprite.mass),
+                                  'walking')
 
-    def stop(self):
-        if self.sprite.on_platform is not None:
-            stopping_friction = self.sprite.on_platform.max_stopping_friction
-        else:
-            stopping_friction = float('inf')
-
+    def stop(self, stopping_friction=float('inf')):
+        """
+        Stops sprite's current movement
+        """
         self.sprite.add_force(Vector2.Cartesian(y=-sign(self.sprite.velocity.y) *
                                                 min(abs(self.sprite.velocity.y),
                                                     stopping_friction)) * self.sprite.mass, 'stop movement')
@@ -163,13 +181,12 @@ class JumpControl(BaseControl):
         self.jumping = False
         self.jump_timer = pg_structs.Timer(jump_delay)
 
-    def move(self, **kwargs):
-        super(JumpControl, self).move(**kwargs)
-
     def jump(self):
-        self.sprite.on_platform = None
-        self.sprite.add_force(Vector2.Cartesian(0, -self.jump_force), 'jump')
-        #  to stop the last movement
+        """
+        Activates jumping
+        """
+        if self.jump_timer.finished():
+            self.sprite.add_force(Vector2.Cartesian(0, -self.jump_force), 'jump')
 
         self.jump_timer.activate()
         self.jumping = True
@@ -245,7 +262,6 @@ class BetterAllDirectionMovement(BaseControl):
                  default_direction=Direction.left):
 
         BaseControl.__init__(self, sprite, default_direction)
-        # super(BetterAllDirectionMovement, self).__init__(sprite, default_direction)
 
         self.speed = moving_speed
         self.moving_direction = self.DIRECTION_TO_VECTOR[self.direction]
@@ -283,10 +299,12 @@ class BetterAllDirectionMovement(BaseControl):
             self.sprite.velocity = self.speed * self.moving_direction
 
     def stop(self, direction):
+        """
+        stops sprites movement among the axis "direction"
+        :param direction: axis unit vector
+        """
         unit = self.DIRECTION_TO_VECTOR[direction]
         self.sprite.add_force(- unit * unit * self.sprite.velocity, 'stop movement')
-        # Vector2.Cartesian((self.moving_speed - self.sprite.velocity.x) * self.sprite.mass),
-        # 'walking'
 
 
 class Key:
@@ -295,20 +313,38 @@ class Key:
         self.pressed = is_pressed
 
     def press(self):
+        """
+        press key
+        """
         self.pressed = True
 
     def release(self):
+        """
+        release key
+        """
         self.pressed = False
 
     def first_pressed(self):
+        """
+        Presses
+        :return: True if key wasn't pressed before
+        """
         was_pressed = self.pressed
         self.press()
         return not was_pressed
 
     def set_pressed(self, value):
+        """
+        Sets pressed state to value
+        """
         self.pressed = value
 
     def set_pressed_auto(self, keys):
+        """
+        Sets pressed state to proper value according to "keys"
+        :return: True if key is pressed and wasn't pressed before
+        """
+
         was_pressed = self.pressed
         self.pressed = keys[self.key]
         return (not was_pressed) and self.pressed

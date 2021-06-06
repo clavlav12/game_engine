@@ -78,11 +78,11 @@ def accurate_rect_collide_old(rect1, rect2, dpos1, dpos2=(0, 0)):
 
 
 def add_tuples(*tuples):
-    x, y = 0, 0
-    for tup in tuples:
-        x += tup[0]
-        y += tup[1]
-    return x, y
+    lst = [0] * len(min(tuples, key=len))
+    for i in range(len(lst)):
+        for tup in tuples:
+            lst[i] += tup[i]
+    return tuple(lst)
 
 
 def get_rect_min_max(rect, dpos):
@@ -107,7 +107,7 @@ def sub_tuples(a, b):
 
 
 def mul_tuple(tup, num):
-    return int(tup[0] * num), int(tup[1] * num)
+    return tuple(map(lambda x: x * num, tup))
 
 
 class PrivateConstructorAccess(Exception):
@@ -544,6 +544,9 @@ class Vector2:
     def __abs__(self):
         return self.magnitude()
 
+    def __len__(self):
+        return 2
+
     def modf(self):
         x_float, x_num = math.modf(self.x)
         y_float, y_num = math.modf(self.y)
@@ -564,6 +567,8 @@ class Vector2:
             max(self.y, other.y)
         )
 
+    def add_point(self, point):
+        return self + Vector2.Point(point)
 
 class Default:
     pass

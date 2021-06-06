@@ -1,18 +1,15 @@
+from Engine.CollisionManifold import ManifoldGenerator, CollisionManifold
 import Engine.base_control as controls
 import Engine.Particle as Particles
 import Engine.structures as structures
-import Engine.pygame_structures as pygame_structures
-from Engine import Sound
-from CollisionManifold import ManifoldGenerator, CollisionManifold
-import pygame
-from typing import Tuple, Optional, Union
-from idk import maybe
-from time import time
-from random import shuffle
 from collections import namedtuple
+from typing import Tuple, Optional
+from Engine import Sound, Bodies
+from random import shuffle
 from Engine.Debug import *
+from time import time
+import pygame
 import math
-import Bodies
 import os
 
 Projection = namedtuple('Projection', ('min', 'max', 'collision_vertex'))
@@ -20,14 +17,14 @@ player = Sound.Player()
 clock = pygame.time.Clock()
 GRAVITY = 3_000
 GRAVITY = 1_500
-GRAVITY = 20
+GRAVITY = 150
+# GRAVITY = 20
 
 
 def no_generator(a, b):
-    pass
-
-
-def empty_solver(manifold):
+    """
+    Empty manifold generator
+    """
     pass
 
 
@@ -45,6 +42,11 @@ class Collider:
         self.sprites_collision_by_rect = sprites_collision_by_rect
 
     def __and__(self, other):
+        """
+        Combines two Collider objects into one, choosing the more complex one from every aspect
+        :param other:
+        :return:
+        """
         if isinstance(other, Collider):
             complex_generator_obj = max(self, other, key=lambda x: x.manifold_generator.complexity)
             return Collider(
@@ -66,6 +68,11 @@ class Tile(pygame.sprite.Sprite):
 
     @classmethod
     def get_tile(cls, id_):
+        """
+        Get tile class by id
+        :param id_:  id of tile class
+        :return:  class with id == id_
+        """
         if 0 not in cls.classes:
             cls.classes[0] = Tile
         return cls.classes[id_]
@@ -79,6 +86,7 @@ class Tile(pygame.sprite.Sprite):
         super(Tile, self).__init__()
         self.image = img
         self.rect = img.get_rect()
+
         self.rect.topleft = x, y
 
         self.set_group(group)
@@ -87,11 +95,12 @@ class Tile(pygame.sprite.Sprite):
         # self.mask = pygame.mask.from_surface(img)
         Tile.blocks_list.add(self)
 
-    # @property
-    # def position(self):
-    #     return self.rect.center
-
     def set_group(self, group):
+        """
+        Sets tile's group to group
+        :param group:
+        :return:
+        """
         if group is not None:
             self.group = group
             group.add_tile(self)
@@ -108,9 +117,17 @@ class Tile(pygame.sprite.Sprite):
 
     def draw(self):
         pygame_structures.Camera.blit(self.image, self.rect.topleft - pygame_structures.Camera.scroller)
+        self.draw_rect()
 
     def draw_no_convert(self):
         pygame_structures.Camera.blit(self.image, self.rect.topleft - pygame_structures.Camera.scroller)
+
+    def draw_rect(self, clr=pygame.Color('red')):
+        if not pygame_structures.Camera.screen:
+            return
+        r = pygame.Rect(self.rect)
+        r.topleft = r.topleft - pygame_structures.Camera.scroller
+        pygame.draw.rect(pygame_structures.Camera.screen, clr, r, 0)
 
     @classmethod
     def update_all(cls):
@@ -123,10 +140,8 @@ class BlockingTile(Tile):
 
     def __init__(self, img, group: pygame_structures.TileCollection, restitution: float = 0.0,  static_friction: float = 0.0, dynamic_friction: float = 0.0,
                  *, x, y,):
-        if group is None:
-            group = self
-
-        super(BlockingTile, self).__init__(img, x=x, y=y, group=group, manifold_generator=BaseSprite.basic_generator)
+        super(BlockingTile, self).__init__(img, x=x, y=y, group=group, manifold_generator=BaseSprite.basic_generator,
+                                           )
         self.max_stopping_friction = float('inf')  # change if want to simulate ice or something with low friction coeff
         # self.max_stopping_friction = 0  # change if want to simulate ice or something with low friction coeff
 
@@ -344,7 +359,7 @@ def get_mid(obj):
 
 class BaseSprite(pygame.sprite.Sprite):
     sprites_list = pygame.sprite.Group()
-
+    collision_detection = True
     current_id = 0
 
     sprites_by_id = {}
@@ -360,6 +375,7 @@ class BaseSprite(pygame.sprite.Sprite):
     }
 
     server = None
+    client = None
 
     @classmethod
     def create_from_kwargs(cls, *, id_, **kwargs):
@@ -375,19 +391,27 @@ class BaseSprite(pygame.sprite.Sprite):
     def set_server(cls, server):
         cls.server = server
 
+    @classmethod
+    def set_client(cls, client):
+        cls.client = client
+
     def __init_subclass__(cls, **kwargs):
         cls.id = BaseSprite.id
         BaseSprite.classes[str(cls.id)] = cls
         BaseSprite.id += 1
 
-    def __init__(self, rect, control, mass, *, sprite_collision_by_rect=False, tile_collision_by_rect=True,
+    def __init__(self, rect, control: controls.BaseControl, mass, *, sprite_collision_by_rect=False, tile_collision_by_rect=True,
                  manifold_generator=Collider.empty_generator
                  ):
-        # hit boxes & moving
+        self.user = None
 
+        # hit boxes & moving
+        if control is None:
+            control = controls.NoMoveControl()
         super(BaseSprite, self).__init__()
+
         #
-        self.collider = Collider(
+        self.collider: Collider = Collider(
             sprite_collision_by_rect,
             tile_collision_by_rect,
             manifold_generator
@@ -410,7 +434,7 @@ class BaseSprite(pygame.sprite.Sprite):
         self.static_friction = 0
         self.dynamic_friction = 0
 
-        self.control = control
+        self.control: controls.BaseControl = control
 
         self.restitution = 0
         BaseSprite.sprites_list.add(self)
@@ -418,10 +442,10 @@ class BaseSprite(pygame.sprite.Sprite):
         self.id = BaseSprite.current_id
         BaseSprite.current_id += 1
         if str(self.id) in BaseSprite.sprites_by_id:
-            raise WTFError('id occupied?!')
+            pass
+            # raise WTFError('id occupied?!')
         BaseSprite.sprites_by_id[str(self.id)] = self
 
-        self.user = None
         self.child_sprites = []
 
     def add_child(self, child):
@@ -473,11 +497,11 @@ class BaseSprite(pygame.sprite.Sprite):
 
     @property
     def elasticity(self):
-        return 1 - self.restitution
+        return self.restitution
 
     @elasticity.setter
     def elasticity(self, value):
-        self.restitution = 1 - value
+        self.restitution = value
 
     @property
     def inv_mass(self):
@@ -502,10 +526,10 @@ class BaseSprite(pygame.sprite.Sprite):
             other_vel = structures.Vector2.Zero()
         return other_vel - self.velocity
 
-    def draw_rect(self, clr=pygame.Color('red')):
+    def draw_rect(self, clr=pygame.Color('red'), w=1):
         r = pygame.Rect(self.rect)
         r.topleft = r.topleft - pygame_structures.Camera.scroller
-        pygame.draw.rect(pygame_structures.Camera.screen, clr, r, 1)
+        pygame.draw.rect(pygame_structures.Camera.screen, clr, r, w)
 
     def add_force(self, force: structures.Vector2, signature: str = None, mul_dtime: bool = True):
         """
@@ -532,6 +556,7 @@ class BaseSprite(pygame.sprite.Sprite):
         """Called on redraw function for each sprite in BaseSprite.sprites_list.
          draw the sprite to the screen"""
         pygame_structures.Camera.blit(self.image, self.rect.topleft - pygame_structures.Camera.scroller)
+
 
     def _update(self, control_dict):
         """A method to control sprite behavior. Called ones per frame"""
@@ -571,23 +596,24 @@ class BaseSprite(pygame.sprite.Sprite):
 
     #
 
-    def on_platform_collision(self, direction, platform, before):
+    def on_platform_collision(self, platform):
         """Called when the sprite collides with a platform"""
         # when finishing the game, should try to change it to forced verision
         pass
 
     def update_kinematics(self, time_delta):
-        platform, before = pygame_structures.Map.check_platform_collision(self, time_delta)
-        if platform is not None:
-            self.on_platform_collision(structures.Direction.vertical, platform, before)
-            self.control.platform_collide(structures.Direction.vertical, platform, before)
+        if self.collision_detection:
+            platform = pygame_structures.Map.check_platform_collision(self, time_delta)
+            if platform is not None:
+                self.on_platform_collision(platform)
+                self.control.platform_collide(platform)
 
         # print(self.force)
         self.update_position(time_delta)
         self.update_velocity_and_acceleration(time_delta)
 
-
-        return platform
+        if self.collision_detection:
+            return platform
 
     def update_velocity_and_acceleration(self, time_delta):
         self.update_acceleration()
@@ -599,7 +625,8 @@ class BaseSprite(pygame.sprite.Sprite):
 
     @classmethod
     def check_sprite_collision(cls, collision_type='mask', *, lst=None):
-
+        if not cls.collision_detection:
+            return
         if lst is None:
             lst = cls.sprites_list
         if collision_type == 'mask':
@@ -652,10 +679,14 @@ class BaseSprite(pygame.sprite.Sprite):
         cls.game_states['keys'] = keys
 
     def collision(self, other):
-        """Called when one sprite collides with another
         """
-        pass
+        Called when one sprite collides with another
+        """
 
+    def solved_collision(self, other):
+        """
+        Called after a collision manifols is solved
+        """
 
 class AdvancedSprite(BaseSprite):
     """Sprite that can jump and has health bar"""
@@ -795,7 +826,7 @@ class BaseRigidBody(BaseSprite):
         # super(BaseRigidBody, self).__init__(rect, control, mass, hit_points=hit_points,
         #                                     health_bar_colors=health_bar_colors)
         print("orientation is not one, make ur own obb")
-        self.obb = Bodies.Rectangle.AxisAligned(rect.center, rect.width/2, rect.height/2, (0, 0), 0)
+        self.obb = Bodies.Rectangle.AxisAligned(rect.center, rect.width / 2, rect.height / 2, (0, 0), 0)
         if calculate_attributes:
             mass = self.obb.polygon.mass
             moment_of_inertia = self.obb.polygon.moment_of_inertia
@@ -1045,9 +1076,8 @@ class Bullet(BaseSprite):
             # Camera.shake()
         # elif isinstance(other, Bullet):
 
-    def on_platform_collision(self, direction, platform, before):
-        if direction == structures.Direction.vertical:
-            self.kill()
+    def on_platform_collision(self, platform):
+        self.kill()
 
 
 class Magazine(pygame.sprite.Group):
@@ -1123,15 +1153,21 @@ def resolve_collisions():
 
     for manifold in CollisionManifold.Manifolds:
         manifold.penetration_resolution()
+        if isinstance(manifold.obj1, BaseSprite):
+            manifold.obj1.solved_collision(manifold.obj2)
+        if isinstance(manifold.obj2, BaseSprite):
+            manifold.obj2.solved_collision(manifold.obj1)
     CollisionManifold.Manifolds.clear()
 
 
-def solve_manifolds(n=1):
+def solve_manifolds(n=10):
     if n > 0:
         sprites_set = set()
         for m in CollisionManifold.Manifolds:
-            sprites_set.add(m.obj1)
-            sprites_set.add(m.obj2)
+            f = lambda obj: obj.reference if isinstance(obj, pygame_structures.TileCollection) else obj
+            if isinstance(f(m.obj1), Tile) or isinstance(f(m.obj2), Tile): continue
+            sprites_set.add(f(m.obj1))
+            sprites_set.add(f(m.obj2))
     resolve_collisions()
     for i in range(n - 1):
         BaseSprite.check_sprite_collision(lst=sprites_set)
@@ -1158,3 +1194,38 @@ def tick(elapsed, keys=pygame.key.get_pressed()):
     Tile.update_all()
     pygame_structures.Camera.scroller.update()
     structures.UntilCondition.update_all()
+
+
+def basic_loop():
+    running = 1
+    fps = 1000
+    elapsed = 1/fps
+    while running:
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.WINDOWEVENT:
+                clock.tick()
+                continue
+            if event.type == pygame.QUIT:
+                running = 0
+
+            if BaseSprite.client:
+                if event.type == pygame.KEYDOWN:
+                    BaseSprite.client.key_event(event.key, 1)
+
+                if event.type == pygame.KEYUP:
+                    BaseSprite.client.key_event(event.key, 0)
+
+        keys = pygame.key.get_pressed()
+        tick(elapsed, keys)
+
+        pygame_structures.Camera.post_process(BaseSprite.sprites_list)
+        elapsed = min(clock.tick(fps) / 1000.0, 1 / 30)
+
+    if BaseSprite.server:
+        print(BaseSprite.server)
+        BaseSprite.server.server_socket.close()
+    elif BaseSprite.client:
+        BaseSprite.client.socket.close()
+
+

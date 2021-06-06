@@ -1,18 +1,10 @@
-from Engine import pygame_structures
 from Engine.Debug import *
 from Engine import base_sprites
 from Engine import base_control
-from Engine import structures
 from Engine.structures import Vector2, Direction
-from Engine import Geometry
-from typing import Union, Tuple, List
-from collections import namedtuple
 from enum import Enum
-import Bodies
 import pygame as pg
 import random
-import math
-import os
 
 
 class Color(Enum):

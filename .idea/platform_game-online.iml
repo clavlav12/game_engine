@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/GUI" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Testing/tanks" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Testing/Omer's Project/Drone/GameFiles" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/ClientServerTank/Networking" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pong Example/OnlinePong" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/PyIgnition" />
       <excludeFolder url="file://$MODULE_DIR$/particle" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />

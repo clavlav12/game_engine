@@ -1,14 +1,17 @@
 from Engine.structures import Vector2
-import Bodies
-import math
 from Engine.Debug import *
-from Engine.pygame_structures import Camera
 BaseSprite: type
 RigidBody: type
 Tile: type
 
 
 def initialize(BaseSprite_, RigidBody_, Tile_):
+    """
+    Used to avoid recursive importing
+    :param BaseSprite_: BaseSprite class (from base_sprites.py)
+    :param RigidBody_:  RigidBody class (from base_sprites.py)
+    :param Tile_:  Tile class (from base_sprites.py)
+    """
     global BaseSprite, RigidBody, Tile
     BaseSprite = BaseSprite_
     RigidBody = RigidBody_
@@ -16,7 +19,8 @@ def initialize(BaseSprite_, RigidBody_, Tile_):
 
 
 class CollidedSprite:
-    def __init__(self, obj, inv_mass, inv_moment_of_inertia, position, velocity, angular_velocity, elasticity):
+    def __init__(self, obj, inv_mass, inv_moment_of_inertia, position, velocity, angular_velocity, elasticity,
+                 static_friction, dynamic_friction):
         self.angular_velocity = angular_velocity
         self.velocity = velocity
         self.position = position
@@ -24,9 +28,14 @@ class CollidedSprite:
         self.inv_mass = inv_mass
         self.obj = obj
         self.elasticity = elasticity
+        self.static_friction = static_friction
+        self.dynamic_friction = dynamic_friction
 
     @classmethod
     def Create(cls, obj):
+        """
+        Generates CollidedSprite by object type
+        """
         if isinstance(obj, RigidBody):
             return cls.from_rigid_body(obj)
         elif isinstance(obj, BaseSprite):
@@ -36,24 +45,43 @@ class CollidedSprite:
 
     @classmethod
     def from_tile_collection(cls, collection):
+        """
+        Generates CollidedSprite by TileCollection
+        """
         return cls(collection.reference, 0, 0, Vector2.Point(collection.reference.rect.center), Vector2.Zero(), 0,
-                   collection.reference.elasticity)
+                   collection.reference.elasticity, collection.reference.static_friction,
+                   collection.reference.dynamic_friction)
 
     @classmethod
     def from_regular_sprite(cls, sprite):
-        return cls(sprite, 1/sprite.mass, 0, sprite.position, sprite.velocity, 0, sprite.elasticity)
+        """
+        Generates CollidedSprite by BaseSprite
+        """
+        return cls(sprite, 1/sprite.mass, 0, sprite.position, sprite.velocity, 0, sprite.elasticity,
+                   sprite.static_friction, sprite.dynamic_friction)
 
     @classmethod
     def from_rigid_body(cls, sprite):
+        """
+        Generates CollidedSprite by RigidBody
+        """
         return cls(sprite, 1/sprite.mass, 1/sprite.moment_of_inertia, sprite.position,
-                   sprite.velocity, sprite.angular_velocity, sprite.elasticity)
+                   sprite.velocity, sprite.angular_velocity, sprite.elasticity, sprite.static_friction, sprite.dynamic_friction)
 
     def add_to_position(self, displacement):
+        """
+        Moves movable sprites by displacement (Vector2)
+        """
         if isinstance(self.obj, BaseSprite):
             self.obj.position += displacement
             self.obj.set_position()
 
     def apply_impulse(self, impulse_vector: Vector2, arm: Vector2 = None):
+        """
+        Applies impulse if relevant
+        :param impulse_vector: Vector of the impulse
+        :param arm: Vector from com to contact point (only relevant for RigidBodies)
+        """
         if isinstance(self.obj, BaseSprite):
             self.obj.velocity += impulse_vector * self.obj.inv_mass
         if isinstance(self.obj, RigidBody) and arm is not None:
@@ -78,31 +106,39 @@ class CollisionManifold:
 
     @classmethod
     def NoCollision(cls):
+        """
+        Generates empty CollisionManifold that is not solved
+        """
         return cls(None, None, 0, None, None, False)
 
     def __bool__(self):
+        """
+        :return: Whether or not a collision happened
+        """
         return self.collision
 
     def penetration_resolution(self):
+        """
+        Solves penetration
+        """
         first = CollidedSprite.Create(self.obj1)
         second = CollidedSprite.Create(self.obj2)
         if (not self.depth) or not (first.inv_mass + second.inv_mass):
             return
 
-        # pen_res = self.normal * self.depth / (first.inv_mass + second.inv_mass)
-
         percent = .2
         slop = .1
         pen_res = max(self.depth - slop, 0.0) / (first.inv_mass + second.inv_mass) * percent * self.normal
-        # print(max(self.depth - slop, 0.0))
         first.add_to_position(pen_res * first.inv_mass)
         second.add_to_position(-pen_res * second.inv_mass)
 
     def collision_response(self):
+        """
+        Velocity response + friction
+        """
         first = CollidedSprite.Create(self.obj1)
         second = CollidedSprite.Create(self.obj2)
 
-        # closing velocities
         if self.contact_point is not None:
             arm1 = self.contact_point - first.position
         else:
@@ -130,31 +166,27 @@ class CollisionManifold:
         if separating_velocity > 0:
             return
 
-        # new_separating_velocity = - separating_velocity * min(obj1.elasticity, obj2.elasticity)
-        #
-        # vel_sep_diff = new_separating_velocity - separating_velocity
-
         if not (first.inv_mass + second.inv_mass + imp_aug1 + imp_aug2):
             return
 
         beta = 0
 
         b = beta * self.depth
-        # impulse = (-separating_velocity * (min(first.elasticity, second.elasticity) + 1) + b) / (
-        #         first.inv_mass + second.inv_mass + imp_aug1 + imp_aug2)
-        impulse = (-separating_velocity * (0 + 1) + b) / (
+        impulse = (-separating_velocity * (min(first.elasticity, second.elasticity) + 1) + b) / (
                 first.inv_mass + second.inv_mass + imp_aug1 + imp_aug2)
-
-        # if impulse < 1000000:
-        #     impulse = -separating_velocity/ (
-        #             obj1.inv_mass + obj2.inv_mass + imp_aug1 + imp_aug2)
 
         impulse_vector = self.normal * impulse
         first.apply_impulse(impulse_vector, arm1)
         second.apply_impulse(-impulse_vector, arm2)
-        self.original_friction(first, second, impulse)
+        self.apply_friction(first, second, impulse)
 
-    def original_friction(self, first, second, j):
+    def apply_friction(self, first, second, j):
+        """
+        Applies friction
+        :param first: first CollidedSprite
+        :param second: second CollidedSprite
+        :param j: Impulse vector
+        """
         obj1: RigidBody
         obj2: RigidBody
 
@@ -179,7 +211,6 @@ class CollisionManifold:
         imp_aug2 = arm2 ** self.normal
         imp_aug2 = imp_aug2 * second.inv_moment_of_inertia * imp_aug2
 
-        rv = second.velocity - first.velocity
         rv = close_vel1 - close_vel2
 
         normal = self.normal
@@ -190,14 +221,10 @@ class CollisionManifold:
 
         t.normalize()
         jt = -rv * t
-        # if abs(jt) < 70:
-        #     return
         jt /= (first.inv_mass + second.inv_mass + imp_aug1 + imp_aug2)
 
-        # if abs(jt) < 100_000:
-        #     return
-
-        sf = df = .2
+        sf = math.hypot(first.static_friction, second.static_friction)
+        df = math.hypot(first.dynamic_friction, second.dynamic_friction)
 
         if abs(jt) < j * sf:
             tangentImpulse = t * jt
@@ -209,10 +236,16 @@ class CollisionManifold:
 
     @classmethod
     def clear(cls):
+        """
+        Clears not solved manifolds
+        """
         cls.Manifolds.clear()
 
     @classmethod
     def add_manifold(cls, manifold):
+        """
+        Adds a manifold to solve
+        """
         cls.Manifolds.append(manifold)
 
 
@@ -227,9 +260,17 @@ class ManifoldGenerator:
         self.complexity = complexity
 
     def __and__(self, other):
+        """
+        Combines two ManifoldGenerator by taking the more complex one
+        :param other: another ManifoldGenerator
+        :return: the more complex ManifoldGenerator
+        """
         if isinstance(other, ManifoldGenerator):
             return max(self, other, key=lambda x: x.complexity)
         return NotImplemented
 
     def __call__(self, *args, **kwargs):
+        """
+        Calls generator
+        """
         return self.func(*args, **kwargs)

@@ -3,9 +3,36 @@ import socket
 import select
 import warnings
 from Engine import base_sprites
+import inspect
 
 
-class CommandClient(Thread):
+class MetaClient(type):
+    def __new__(mcs, name, bases, attrs):
+        cls = type.__new__(mcs, name, bases, attrs)
+        if 'commands' in attrs:
+            dictionary = attrs['commands']
+            if not isinstance(dictionary, dict):
+                raise AttributeError('"commands" attribute must be of type "dict"')
+            for base in cls.__bases__:
+                try:
+                    if issubclass(base, CommandClient):
+                        print(cls.commands, base.commands)
+                        cls.commands = {**cls.commands, **base.commands}  # inheriting the commands
+                except NameError: # CommandServer is not yet maid
+                    pass
+        for attr in attrs:
+            function = filter(lambda f: f.__name__ == attr, cls.commands.values())
+            try:
+                function = next(function)
+                for key, value in cls.commands.items():
+                    if value is function:
+                        cls.commands[key] = attrs[attr]
+            except StopIteration:
+                pass
+        return cls
+
+
+class CommandClient(Thread, metaclass=MetaClient):
     SERVER_PORT = 35241
     IP = "127.0.0.1"
     try:
@@ -22,7 +49,7 @@ class CommandClient(Thread):
     def __init__(self):
         super(CommandClient, self).__init__()
         self.socket = None
-        base_sprites.BaseSprite.set_server(self)
+        base_sprites.BaseSprite.set_client(self)
 
     def run(self):
         self.connected = self.connect_server()
@@ -78,7 +105,11 @@ class CommandClient(Thread):
             requests = self.smart_split(data.decode(), '\n')
             for request in requests:
                 command, kwargs = self.split_message(request)
-                self.commands[command](self, kwargs)
+                try:
+                    self.commands[command](self, **kwargs)
+                except TypeError:
+                    self.commands[command](self, kwargs)
+
         except Exception as e:
             raise  e
             # warnings.warn("Something broken\n " + repr(e))
@@ -174,7 +205,21 @@ class OtherUser:
         return False
 
 
-class Client(CommandClient):
+params = {}
+
+
+def safe_kwargs(f):
+    def inner(self, kwargs):
+        if f not in params:
+            params[f] = list(inspect.signature(f).parameters)[1]
+        param_name = params[f]
+        if not isinstance(kwargs, dict):
+            kwargs = {param_name: kwargs}
+        f(self, kwargs)
+    return inner
+
+
+class GameClient(CommandClient):
     def key_event(self, key: int, pressed: bool):
         self.send_message('KeyChange', keyNumber=key, isPressed=pressed)
 
@@ -182,6 +227,7 @@ class Client(CommandClient):
         self.send_message('Connect')
 
     @CommandClient.command('Update')
+    @safe_kwargs
     def update_sprite(self, kwargs):
         id_ = kwargs.pop('id')
         try:
@@ -190,6 +236,7 @@ class Client(CommandClient):
             print("sprite is not created yet", e)
 
     @CommandClient.command('Create')
+    @safe_kwargs
     def create_sprite(self, kwargs):
         id_ = kwargs.pop('id')
         class_id = kwargs.pop('classId')

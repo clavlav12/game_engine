@@ -1,12 +1,10 @@
-from Engine import pygame_structures
+from Engine import Bodies
 from Engine.Debug import *
 from Engine import base_sprites
 from Engine import base_control
 from Engine import structures
-from Engine import Geometry
 from typing import Union, Tuple, List
 from collections import namedtuple
-import Bodies
 import pygame as pg
 import math
 import os
@@ -15,7 +13,6 @@ Vector2 = structures.Vector2
 Projection = namedtuple('Projection', ('min', 'max', 'collision_vertex'))
 Number = Union[int, float]
 Point = Union[List[Number], Tuple[Number, Number], Vector2]
-
 
 class CollisionManifold:
     def __init__(self, contact_point, normal, depth, collision=True):

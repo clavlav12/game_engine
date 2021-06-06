@@ -10,8 +10,9 @@ import random
 W = 1000
 H = 700
 # screen = DisplayMods.Windowed((1680, 1080))
-print("mod")
-screen = pygame_structures.DisplayMods.Windowed((W, H))
+# print("mod")
+# screen = pygame_structures.DisplayMods.Windowed((W, H))
+screen = pygame_structures.DisplayMods.FullScreen()
 W, H = pygame_structures.DisplayMods.current_width, pygame_structures.DisplayMods.current_height
 
 pygame_structures.Camera.init(screen, "dynamic", None)

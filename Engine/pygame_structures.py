@@ -156,13 +156,17 @@ class Map:
                                 for x, kwargs in enumerate(row)] for y, row in enumerate(first_quadrant)]
 
         self.second_quadrant = [[Tile.get_tile(kwargs['id'])(**remove_id(kwargs), x=-x * tile_size, y=y * tile_size)
+                                 if not x == y == 0 else None
                                  for x, kwargs in enumerate(reversed(row))]
                                 for y, row in enumerate(second_quadrant)]
         self.third_quadrant = [[Tile.get_tile(kwargs['id'])(**remove_id(kwargs), x=-x * tile_size, y=-y * tile_size)
+                                if not x == y == 0 else None
                                 for x, kwargs in enumerate(reversed(row))]
                                for y, row in enumerate(reversed(third_quadrant))]
         self.forth_quadrant = [[Tile.get_tile(kwargs['id'])(**remove_id(kwargs), x=x * tile_size, y=-y * tile_size)
-                                for x, kwargs in enumerate(row)] for y, row in
+                                if not x == y == 0 else None
+                                for x, kwargs in enumerate(row)]
+                               for y, row in
                                enumerate(reversed(forth_quadrant))]
         # for i in self.first_quadrant:
         #     for a in i:
@@ -223,6 +227,7 @@ class Map:
                     if not isinstance(tile, Air):
                         collider = tile.collider & sprite.collider
 
+                        # print(pygame.sprite.collide_mask(sprite, tile))
                         if collider.tile_collision_by_rect or pygame.sprite.collide_mask(sprite, tile):  ## tile group?!
 
                             collection = tile.group
@@ -232,7 +237,6 @@ class Map:
 
                             tile.group.set_reference(tile)
                             manifold = collider.manifold_generator(sprite, tile.group)
-
                             # print("collision :(", manifold, manifold.collision, collider.manifold_generator.func)
 
                             if (manifold is None) or manifold.collision:
@@ -242,15 +246,23 @@ class Map:
                                 #     0.1, True
                                 # )
 
-                                before = tile.sprite_collide(sprite, manifold)
+                                tile.sprite_collide(sprite, manifold)
                                 # sprite.update_velocity_and_acceleration(time_delta)
                 except IndexError as e:  # no collision
                     pass
 
         try:
-            return tile, before
+            return tile
         except:
             return None, None
+
+
+def screen_maker(func):
+    def inner(*args, **kwargs):
+        val = func(DisplayMods, *args, **kwargs)
+        DisplayMods.current_width, DisplayMods.current_height = val.get_size()
+        return val
+    return inner
 
 
 class DisplayMods:
@@ -270,29 +282,29 @@ class DisplayMods:
     def get_resolution(cls):
         return cls.current_width, cls.current_height
 
-    @classmethod
+    @screen_maker
     def FullScreen(cls):
         return pygame.display.set_mode(cls.MONITOR_RESOLUTION, pygame.FULLSCREEN)
 
-    @classmethod
+    @screen_maker
     def FullScreenAccelerated(cls):
         return pygame.display.set_mode(cls.MONITOR_RESOLUTION, pygame.HWSURFACE)
 
-    @classmethod
+    @screen_maker
     def WindowedFullScreen(cls):
         return pygame.display.set_mode(cls.MONITOR_RESOLUTION, pygame.NOFRAME, display=0)
 
-    @classmethod
+    @screen_maker
     def Windowed(cls, size):
         cls.current_width, cls.current_height = size
         return pygame.display.set_mode((cls.current_width, cls.current_height))
 
-    @classmethod
+    @screen_maker
     def Resizable(cls, size):
         cls.current_width, cls.current_height = size
         return pygame.display.set_mode((cls.current_width, cls.current_height), pygame.RESIZABLE)
 
-    @classmethod
+    @screen_maker
     def NoWindow(cls):
         return EmptyDisplayMod()
 
@@ -763,11 +775,18 @@ class Camera:
             for image in new:
                 if image.blit_time is None:
                     cls.blits.remove(image)
-                    image.order()
+                    try:
+                        image.order(cls.screen)
+                    except TypeError:
+                        image.order()
+
                 elif time() - image.start_time > image.blit_time:
                     cls.blits.remove(image)
                 else:
-                    image.order()
+                    try:
+                        image.order(cls.screen)
+                    except TypeError:
+                        image.order()
 
         # for collection in TileCollection.collections:
         #     draw_rect(collection.rect)
@@ -880,7 +899,7 @@ class PrivateAutoConvertSurface:
 
     def __set__(self, instance, value):
         self.set_image(instance, value)
-
+#
 
 class ImageList(list):
     """

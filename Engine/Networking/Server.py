@@ -5,11 +5,11 @@ import select
 import warnings
 import json
 from Engine.base_sprites import BaseSprite, player
-from common_sprites import Tank, Color, W, H, ts
 from Engine.structures import Vector2
 from Engine.base_control import wasd
 from pygame import K_SPACE
 from pygame import Color as pg_color
+import inspect
 
 player.mute = True
 
@@ -147,7 +147,33 @@ class SingleShotTimer:
             timer.update()
 
 
-class CommandServer:
+class MetaServer(type):
+    def __new__(mcs, name, bases, attrs):
+        cls = type.__new__(mcs, name, bases, attrs)
+        if 'commands' in attrs:
+            dictionary = attrs['commands']
+            if not isinstance(dictionary, dict):
+                raise AttributeError('"commands" attribute must be of type "dict"')
+            for base in cls.__bases__:
+                try:
+                    if issubclass(base, CommandServer):
+                        print(cls.commands, base.commands)
+                        cls.commands = {**cls.commands, **base.commands}  # inheriting the commands
+                except NameError:  # CommandServer is not yet maid
+                    pass
+        for attr in attrs:
+            function = filter(lambda f: f.__name__ == attr, cls.commands.values())
+            try:
+                function = next(function)
+                for key, value in cls.commands.items():
+                    if value is function:
+                        cls.commands[key] = attrs[attr]
+            except StopIteration:
+                pass
+        return cls
+
+
+class CommandServer(metaclass=MetaServer):
     TICKS_PER_SECOND = 60
     PORT = 35241
     IP = "0.0.0.0"
@@ -174,7 +200,7 @@ class CommandServer:
 
     def loop(self):
         while self.running:
-            print("tick")
+            # print("tick")
             start_time = time.time()
             self.tick()
             time.sleep(1 / self.TICKS_PER_SECOND)
@@ -221,11 +247,15 @@ class CommandServer:
             requests = self.smart_split(data.decode(), '\n')
             for request in requests:
                 command, kwargs = self.split_message(request)
-                self.commands[command](self, User.users_list[client_socket], kwargs)
+                try:
+                    self.commands[command](self, User.users_list[client_socket], **kwargs)
+                except TypeError:
+                    self.commands[command](self, User.users_list[client_socket], kwargs)
         except Exception as e:
-            warnings.warn("Something broken\n " + repr(e))
-            print(command, kwargs)
-            print(self.commands[command](self, User.users_list[client_socket], kwargs))
+            raise e
+            # warnings.warn("Something broken\n " + repr(e))
+            # print(command, kwargs)
+            # print(self.commands[command](self, User.users_list[client_socket], kwargs))
             return False
         return True
 
@@ -330,7 +360,23 @@ class CommandServer:
         return kwargs
 
 
-class Server(CommandServer):
+params = {}
+
+
+def safe_kwargs(f):
+    def inner(self, user, kwargs):
+        if f not in params:
+            params[f] = list(inspect.signature(f).parameters)[1]
+        param_name = params[f]
+        if not isinstance(kwargs, dict):
+            kwargs = {param_name: kwargs}
+        f(self, user, kwargs)
+
+    inner.__name__ = f.__name__
+    return inner
+
+
+class GameServer(CommandServer):
     """
     Template:
 
@@ -342,71 +388,55 @@ class Server(CommandServer):
 
     created_sprites = bytearray()
 
-    def __init__(self, user=User):
-        super(Server, self).__init__()
-        self.user_type = user
+    def __init__(self, user_type=User):
+        self.user_type = user_type
+        super(GameServer, self).__init__()
+        BaseSprite.set_server(self)
 
     # commands:
     @CommandServer.command('Connect')
+    @safe_kwargs
     def connect(self, user: User, kwargs):
         """
         Template:
         user.replace(ExampleUser, **kwargs)
         """
+        print("??")
         if self.user_type is not User:
             user.replace(self.user_type, **kwargs)
-        print('sending create', self.created_sprites)
         user.socket.send(self.created_sprites)
 
-        self.user = user
-
-        self.sprite = self.create_sprite(Tank, user,
-                                         init_direction=Vector2.Unit(random.choice(Tank.possible_angles)),
-                                         position=Vector2.Cartesian(random.randint(ts, W - ts),
-                                                                    random.randint(ts, H-ts)),
-                                         control_keys=wasd,
-                                         shoot_key=K_SPACE,
-                                         color=Color.black,
-                                         health_bar_positive_color=pg_color('green'),
-                                         health_bar_negative_color=pg_color('red'),
-                                         user_exception={user: {'color': Color.green}}
-                                         )
+        # self.create_sprite(Tank, user,
+        #                                  init_direction=Vector2.Unit(random.choice(Tank.possible_angles)),
+        #                                  position=Vector2.Cartesian(random.randint(ts, W - ts),
+        #                                                             random.randint(ts, H-ts)),
+        #                                  control_keys=wasd,
+        #                                  shoot_key=K_SPACE,
+        #                                  color=Color.black,
+        #                                  health_bar_positive_color=pg_color('green'),
+        #                                  health_bar_negative_color=pg_color('red'),
+        #                                  user_exception={user: {'color': Color.green}}
+        #                                  )
 
     @CommandServer.command('Disconnect')
+    @safe_kwargs
     def disconnect(self, user: User, kwargs):
         user.disconnect()
 
     @CommandServer.command('KeyChange')
+    @safe_kwargs
     def key_change(self, user: User, kwargs):
         key_number = kwargs['keyNumber']
         pressed = kwargs['isPressed']
-        # print("key change", key_number, pressed)
         user.active_keys[int(key_number)] = int(pressed)
 
     @CommandServer.command('SetAttr')
+    @safe_kwargs
     def set_attribute(self, user: User, kwargs):
         attr = kwargs['attr']
         value = kwargs['value']
 
         user.set_attribute(attr, value)
-
-    # /commands
-    # def create_sprite(self, cls, controller: User = None, *, user_exception=None, **kwargs):
-    #     if user_exception is None:
-    #         user_exception = {}
-    #     sprite = cls(**kwargs)
-    #     kwargs = cls.encode_creation(**kwargs)
-    #     packet = self.send_all('Create', id=sprite.id, classId=cls.id, control=0,
-    #                            exceptions=(controller.socket,) if controller is not None else (),
-    #                            user_exception=user_exception, **kwargs)
-    #
-    #     self.created_sprites.extend(packet)
-    #     if controller is not None:
-    #         self.send_message(controller.socket, 'Create', id=sprite.id, classId=cls.id, control=1,
-    #                           **self.merge_kwargs(user_exception, controller, kwargs)
-    #                           )
-    #     sprite.set_user(controller)
-    #     return sprite
 
     def create_sprite(self, cls, controller: User = None, *, user_exception=None, **kwargs):
         if user_exception is None:
@@ -416,7 +446,9 @@ class Server(CommandServer):
             user_exception[controller] = {**{'control': 1}, **old}
 
         print(user_exception)
+        print("bed: ", kwargs)
         sprite = cls(**kwargs)
+        print("aft: ", kwargs)
         default_kwargs = cls.encode_creation(**kwargs)
         kwargs_dict = {'id': sprite.id, 'classId': cls.id, 'control': 0, **default_kwargs}
 
@@ -427,7 +459,11 @@ class Server(CommandServer):
                 packet = self.build_packet('Create', **{**kwargs_dict,
                                                         **merge_dicts(
                                                             user_exception[user]
-                    ,cls.encode_creation(**user_exception[user]))})
+                                                            , cls.encode_creation(**merge_dicts(
+                                                                user_exception[user],
+                                                                kwargs
+                                                            )
+                                                                                  ))})
                 print('exception1!!!', packet)
             self.send_packet(user.socket, packet)
 
@@ -439,14 +475,6 @@ class Server(CommandServer):
     def send_sprite_update(self, sprite):
         kwargs = sprite.encode()
 
-        # try:
-        #     print(self.user.current_keys)
-        # except AttributeError:
-        #     pass
-        # try:
-        #     print(sprite.user)
-        # except AttributeError:
-        #     pass
         self.send_all('Update', id=sprite.id, **kwargs)
 
     def update_all(self, sprite_list):
@@ -456,8 +484,8 @@ class Server(CommandServer):
 
     def tick(self):
         self.update_all(BaseSprite.sprites_list)
-        super(Server, self).tick()
+        super(GameServer, self).tick()
 
 
 if __name__ == '__main__':
-    Server()
+    GameServer()

@@ -4,7 +4,6 @@ import Engine.Geometry as Geometry
 from abc import ABC, abstractmethod
 from typing import Union, List, Tuple
 import pygame
-import math
 
 Number = Union[int, float]
 Point = Union[List[Number], Tuple[Number, Number], Vector2]
@@ -18,6 +17,10 @@ class RotationMatrix:
         self.br = self.tl
 
     def __mul__(self, other):
+        """
+        :param other: Vector2 to multiply by
+        :return: Result of matrix multiplication
+        """
         if isinstance(other, Vector2):
             return Vector2.Cartesian(
                 self.tl * other.x + self.tr * other.y,
@@ -33,7 +36,7 @@ class Body(ABC):
     EMPTY = pygame.Surface((0, 0))
 
     def __init__(self, vertices: List[Point], center_offset, parent_orientation: Union[int, float],
-                 color=pygame.Color('white'), brush_width=1):
+                 color=pygame.Color('blue'), brush_width=1):
         """
         :param vertices:
         :param center_offset: offset of centroid from parent's position
@@ -67,9 +70,17 @@ class Body(ABC):
 
     @abstractmethod
     def get_rect(self):
+        """
+        :return: sprite's current hitbox
+        """
         pass
 
     def update_position(self, parent_position: Point, parent_orientation: Union[int, float], ):
+        """
+        Updates position and orientation by parent position (updates orientation at the same time to save performance)
+        :param parent_position: Parent sprite's position (Vector2)
+        :param parent_orientation: Parent sprite's orientation (float)
+        """
         matrix = RotationMatrix(parent_orientation - self.reference_orientation)
 
         self.position = parent_position + (self.center_offset * matrix)
@@ -79,18 +90,26 @@ class Body(ABC):
     def update_floating_vertices(self, axis):
         """
         some objects have other kinds of vertices that change depending on the collision
-        :param axis:
-        :return:
+        :param axis: axis of collision
+        :return: vertices to use on SAT
         """
         pass
 
     def redraw(self, position=None):
+        """
+        :param position: position to blit (if not provided uses the current held position)
+        """
         if position is None:
             position = (self.position - Vector2.Point(self.image.get_size()) / 2)
         position = tuple(position)
         Camera.screen.blit(self.image, position - Camera.scroller)
 
     def get_normals(self, other):
+        """
+        Generates axis to check for collision on the SAT test
+        :param other: Second sprite to perform collision test with
+        :return: axis to check for collision
+        """
         return [(self.vertices[i + 1] - self.vertices[i]).normalized().normal()
                 for i in range(len(self.vertices) - 1)]
 
@@ -101,7 +120,6 @@ class Line(Body):
         super(Line, self).__init__([p1, p2], Vector2.Point(center_offset), orientation)
         self.dir = (p2 - p1).normalized()
         self.length = (p2 - p1).magnitude()
-        # self.redraw()
 
     @property
     def position(self):
@@ -137,7 +155,10 @@ class Circle(Body):
         self.image = pygame.Surface((self.radius * 2, self.radius * 2), pygame.SRCALPHA)
         pygame.draw.circle(self.image, self.color,
                            (self.radius, self.radius),
-                           self.radius, self.brush_width)
+                           self.radius, 0)
+        pygame.draw.circle(self.image, pygame.Color('black'),
+                           (self.radius, self.radius),
+                           self.radius, 4)
 
     @property
     def position(self):
@@ -158,6 +179,12 @@ class Circle(Body):
 
     @staticmethod
     def closest_vertex_to_point(vertices, p):
+        """
+        Finds the closest vertex to a point
+        :param vertices: List of vertices
+        :param p: point
+        :return: Vertex (from the list) that is closest to point p
+        """
         closest_vertex = None
         min_distance = float('inf')
 
@@ -207,7 +234,10 @@ class Polygon(Body):
         self.image = pygame.Surface(tuple(self.polygon.rect.size +
                                           Vector2.Cartesian(self.brush_width, self.brush_width) * 2), pygame.SRCALPHA)
         pygame.draw.polygon(self.image, self.color, [tuple(v - self.polygon.rect.topleft) for v in
-                                                     self.polygon.world_vertices], self.brush_width
+                                                     self.polygon.world_vertices], 0
+                            )
+        pygame.draw.polygon(self.image, pygame.Color('black'), [tuple(v - self.polygon.rect.topleft) for v in
+                                                     self.polygon.world_vertices], 4
                             )
 
         super(Polygon, self).redraw(self.polygon.rect.topleft)
@@ -277,7 +307,6 @@ class AABB(Body):
     @vertices.setter
     def vertices(self, _):
         pass
-        # raise NotImplementedError("Can't edit vertices")
 
     @property
     def position(self):
