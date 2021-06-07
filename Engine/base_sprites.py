@@ -50,8 +50,8 @@ class Collider:
         if isinstance(other, Collider):
             complex_generator_obj = max(self, other, key=lambda x: x.manifold_generator.complexity)
             return Collider(
-                not (self.sprites_collision_by_rect and other.sprites_collision_by_rect),
-                not (self.tile_collision_by_rect and other.tile_collision_by_rect),  # uses the more complex system
+                self.sprites_collision_by_rect and other.sprites_collision_by_rect,
+                self.tile_collision_by_rect and other.tile_collision_by_rect,  # uses the more complex system
                 complex_generator_obj.manifold_generator,
             )
         return NotImplemented
@@ -92,7 +92,7 @@ class Tile(pygame.sprite.Sprite):
         self.set_group(group)
         self.collider = Collider(False, tile_collision_by_rect, manifold_generator)
         self.elasticity = 1
-        # self.mask = pygame.mask.from_surface(img)
+        self.mask = pygame.mask.from_surface(img)
         Tile.blocks_list.add(self)
 
     def set_group(self, group):
@@ -357,15 +357,24 @@ def get_mid(obj):
         return obj.rect.center
 
 
-class BaseSprite(pygame.sprite.Sprite):
+class MetaSprite(type):
     sprites_list = pygame.sprite.Group()
+
+    def __call__(cls, *args, **kwargs):
+        """Called when you call BaseSprite() """
+        obj = type.__call__(cls, *args, **kwargs)
+        obj.final_initiation()
+        return obj
+
+
+class BaseSprite(pygame.sprite.Sprite, metaclass=MetaSprite):
     collision_detection = True
     current_id = 0
 
     sprites_by_id = {}
 
     image = pygame.Surface((100, 100))
-    game_states = {'sprites': sprites_list, 'keys': [], 'dtime': 0}
+    game_states = {'sprites': MetaSprite.sprites_list, 'keys': [], 'dtime': 0}
     basic_generator = ManifoldGenerator(by_two_objects, 1)
 
     id = 1
@@ -403,6 +412,9 @@ class BaseSprite(pygame.sprite.Sprite):
     def __init__(self, rect, control: controls.BaseControl, mass, *, sprite_collision_by_rect=False, tile_collision_by_rect=True,
                  manifold_generator=Collider.empty_generator
                  ):
+
+        self.initiated = False
+
         self.user = None
 
         # hit boxes & moving
@@ -437,7 +449,8 @@ class BaseSprite(pygame.sprite.Sprite):
         self.control: controls.BaseControl = control
 
         self.restitution = 0
-        BaseSprite.sprites_list.add(self)
+
+        self.child_sprites = []
 
         self.id = BaseSprite.current_id
         BaseSprite.current_id += 1
@@ -446,7 +459,9 @@ class BaseSprite(pygame.sprite.Sprite):
             # raise WTFError('id occupied?!')
         BaseSprite.sprites_by_id[str(self.id)] = self
 
-        self.child_sprites = []
+    def final_initiation(self):
+        self.initiated = True
+        BaseSprite.sprites_list.add(self)
 
     def add_child(self, child):
         self.child_sprites.append(child)
@@ -1049,7 +1064,7 @@ class Bullet(BaseSprite):
     DAMAGE = 1
 
     def __init__(self, rect, damage, travel_distance):
-        super(Bullet, self).__init__(rect, controls.NoMoveControl(), 1)
+        super(Bullet, self).__init__(rect, controls.NoMoveControl(), 1, tile_collision_by_rect=False)
         self.damage = damage
         self.travel_distance = travel_distance
         self.first_frame = True

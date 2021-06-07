@@ -27,7 +27,7 @@ def init(TileClass, AirClass, SpriteClass, clockInstance):
 
 
 def smooth_scale_image(img, scale):
-    return pygame.transform.smoothscale(img, structures.mul_tuple(img.get_size(), scale))
+    return pygame.transform.smoothscale(img, [int(x) for x in structures.mul_tuple(img.get_size(), scale)])
 
 
 def smooth_scale_images(lst, scale):
@@ -223,13 +223,12 @@ class Map:
         for column in range(top, bottom + 1):
             for row in range(left, right + 1):
                 try:
-                    tile = self.get_tile(row, column)
-                    if not isinstance(tile, Air):
+                    current_tile = self.get_tile(row, column)
+                    if not isinstance(current_tile, Air):
+                        tile = current_tile
                         collider = tile.collider & sprite.collider
 
-                        # print(pygame.sprite.collide_mask(sprite, tile))
                         if collider.tile_collision_by_rect or pygame.sprite.collide_mask(sprite, tile):  ## tile group?!
-
                             collection = tile.group
 
                             if collection in called:
@@ -252,9 +251,11 @@ class Map:
                     pass
 
         try:
+            if isinstance(tile, Air):
+                tile = None
             return tile
-        except:
-            return None, None
+        except NameError:
+            return None
 
 
 def screen_maker(func):
@@ -450,13 +451,17 @@ class Animation:
         return len(self.images_list)
 
 
-class TileCollection:
+class TileCollection(pygame.sprite.Sprite):
     collections = []
 
     def __init__(self):
         self.rect = None
         self.reference = None
         self.collections.append(self)
+        super(TileCollection, self).__init__()
+
+    def update(self):
+        self.mask = pygame.mask.Mask(self.rect.size, True)
 
     def set_reference(self, tile):
         self.reference = tile
@@ -474,6 +479,7 @@ class TileCollection:
                 self.rect.width += rect.width
             elif rect.y < self.rect.y:
                 self.rect.top -= rect.top
+            self.update()
 
     def sprite_collide(self, _sprite, collision):
         pass

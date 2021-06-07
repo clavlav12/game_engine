@@ -2,31 +2,1100 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="71a335b9-b6e5-4148-a18b-ae04a242155c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Engine/Networking/Client.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Engine/Networking/Server.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pong Example/OnlinePong/ClientPong.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pong Example/OnlinePong/ServerPong.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pong Example/OnlinePong/common_sprites.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pong Example/pong.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/aviro.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/aviro.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/platform_game-online.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/platform_game-online.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bodies.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Bodies.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientServerTank/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/ClientServerTank/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientServerTank/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/ClientServerTank/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CollisionManifold.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/CollisionManifold.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/AdvancedRigidBody.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/AdvancedRigidBody.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/Debug.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Debug.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/base_control.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/base_control.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServer/Protocol.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Networking/Protocol.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServer/TestClient.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServer/TestServer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServer/client.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServer/common_sprites.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServer/openClient.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServer/server.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/Arts/army_tank_body.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/Arts/army_tank_body_black.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/Arts/army_tank_turret.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/Arts/army_tank_turret_black.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/IP.TXT" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/Networking/Client Tester.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/Networking/Server Tester.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/Networking/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/Networking/client.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/Networking/server.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/Protocol.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/TestClient.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/TestClient.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/TestClient.spec" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/TestServer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/TestServer.spec" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/Tank/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/Tank/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/Tank/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/Tank/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/bullet/large/blue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/bullet/large/green.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/bullet/large/red.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/bullet/large/yellow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/bullet/medium/blue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/bullet/medium/green.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/bullet/medium/red.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/bullet/medium/yellow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/bullet/small/blue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/bullet/small/green.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/bullet/small/red.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/bullet/small/yellow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/explostions/regularExplosion00.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/explostions/regularExplosion01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/explostions/regularExplosion02.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/explostions/regularExplosion03.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/explostions/regularExplosion04.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/explostions/regularExplosion05.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/explostions/regularExplosion06.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/explostions/regularExplosion07.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/explostions/regularExplosion08.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_006.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_007.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_008.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_009.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_010.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_011.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_012.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_013.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_014.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_015.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_016.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/Idle/Idle_017.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Dying/Dying_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Dying/Dying_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Dying/Dying_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Dying/Dying_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Dying/Dying_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Dying/Dying_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Dying/Dying_006.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Dying/Dying_007.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Dying/Dying_008.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Dying/Dying_009.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Dying/Dying_010.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Dying/Dying_011.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Dying/Dying_012.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Dying/Dying_013.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Dying/Dying_014.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_006.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_007.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_008.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_009.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_010.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_011.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_012.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_013.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/DyingOld/Dying_014.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Falling Down/Falling Down_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing in The Air/Firing in The Air_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing in The Air/Firing in The Air_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing in The Air/Firing in The Air_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing in The Air/Firing in The Air_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing new/frame_00_delay-0.1s.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing new/frame_01_delay-0.1s.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing new/frame_02_delay-0.1s.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing new/frame_03_delay-0.1s.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing new/frame_04_delay-0.1s.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing new/frame_05_delay-0.1s.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing new/frame_06_delay-0.1s.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing new/frame_07_delay-0.1s.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing new/frame_08_delay-0.1s.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing new/frame_09_delay-0.1s.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing new/frame_10_delay-0.1s.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing new/frame_11_delay-0.1s.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing new/frame_12_delay-0.1s.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing new/frame_13_delay-0.1s.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing new/frame_14_delay-0.1s.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing old firing/Firing_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing old firing/Firing_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing old firing/Firing_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing old firing/Firing_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing/idle_0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing/idle_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing/idle_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Firing/idle_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_006.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_007.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_008.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_009.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_010.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Hurt/Hurt_011.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Jump Loop/Jump Loop_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Jump Start/Jump Start_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_006.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_007.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_008.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_009.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_010.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_011.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_012.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_013.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_014.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_015.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_016.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing old/Run Firing_017.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 13.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 14.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 15.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 17.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 18.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Run Firing/Background 9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Sliding/Sliding_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Squat Firing/Squat Firing_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Squat Firing/Squat Firing_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Squat Firing/Squat Firing_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/Squat Firing/Squat Firing_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Firing_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Firing_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Firing_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Firing_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_006.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_007.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_008.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_009.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_010.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_011.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_012.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_013.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_014.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_015.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_016.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/fighter/PNG/PNG Sequences/תיקיה חדשה/Run Firing_017.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_006.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_007.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_008.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_009.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_010.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Attacking/Attacking_011.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_006.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_007.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_008.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_009.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_010.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_011.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_012.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_013.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Dying/Dying_014.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Falling Down/Falling Down_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_006.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_007.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_008.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_009.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_010.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Hurt/Hurt_011.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_006.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_007.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_008.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_009.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_010.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Idle/Idle_011.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Loop/Jump Loop_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Jump Start/Jump Start_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_006.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_007.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_008.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_009.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_010.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_011.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_012.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_013.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_014.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_015.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_016.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/animation/zombie/PNG/Tiny Zombie 01/PNG Sequences/Walking/Walking_017.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/Analysis-00.toc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/EXE-00.toc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/PKG-00.pkg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/PKG-00.toc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/PYZ-00.pyz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/PYZ-00.toc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/TestClient.exe.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/base_library.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/warn-TestClient.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestClient/xref-TestClient.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestServer/Analysis-00.toc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestServer/EXE-00.toc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestServer/PKG-00.pkg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestServer/PKG-00.toc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestServer/PYZ-00.pyz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestServer/PYZ-00.toc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestServer/TestServer.exe.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestServer/base_library.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestServer/runw.exe.zngmmq7f" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestServer/warn-TestServer.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/build/TestServer/xref-TestServer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/client.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/common_sprites.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/dist/TestClient.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/idk.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/images/M484BulletCollection1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/images/aa.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/images/background.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/images/main-turret.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/images/missile.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/images/platform.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/images/player1 keyboard.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/images/player2 keyboard.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/images/portal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/images/portal2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/images/shot.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/openClient.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/server.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/sprites.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/tank_icon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientServerTank/‏‏TestClient.py - קיצור דרך.lnk" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/base_sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/base_sprites.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/pygame_structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/pygame_structures.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/structures.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Testing/AdvancedRigidBodyOld.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/AdvancedRigidBodyOld.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Testing/Collision Time/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/Collision Time/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Testing/Omer's Project/Drone/GameFiles/sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/Omer's Project/Drone/GameFiles/sprites.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Testing/gravity/gravity simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/gravity/gravity simulation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Excel Test/Non Render Test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Excel Test/Test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Excel Test/your_file.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MySprites.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pong Example/OnlinePong/ClientPong.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pong Example/OnlinePong/ServerPong.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pong Example/OnlinePong/common_sprites.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pong Example/OnlinePong/ip.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pong Example/pong.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Related/crop image.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/.idea/Testing.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/AdvancedRigidBodyOld.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/Collision Time/test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/friction_torque.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/gravity/DoublePendulum.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/gravity/gravity simulation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/line.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/lolimg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/new_rigid.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/OldRigid/new_rigid.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/tanks/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/tanks/controls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/tanks/main test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/tanks/main test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/tanks/rigidCube.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/OldRigid/rigidCube.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/tanks/scratch.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/OldRigid/scratch.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing/wtf.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing/OldRigid/wtf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cool things/copy files.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cool things/rect outline.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/line.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/explosion.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/glauncher.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/glauncher2.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/glauncher3.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/grenade.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/grenade2.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/grenade3.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/jumppad.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/jumppad2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/license.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/minigun.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/minigun2.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/minigun3.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/outofammo.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/pistol.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/pistol2.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/pistol3.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/quaddamage_out.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/quaddamage_shoot.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/readme.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/ren.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/ren2.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/ren3.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/rifle.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/rifle2.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/rifle3.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/rlauncher.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/rlauncher2.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/rlauncher3.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/shotgun.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/shotgun2.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/shotgun3.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/teleport.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/q009/weapswitch.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/school/alis.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/school/s.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/school/try class.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/_camera.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/_pygame.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/_surface.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/camera.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/fastevents.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/font.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/freetype.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/mask.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/mixer.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/palette.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/pgarrinter.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/pgbufferproxy.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/pgcompat.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/pgimport.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/pgopengl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/pgplatform.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/pygame.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/scrap.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Include/site/python3.7/pygame/surface.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/easy-install.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/EGG-INFO/PKG-INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/EGG-INFO/SOURCES.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/EGG-INFO/dependency_links.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/EGG-INFO/entry_points.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/EGG-INFO/not-zip-safe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/EGG-INFO/top_level.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/__main__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/build_env.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/cache.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/cli/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/cli/autocompletion.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/cli/base_command.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/cli/cmdoptions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/cli/main_parser.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/cli/parser.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/cli/status_codes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/check.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/completion.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/configuration.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/download.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/freeze.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/hash.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/help.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/install.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/list.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/search.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/show.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/uninstall.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/wheel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/configuration.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/download.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/exceptions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/index.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/locations.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/models/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/models/candidate.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/models/format_control.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/models/index.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/models/link.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/operations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/operations/check.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/operations/freeze.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/operations/prepare.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/pep425tags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/pyproject.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/req/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/req/constructors.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/req/req_file.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/req/req_install.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/req/req_set.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/req/req_tracker.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/req/req_uninstall.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/resolve.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/appdirs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/deprecation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/encoding.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/filesystem.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/glibc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/hashes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/logging.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/misc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/outdated.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/packaging.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/setuptools_build.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/temp_dir.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/typing.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/ui.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/vcs/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/vcs/bazaar.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/vcs/git.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/vcs/mercurial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/vcs/subversion.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/wheel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/appdirs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/_cmd.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/adapter.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/cache.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/caches/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/caches/file_cache.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/caches/redis_cache.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/controller.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/filewrapper.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/heuristics.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/serialize.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/wrapper.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/certifi/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/certifi/__main__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/certifi/cacert.pem" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/certifi/core.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/big5freq.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/big5prober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/chardistribution.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/charsetgroupprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/charsetprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/cli/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/cli/chardetect.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/codingstatemachine.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/cp949prober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/enums.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/escprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/escsm.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/eucjpprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/euckrfreq.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/euckrprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/euctwfreq.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/euctwprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/gb2312freq.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/gb2312prober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/hebrewprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/jisfreq.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/jpcntx.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/langbulgarianmodel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/langcyrillicmodel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/langgreekmodel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/langhebrewmodel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/langhungarianmodel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/langthaimodel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/langturkishmodel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/latin1prober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/mbcharsetprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/mbcsgroupprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/mbcssm.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/sbcharsetprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/sbcsgroupprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/sjisprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/universaldetector.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/utf8prober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/version.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/colorama/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/colorama/ansi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/colorama/ansitowin32.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/colorama/initialise.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/colorama/win32.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/colorama/winterm.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/_backport/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/_backport/misc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/_backport/shutil.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/_backport/sysconfig.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/_backport/sysconfig.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/_backport/tarfile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/database.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/index.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/locators.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/manifest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/markers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/metadata.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/resources.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/scripts.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/t32.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/t64.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/util.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/version.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/w32.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/w64.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/wheel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distro.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/_ihatexml.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/_inputstream.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/_tokenizer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/_trie/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/_trie/_base.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/_trie/datrie.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/_trie/py.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/constants.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/filters/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/filters/alphabeticalattributes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/filters/base.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/filters/inject_meta_charset.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/filters/lint.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/filters/optionaltags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/filters/sanitizer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/filters/whitespace.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/html5parser.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/serializer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treeadapters/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treeadapters/genshi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treeadapters/sax.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treebuilders/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treebuilders/base.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treebuilders/dom.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treebuilders/etree.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treebuilders/etree_lxml.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treewalkers/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treewalkers/base.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treewalkers/dom.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treewalkers/etree.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treewalkers/etree_lxml.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treewalkers/genshi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/idna/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/idna/codec.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/idna/compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/idna/core.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/idna/idnadata.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/idna/intranges.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/idna/package_data.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/idna/uts46data.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/ipaddress.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/lockfile/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/lockfile/linklockfile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/lockfile/mkdirlockfile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/lockfile/pidlockfile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/lockfile/sqlitelockfile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/lockfile/symlinklockfile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/msgpack/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/msgpack/_version.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/msgpack/exceptions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/msgpack/fallback.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/__about__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/_compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/_structures.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/markers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/requirements.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/specifiers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/version.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pep517/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pep517/_in_process.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pep517/build.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pep517/check.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pep517/colorlog.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pep517/compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pep517/envbuild.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pep517/wrappers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pkg_resources/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pkg_resources/py31compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/progress/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/progress/bar.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/progress/counter.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/progress/helpers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/progress/spinner.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pyparsing.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pytoml/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pytoml/core.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pytoml/parser.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pytoml/test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pytoml/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pytoml/writer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/__version__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/_internal_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/adapters.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/api.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/auth.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/certs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/cookies.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/exceptions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/help.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/hooks.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/packages.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/sessions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/status_codes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/structures.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/retrying.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/six.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/_collections.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/connection.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/connectionpool.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/_appengine_environ.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/_securetransport/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/_securetransport/bindings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/_securetransport/low_level.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/appengine.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/ntlmpool.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/pyopenssl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/securetransport.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/socks.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/exceptions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/fields.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/filepost.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/packages/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/packages/backports/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/packages/backports/makefile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/packages/six.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/packages/ssl_match_hostname/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/packages/ssl_match_hostname/_implementation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/poolmanager.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/request.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/response.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/connection.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/queue.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/request.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/response.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/retry.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/ssl_.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/timeout.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/url.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/wait.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/webencodings/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/webencodings/labels.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/webencodings/mklabels.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/webencodings/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/webencodings/x_user_defined.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame-2.0.0.dev6.dist-info/INSTALLER" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame-2.0.0.dev6.dist-info/METADATA" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame-2.0.0.dev6.dist-info/RECORD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame-2.0.0.dev6.dist-info/WHEEL" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame-2.0.0.dev6.dist-info/top_level.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/SDL2.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/SDL2_image.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/SDL2_mixer.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/SDL2_ttf.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/_camera_opencv_highgui.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/_camera_vidcapture.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/_dummybackend.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/_freetype.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/_numpysndarray.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/_numpysurfarray.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/_sdl2/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/_sdl2/audio.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/_sdl2/controller.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/_sdl2/mixer.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/_sdl2/sdl2.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/_sdl2/touch.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/_sdl2/video.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/_sprite.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/base.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/bufferproxy.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/camera.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/color.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/colordict.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/constants.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/cursors.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/display.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/docs/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/docs/__main__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/docs/logos.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/docs/pygame_logo.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/docs/pygame_powered.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/docs/pygame_small.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/docs/pygame_tiny.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/docs/ref/docscomments.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/draw.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/draw_py.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/event.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/aacircle.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/aliens.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/arraydemo.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/audiocapture.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/blend_fill.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/blit_blends.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/camera.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/chimp.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/cursors.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/alien1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/alien1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/alien1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/alien2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/alien2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/alien3.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/alien3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/arraydemo.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/asprite.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/background.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/blue.mpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/bomb.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/boom.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/brick.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/car_door.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/chimp.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/city.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/danger.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/explosion1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/fist.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/house_lo.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/house_lo.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/house_lo.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/liquid.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/midikeys.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/oldplayer.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/player1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/punch.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/sans.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/secosmic_lo.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/shot.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/static.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/whiff.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/data/yuv_1.pgm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/dropevent.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/eventlist.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/fastevents.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/font_viewer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/fonty.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/freetype_misc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/glcube.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/headless_no_windows_needed.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/liquid.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/mask.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/midi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/moveit.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/music_drop_fade.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/overlay.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/pixelarray.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/playmus.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/prevent_display_stretching.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/readme.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/scaletest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/scrap_clipboard.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/scroll.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/setmodescale.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/sound.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/sound_array_demos.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/sprite_texture.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/stars.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/testsprite.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/textinput.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/vgrade.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/examples/video.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/fastevent.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/font.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/freesansbold.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/freetype.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/ftfont.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/gfxdraw.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/image.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/imageext.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/joystick.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/key.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/libFLAC-8.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/libfreetype-6.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/libjpeg-9.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/libmodplug-1.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/libmpg123-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/libogg-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/libopus-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/libopusfile-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/libpng16-16.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/libtiff-5.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/libvorbis-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/libvorbisfile-3.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/libwebp-7.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/locals.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/macosx.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/mask.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/math.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/midi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/mixer.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/mixer_music.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/mouse.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/newbuffer.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/pixelarray.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/pixelcopy.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/pkgdata.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/portmidi.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/pygame.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/pygame_icon.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/pygame_icon.icns" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/pygame_icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/pygame_icon.tiff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/pypm.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/rect.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/rwobject.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/scrap.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/sndarray.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/sprite.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/surface.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/surfarray.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/surflock.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/sysfont.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/__main__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/base_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/blit_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/bufferproxy_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/camera_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/cdrom_tags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/cdrom_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/color_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/compat_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/constants_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/cursors_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/display_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/draw_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/event_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/fastevent_tags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/fastevent_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/fixtures/fonts/A_PyGameMono-8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/fixtures/fonts/PyGameMono-18-100dpi.bdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/fixtures/fonts/PyGameMono-18-75dpi.bdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/fixtures/fonts/PyGameMono-8.bdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/fixtures/fonts/PyGameMono.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/fixtures/fonts/test_fixed.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/fixtures/fonts/test_sans.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/fixtures/fonts/u13079_PyGameMono-8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/fixtures/xbm_cursors/white_sizing.xbm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/fixtures/xbm_cursors/white_sizing_mask.xbm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/font_tags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/font_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/freetype_tags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/freetype_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/ftfont_tags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/ftfont_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/gfxdraw_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/image__save_gl_surface_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/image_tags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/image_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/imageext_tags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/imageext_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/joystick_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/key_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/mask_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/math_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/midi_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/mixer_music_tags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/mixer_music_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/mixer_tags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/mixer_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/mouse_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/overlay_tags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/overlay_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/pixelarray_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/pixelcopy_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/rect_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/all_ok/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/all_ok/fake_2_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/all_ok/fake_3_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/all_ok/fake_4_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/all_ok/fake_5_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/all_ok/fake_6_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/all_ok/no_assertions__ret_code_of_1__test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/all_ok/zero_tests_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/everything/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/everything/fake_2_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/everything/incomplete_todo_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/everything/magic_tag_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/everything/sleep_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/exclude/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/exclude/fake_2_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/exclude/invisible_tag_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/exclude/magic_tag_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/failures1/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/failures1/fake_2_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/failures1/fake_3_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/failures1/fake_4_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/incomplete/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/incomplete/fake_2_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/incomplete/fake_3_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/incomplete_todo/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/incomplete_todo/fake_2_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/incomplete_todo/fake_3_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/infinite_loop/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/infinite_loop/fake_1_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/infinite_loop/fake_2_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/print_stderr/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/print_stderr/fake_2_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/print_stderr/fake_3_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/print_stderr/fake_4_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/print_stdout/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/print_stdout/fake_2_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/print_stdout/fake_3_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/print_stdout/fake_4_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/run_tests__test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/timeout/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/timeout/fake_2_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/run_tests__tests/timeout/sleep_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/rwobject_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/scrap_tags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/scrap_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/sndarray_tags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/sndarray_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/sprite_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/surface_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/surfarray_tags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/surfarray_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/surflock_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/sysfont_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/test_test_.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/test_utils/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/test_utils/arrinter.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/test_utils/async_sub.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/test_utils/buftools.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/test_utils/endian.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/test_utils/png.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/test_utils/run_tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/test_utils/test_machinery.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/test_utils/test_runner.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/threads_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/time_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/touch_tags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/touch_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/transform_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/tests/version_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/threads/Py25Queue.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/threads/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/time.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/transform.cp37-win32.pyd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/version.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pygame/zlib1.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pymaybe-0.1.6.dist-info/DESCRIPTION.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pymaybe-0.1.6.dist-info/INSTALLER" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pymaybe-0.1.6.dist-info/METADATA" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pymaybe-0.1.6.dist-info/RECORD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pymaybe-0.1.6.dist-info/WHEEL" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pymaybe-0.1.6.dist-info/metadata.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pymaybe-0.1.6.dist-info/top_level.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pymaybe/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/setuptools-40.8.0-py3.7.egg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/setuptools.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/Activate.ps1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/activate" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/activate.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/deactivate.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install-3.7-script.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install-3.7.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install-3.7.exe.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install-script.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install.exe.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/pip-script.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/pip.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/pip.exe.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/pip3-script.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/pip3.7-script.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/pip3.7.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/pip3.7.exe.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/pip3.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/pip3.exe.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/python.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/pythonw.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/pyvenv.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wtf.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ללא שם.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,8 +1125,6 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Engine/structures.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Pong Example/OnlinePong/ClientPong.py" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/Pong Example/OnlinePong/ServerPong.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Engine/CollisionManifold.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Engine/Geometry.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Engine/Networking/Client.py" root0="FORCE_HIGHLIGHTING" />
@@ -71,11 +1138,13 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python&#10;TEXT" />
     <property name="last.edited.regexp" value="Sample Text" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Video Player QT5" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Engine" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -84,22 +1153,22 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\aviro\Desktop\game_engine\Engine" />
       <recent name="C:\Users\aviro\Desktop\game_engine\ClientServerTank" />
       <recent name="C:\Users\aviro\Desktop\game_engine\ClientServerTank\Networking" />
-      <recent name="C:\Users\aviro\Desktop\game_engine\Engine" />
       <recent name="C:\Users\aviro\Desktop\game_engine\Testing\Omer's Project\Tanks\animation\explostions" />
       <recent name="C:\Users\aviro\Desktop\game_engine\ClientServerTank\animation\explostions" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\aviro\Desktop\game_engine\Testing\OldRigid" />
+      <recent name="C:\Users\aviro\Desktop\game_engine\Testing\gravity" />
       <recent name="C:\Users\aviro\Desktop\game_engine\Engine" />
-      <recent name="C:\Users\aviro\Desktop\game_engine\ClientServerTank" />
-      <recent name="C:\Users\aviro\Desktop\game_engine\ClientServer" />
-      <recent name="C:\Users\aviro\Desktop\game_engine\Testing" />
-      <recent name="C:\Users\aviro\Desktop\game_engine" />
+      <recent name="C:\Users\aviro\Desktop\game_engine\ClientServerTank\images" />
+      <recent name="C:\Users\aviro\Desktop\game_engine\Engine\Networking" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.AdvancedRigidBody">
-    <configuration name="AdvancedRigidBody" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.main (1)">
+    <configuration name="ClientPong" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -107,32 +1176,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Engine" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/Pong Example/OnlinePong" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Engine/AdvancedRigidBody.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="AdvancedRigidBodyOld" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="platform_game-online" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/AdvancedRigidBodyOld.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/Pong Example/OnlinePong/ClientPong.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -149,11 +1197,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/gravity" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/Physics" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/gravity/DoublePendulum.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/Physics/DoublePendulum.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -184,6 +1232,48 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="gravity simulation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="platform_game-online" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/Physics" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/Physics/gravity simulation.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="platform_game-online" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/Omer's Project/Drone/GameFiles" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/Omer's Project/Drone/GameFiles/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="platform_game-online" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -197,27 +1287,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testing/Omer's Project/Tanks/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="scratch_76" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="platform_game-online" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch_76.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -249,21 +1318,21 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.Unnamed" />
-      <item itemvalue="Python.tes" />
-      <item itemvalue="Python.AdvancedRigidBody" />
+      <item itemvalue="Python.ClientPong" />
       <item itemvalue="Python.DoublePendulum" />
-      <item itemvalue="Python.scratch_76" />
+      <item itemvalue="Python.Unnamed" />
+      <item itemvalue="Python.gravity simulation" />
+      <item itemvalue="Python.main (1)" />
       <item itemvalue="Python.main" />
-      <item itemvalue="Python.AdvancedRigidBodyOld" />
+      <item itemvalue="Python.tes" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.AdvancedRigidBody" />
-        <item itemvalue="Python.AdvancedRigidBodyOld" />
-        <item itemvalue="Python.DoublePendulum" />
+        <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.scratch_76" />
+        <item itemvalue="Python.gravity simulation" />
+        <item itemvalue="Python.DoublePendulum" />
+        <item itemvalue="Python.ClientPong" />
       </list>
     </recent_temporary>
   </component>
@@ -280,6 +1349,7 @@
       <updated>1570184384522</updated>
       <workItem from="1621537243957" duration="4433000" />
       <workItem from="1621587873140" duration="5365000" />
+      <workItem from="1623022273889" duration="64000" />
     </task>
     <task id="LOCAL‎00001" summary="bad rigidCube">
       <created>1604790254036</created>
