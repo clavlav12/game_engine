@@ -57,7 +57,7 @@ class CollidedSprite:
         """
         Generates CollidedSprite by BaseSprite
         """
-        return cls(sprite, 1/sprite.mass, 0, sprite.position, sprite.velocity, 0, sprite.elasticity,
+        return cls(sprite, 1/sprite.mass, 0, sprite.position, sprite.velocity, 0, sprite.restitution,
                    sprite.static_friction, sprite.dynamic_friction)
 
     @classmethod
@@ -66,7 +66,7 @@ class CollidedSprite:
         Generates CollidedSprite by RigidBody
         """
         return cls(sprite, 1/sprite.mass, 1/sprite.moment_of_inertia, sprite.position,
-                   sprite.velocity, sprite.angular_velocity, sprite.elasticity, sprite.static_friction, sprite.dynamic_friction)
+                   sprite.velocity, sprite.angular_velocity, sprite.restitution, sprite.static_friction, sprite.dynamic_friction)
 
     def add_to_position(self, displacement):
         """
@@ -96,13 +96,18 @@ class CollisionManifold:
     def __init__(self, contact_point, normal, depth, obj1, obj2, collision=True, *, solve=True):
         self.contact_point = contact_point
         self.normal = normal
-        self.depth = depth
+        self.depth = depth + .2
         self.collision = collision
         self.obj1 = obj1
         self.obj2 = obj2
-
         if solve and collision:
             self.add_manifold(self)
+
+    def __str__(self):
+        if self.collision:
+            return f"CollisionManifold(cp={self.contact_point}, n={self.normal}, d={self.depth})"
+        else:
+            return f"CollisionManifold(None)"
 
     @classmethod
     def NoCollision(cls):

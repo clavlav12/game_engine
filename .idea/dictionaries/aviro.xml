@@ -7,12 +7,18 @@
       <w>classmethod</w>
       <w>coeff</w>
       <w>dtime</w>
+      <w>fullscreen</w>
       <w>hitbox</w>
+      <w>hitboxes</w>
+      <w>hitpoints</w>
       <w>mmoi</w>
       <w>noramls</w>
+      <w>obb's</w>
       <w>radiuses</w>
       <w>rects</w>
+      <w>scoller</w>
       <w>scroller</w>
+      <w>shapely's</w>
       <w>talpion</w>
       <w>trigo</w>
       <w>unrotated</w>

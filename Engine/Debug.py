@@ -3,6 +3,54 @@ import math
 from Engine import pygame_structures
 
 
+class DebugKey:
+    def __init__(self, key=None, is_pressed=False):
+        self.key = pg.K_RETURN or key
+        self.pressed = is_pressed
+
+    def press(self):
+        """
+        press key
+        """
+        self.pressed = True
+
+    def release(self):
+        """
+        release key
+        """
+        self.pressed = False
+
+    def first_pressed(self):
+        """
+        Presses
+        :return: True if key wasn't pressed before
+        """
+        was_pressed = self.pressed
+        self.press()
+        return not was_pressed
+
+    def set_pressed(self, value):
+        """
+        Sets pressed state to value
+        """
+        self.pressed = value
+
+    def set_pressed_auto(self):
+        """
+        Sets pressed state to proper value according to "keys"
+        :return: True if key is pressed and wasn't pressed before (new press)
+        """
+        keys = pg.key.get_pressed()
+        was_pressed = self.pressed
+        self.pressed = keys[self.key]
+        return (not was_pressed) and self.pressed
+
+    def __str__(self):
+        return str(self.key)
+
+    def __bool__(self):
+        return bool(self.pressed)
+
 def draw_arrow(start, vec, lcolor=pg.Color('red'), tricolor=pg.Color('green'), trirad=3, thickness=2, scale=1):
     """
     Draws a Vector2 to the screen
@@ -67,3 +115,6 @@ def draw_rect(r: pg.Rect, clr=pg.Color('red')):
 
 class WTFError(Exception):
     pass
+
+
+debug = DebugKey()

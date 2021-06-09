@@ -11,8 +11,6 @@ from common_sprites import *
 W = 1000
 H = 700
 
-print(base_sprites.BaseSprite.classes)
-
 def Main():
     # screen = pygame_structures.DisplayMods.NoWindow()
     screen = pygame_structures.DisplayMods.Windowed((W, H))

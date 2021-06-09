@@ -8,14 +8,17 @@ import math
 
 
 def triangle_area(a, b):
+    """Triangle area by two points and origin"""
     return (a ** b) / 2
 
 
 def triangle_center(a, b):
+    """Triangle center by two points and origin"""
     return (a + b) / 3
 
 
 def triangle_moment_of_inertia(a, b, mass):
+    """Triangle moment of inertia by two points, mass and origin"""
     return mass / 6 * (a * a + b * b + a * b)
 
 
@@ -43,6 +46,7 @@ class Polygon:
         return [v - self.centroid for v in self.world_vertices]
 
     def update_centroid(self, new_centroid: Vector2):
+        """Shifts the polygon by giving it a new com position"""
         c = self.shapely_polygon.centroid
         offset = new_centroid - (c.x, c.y)
         self.shapely_polygon = shift(self.shapely_polygon, offset.x, offset.y)
@@ -50,22 +54,27 @@ class Polygon:
         self.centroid = new_centroid
 
     def rotate_and_move(self, new_angle: Union[int, float], centroid, radians=False):
+        """Rotates and shift the polygon at the same time"""
         self.shapely_polygon = rotate_polygon(self.reference_shapely_polygon, new_angle, 'centroid', radians)
         self.update_centroid(centroid)
 
     def update_vertices(self):
+        """Update vertices to match to shapely's"""
         self.world_vertices = [Vector2.Point(v) for v in self.shapely_polygon.exterior.coords]
         self.update_rect()
 
     def update_rect(self):
+        """Updates polygon's hitbox"""
         bounds = self.shapely_polygon.bounds  # Returns a (minx, miny, maxx, maxy) that bounds the object.
         self.rect = Rect(bounds[0], bounds[1], bounds[2] - bounds[0], bounds[3] - bounds[1])
 
     def intersection(self, other):
+        """Returns the intersection area between self and other"""
         assert isinstance(other, Polygon)
         return tuple(self.shapely_polygon.intersection(other.shapely_polygon).coords)
 
     def calculate_properties(self):
+        """Calculate important properties such as area, mass, centroid and moment of inertia"""
         area = 0
         mass = 0
         center = Vector2.Zero()
@@ -99,6 +108,7 @@ class Polygon:
         self.mass = abs(mass)
 
     def friction_torque(self, gravity_times_mu):
+        """Calculates the torque done by horizontal friction (Currently the formula is broken)"""
         torque_sum = 0
 
         vertices = self.local_vertices

@@ -302,7 +302,7 @@ class RigidConvexPolygon(base_sprites.BaseRigidBody):
         return True
 
     def get_axes(self, _):
-        return [(self.vertices[i + 1] - self.vertices[i]).normalized().normal()
+        return [(self.vertices[i + 1] - self.vertices[i]).normalized().tangent()
                 for i in range(len(self.vertices) - 1)]
 
     @classmethod
@@ -422,7 +422,7 @@ class OBB(RigidConvexPolygon):
         self.dir = self.edge.normalized()
         self.ref_dir = self.edge.normalized()
         self.width = width
-        vertex[2] = vertex[1] + self.dir.perpendicular() * self.width
+        vertex[2] = vertex[1] + self.dir.tangent() * self.width
         vertex[3] = vertex[2] - self.dir * self.length
 
         control = base_control.NoMoveControl()
@@ -454,7 +454,7 @@ class OBB(RigidConvexPolygon):
 
     def get_axes(self, _):
         direction = (self.vertices[1] - self.vertices[0]).normalized()
-        return [direction, direction.normal()]
+        return [direction, direction.tangent()]
 
 
 class RegularPolygon(RigidConvexPolygon):
@@ -570,7 +570,7 @@ class Capsule(base_sprites.BaseRigidBody):
                     self.width
                     )
 
-        v = self.dir.normal()
+        v = self.dir.tangent()
         pg.draw.line(image, self.color,
                      tuple(self.p1 - self.rect.topleft + v * self.r),
                      tuple(self.p2 - self.rect.topleft + v * self.r),

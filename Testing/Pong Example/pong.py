@@ -65,6 +65,7 @@ class Bat(BaseSprite):
         )
         self.static_friction = 0
         self.dynamic_friction = 0.05
+        self.restitution = 1
 
         self.image = pg.Surface((self.WIDTH, self.HEIGHT))
         self.image.fill(self.COLOR)

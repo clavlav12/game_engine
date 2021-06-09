@@ -3,6 +3,8 @@ from Engine.structures import Vector2
 import pygame as pg
 import math
 
+GRAVITY = 150
+
 
 class Angle:
     def __init__(self, angle, velocity):
@@ -11,8 +13,6 @@ class Angle:
         self.torque = 0
 
     def add_torque(self, torque):
-        if abs(torque) > 100:
-            print(torque)
         self.torque += torque
 
     def step(self, dt):

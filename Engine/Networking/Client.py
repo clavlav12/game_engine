@@ -1,13 +1,13 @@
 from threading import Thread
 import socket
 import select
-import warnings
 from Engine import base_sprites
 import inspect
 
 
 class MetaClient(type):
     def __new__(mcs, name, bases, attrs):
+        """Makes sure commands are inherited"""
         cls = type.__new__(mcs, name, bases, attrs)
         if 'commands' in attrs:
             dictionary = attrs['commands']
@@ -35,16 +35,7 @@ class MetaClient(type):
 class CommandClient(Thread, metaclass=MetaClient):
     SERVER_PORT = 35241
     IP = "127.0.0.1"
-    try:
-        with open('ip.txt', 'r') as file:
-            IP_ = file.read().strip()
-    except:
-        open('ip.txt', 'w').close()
-    # IP = "212.76.116.100"
-    # IP = "31.44.141.250"
     commands = {}
-
-    is_server = False
 
     def __init__(self):
         super(CommandClient, self).__init__()
@@ -52,21 +43,21 @@ class CommandClient(Thread, metaclass=MetaClient):
         base_sprites.BaseSprite.set_client(self)
 
     def run(self):
+        """Runs the client"""
         self.connected = self.connect_server()
         while self.connected:
             read_list = select.select([self.socket], [], [], 1)[0]
             if read_list:
                 self.handle_request()
-        # print("finished")
         self.socket.close()
-        # self.disconnect_and_quit(False)
 
     def connect_server(self):
+        """Connects to the server"""
         self.socket = socket.socket()
         self.socket.settimeout(10)
         try:
             ip = self.IP
-            print("connecting")
+            print("connecting...")
             self.socket.connect((ip, self.SERVER_PORT))
             print("connected")
             self.connect()
@@ -78,6 +69,7 @@ class CommandClient(Thread, metaclass=MetaClient):
             return False
 
     def disconnect_and_quit(self):
+        """Safely disconnects from the server"""
         try:
             self.socket.send(self.build_packet('Disconnect'))
             self.connected = False
@@ -86,6 +78,7 @@ class CommandClient(Thread, metaclass=MetaClient):
             pass
 
     def handle_request(self):
+        """Handles one or more server requests. Splits it to command and arguments and calls the suitable function"""
         try:
             data = bytearray()
             while True:
@@ -111,13 +104,14 @@ class CommandClient(Thread, metaclass=MetaClient):
                     self.commands[command](self, kwargs)
 
         except Exception as e:
-            raise  e
+            raise e
             # warnings.warn("Something broken\n " + repr(e))
             return False
         return True
 
     @classmethod
     def command(cls, name=None):
+        """Meant to be used as a decorator. Defines a new command."""
         if callable(name):  # called without parenthesis
             f = name
             cls.commands[f.__name__] = f
@@ -136,12 +130,14 @@ class CommandClient(Thread, metaclass=MetaClient):
 
     @classmethod
     def build_packet(cls, command: str, **parameters):
+        """Converts command and arguments to something that can be sent over a socket"""
         return cls.format_string(command).encode() + (b'?' if parameters else b'') + ('&'.join(
             ['{}={}'.format(cls.format_string(param), cls.format_string(val))
              for param, val in parameters.items()])).encode() + b'\n'
 
     @classmethod
     def split_message(cls, request: str):
+        """Splits a message into command and arguments"""
         command, *arguments = cls.smart_split(request, '?')
         if arguments:
             a = [cls.smart_split(i, '=') for i in cls.smart_split(arguments[0], '&')]
@@ -152,8 +148,10 @@ class CommandClient(Thread, metaclass=MetaClient):
 
     @staticmethod
     def smart_split(string, separator, saver='\\'):
-        """Split string by the separator, as long as saver is not present before the separator.
-        for example: string='Hello0Dear0W\0rld, separator='0', saver='\' returns ['Hello', 'Dear', 'W0rld']"""
+        """
+        Split string by the separator, as long as saver is not present before it.
+        for example: string='Hello0Dear0W\0rld, separator='0', saver='\' returns ['Hello', 'Dear', 'W0rld']
+        """
         splited = string.split(separator)
         new_list = []
         i = 0
@@ -171,16 +169,20 @@ class CommandClient(Thread, metaclass=MetaClient):
 
     @staticmethod
     def encode_list(args):
+        """Encodes a list to something that can be sent over a socket"""
         return ','.join(arg.replace(',', r'\,') for arg in args)
 
     @classmethod
     def decode_list(cls, lst):
+        """Decodes the list encoded by encode_list"""
         return cls.smart_split(lst, ',')
 
     def send_message(self, command: str, **parameters):
+        """Send a command and arguments to the server"""
         self.socket.send(self.build_packet(command, **parameters))
 
     def connect(self):
+        """Called after the three-way-handshake. Sends a protocol-valid connect request to the server."""
         print("sent connect")
         self.send_message('Connect')
 
@@ -198,6 +200,7 @@ class FalseDict(dict):
 
 
 class OtherUser:
+    """User whose active keys are always nothing"""
     def __init__(self):
         self.active_keys = FalseDict()
 
@@ -209,6 +212,19 @@ params = {}
 
 
 def safe_kwargs(f):
+    """
+    Meant to be used as a decorator. Makes sure that if a command function only takes one argument, it will get it as a
+    dictionary describing the keyword arguments it got.
+
+    without it, a command defined as:
+
+    @CommandClient.command
+    def command(self, keyword_arguments):
+        pass
+
+    can get a request like "command?keyword_arguments=4". This is dangerous because the programmer really expected to
+    get {"keyword_arguments": "4"} as keyword_arguments.
+    """
     def inner(self, kwargs):
         if f not in params:
             params[f] = list(inspect.signature(f).parameters)[1]
@@ -221,6 +237,7 @@ def safe_kwargs(f):
 
 class GameClient(CommandClient):
     def key_event(self, key: int, pressed: bool):
+        """Updates the server that a key status has changed"""
         self.send_message('KeyChange', keyNumber=key, isPressed=pressed)
 
     def connect(self):
@@ -229,15 +246,25 @@ class GameClient(CommandClient):
     @CommandClient.command('Update')
     @safe_kwargs
     def update_sprite(self, kwargs):
+        """Updates a sprite"""
         id_ = kwargs.pop('id')
         try:
             base_sprites.BaseSprite.sprites_by_id[id_].decode_update(**kwargs)
         except KeyError as e:
-            print("sprite is not created yet", e)
+            print("sprite is not created yet", e, base_sprites.BaseSprite.sprites_by_id)
+
+    @CommandClient.command('Kill')
+    def update_sprite(self, id_):
+        """Kills a sprite"""
+        try:
+            base_sprites.BaseSprite.sprites_by_id[id_].kill()
+        except KeyError as e:
+            print("Cant kill a sprite cause it doesn't exists", e, base_sprites.BaseSprite.sprites_by_id)
 
     @CommandClient.command('Create')
     @safe_kwargs
     def create_sprite(self, kwargs):
+        """Creates a sprite"""
         id_ = kwargs.pop('id')
         class_id = kwargs.pop('classId')
         controlled = kwargs.pop('control')
@@ -249,6 +276,3 @@ class GameClient(CommandClient):
             new.set_id(int(id_))
             if not int(controlled):
                 new.set_user(OtherUser())
-
-
-# @CommandClient.command

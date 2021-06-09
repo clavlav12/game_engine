@@ -4,7 +4,7 @@ import Engine.pygame_structures as pygame_structures
 
 class Particle(pygame.sprite.Sprite):
     particle_list = pygame.sprite.Group()
-    particle_sprite_list = pygame.sprite.Group()  # particles who need to check collide with sprites
+    particle_sprite_list = pygame.sprite.Group()  # particles who need to check for collision with sprites
 
     def __init__(self, image, center_position, collide):
         super(Particle, self).__init__()
@@ -15,35 +15,39 @@ class Particle(pygame.sprite.Sprite):
             Particle.particle_sprite_list.add(self)
 
     def draw(self):
+        """Called each frame, draws the particle to the screen"""
         pygame_structures.Camera.blit(self.image, self.rect.topleft - pygame_structures.Camera.scroller)
-        # self.draw_rect()
-        
+
     def update(self):
+        """Called each frame. meant to control the effect behavior"""
         self.draw()
 
     @classmethod
     def update_all(cls):
+        """Called each frame. updates all the particles"""
         for sprite in cls.particle_list:
             sprite.update()
 
     def collide(self, other):
-        pass
+        """Called on collision with sprites"""
 
     def draw_rect(self, clr=pygame.Color('red')):
+        """Draws particle's hitbox"""
         r = pygame.Rect(self.rect)
         r.topleft = r.topleft - pygame_structures.Camera.scroller
         pygame.draw.rect(pygame_structures.Camera.screen, clr, r, 1)
 
     @classmethod
     def check_all_collision(cls, sprites_list):
+        """Checks for collision with sprites for each particle"""
         for particle in cls.particle_sprite_list:
+            particle: Particle
             lst = pygame.sprite.spritecollide(particle, sprites_list, False)
             for sprite in lst:
                 particle.collide(sprite)
 
 
 class Explosion(Particle):
-    print("here")
     IMAGE_LIST = pygame_structures.get_images_list(r'animation\explostions\\*.png', 1)
 
     def __init__(self, center_position, fpi=20, collide_function=None):

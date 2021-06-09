@@ -4,7 +4,6 @@ from collections import namedtuple
 from win32api import GetSystemMetrics
 from itertools import repeat
 from time import time
-from Engine.Debug import *
 import os
 import pygame
 import math
@@ -16,6 +15,7 @@ clock: type = type
 
 
 def init(TileClass, AirClass, SpriteClass, clockInstance):
+    """Initiate the file to prevent recursive importing"""
     global Tile
     global Sprite
     global Air
@@ -27,14 +27,23 @@ def init(TileClass, AirClass, SpriteClass, clockInstance):
 
 
 def smooth_scale_image(img, scale):
+    """Smoothly scales an image by scale "scale" """
     return pygame.transform.smoothscale(img, [int(x) for x in structures.mul_tuple(img.get_size(), scale)])
 
 
 def smooth_scale_images(lst, scale):
+    """Smoothly scales a list of images by scale "scale" """
     return [smooth_scale_image(i, scale) for i in lst]
 
 
-def get_images_list(path, scale=None, crop_rect=None, sort_key=None):
+def get_images_list(path, scale=None, crop_rect=None, sort_key=None) -> list:
+    """
+    Returns an image list by folder/reg expression
+    :param sort_key: a key to sort the list by
+    :param crop_rect: a rect to crop the images by
+    :param scale: a scale to scale the images by
+    :param path: path to directory / reg expression
+    """
     if sort_key:
         files = sorted(files_in_dir(path), key=sort_key)
     else:
@@ -54,6 +63,7 @@ def get_images_list(path, scale=None, crop_rect=None, sort_key=None):
 
 
 def singleton_classmethod(function):
+    """Binds the instance to the classmethod"""
     def inner(*args, **kwargs):
         assert Map.instance is not None, "No Map"
         if args and isinstance(args[0], Map):
@@ -64,71 +74,8 @@ def singleton_classmethod(function):
     return inner
 
 
-class collision_manifold:
-    def __init__(self, sprite1, sprite2, penetration, normal, collision, x_collision,
-                 contact_points=None, contact_count=0):
-        if contact_points is None:
-            contact_points = [None, None]
-            contact_count = 0
-        self.contact_points = contact_points
-        self.contact_count = contact_count
-        self.sprite1 = sprite1
-        self.sprite2 = sprite2
-        self.penetration = penetration
-        self.normal = normal
-        self.collision = collision
-        self.x_collision = x_collision
-
-    def __str__(self):
-        return str(self.collision)
-
-    @classmethod
-    def by_two_objects(cls, obj1, obj2):
-        normal = cls.get_mid(obj2) - cls.get_mid(obj1)
-        obj1_extent_x = obj1.rect.width / 2
-        obj2_extent_x = obj2.rect.width / 2
-
-        x_overlap = obj1_extent_x + obj2_extent_x - abs(normal.x)
-
-        y_collision = False
-        x_collision = False
-        if x_overlap > 0:
-            obj1_extent_y = obj1.rect.height / 2
-            obj2_extent_y = obj2.rect.height / 2
-
-            y_overlap = obj1_extent_y + obj2_extent_y - abs(normal.y)
-            if y_overlap > 0:
-                if x_overlap < y_overlap:
-                    if normal.x < 0:
-                        normal_normalized = structures.Vector2.Cartesian(-1, 0)
-                    else:
-                        normal_normalized = structures.Vector2.Cartesian(1, 0)
-                    penetration = x_overlap
-                    x_collision = True
-                else:
-                    if normal.y < 0:
-                        normal_normalized = structures.Vector2.Cartesian(0, -1)
-                    else:
-                        normal_normalized = structures.Vector2.Cartesian(0, 1)
-                    penetration = y_overlap
-                    y_collision = True
-
-                return cls(obj1, obj2, penetration, normal_normalized, True, x_collision)
-
-        return cls(obj1, obj2, None, None, False, False)
-
-    @staticmethod
-    def get_mid(obj):
-        if isinstance(obj, Sprite):
-            return obj.position
-        else:  # Rect only no float position
-            return obj.rect.topleft + (structures.Vector2.Point(obj.rect.size) / 2)
-
-    def __bool__(self):
-        return self.collision
-
-
 def remove_id(dictionary: dict):
+    """Removes the key id and returns the dictionary"""
     dictionary.pop('id')
     return dictionary
 
@@ -168,12 +115,7 @@ class Map:
                                 for x, kwargs in enumerate(row)]
                                for y, row in
                                enumerate(reversed(forth_quadrant))]
-        # for i in self.first_quadrant:
-        #     for a in i:
-        #         if a.id == 1:
-        #             print(a.rect.top)
 
-        # print(*[['0' if isinstance(tile, air) else '1' for tile in column] for column in self.map], sep='\n')
         self.map_maps = {
             (1, 1): self.first_quadrant,
             (-1, 1): self.second_quadrant,
@@ -183,22 +125,26 @@ class Map:
         }
 
     def get_tile(self, x, y):
+        """Returns a tile by x and y coordinates"""
         return self.map_maps[(int(math.copysign(1, x)), int(math.copysign(1, y)))][abs(y)][abs(x)]
 
     @classmethod
     def No_Map(cls):
+        """Empty map"""
         cls([], [], [], [], 1, empty=True)
 
     @classmethod
     def from_file(cls, file):
-        pass
+        """Implement later. load a map from a file"""
 
     @singleton_classmethod
     def get_map(self, x, y):
+        """Get a quadrant by x and y unit coordinates"""
         return self.map_maps[(int(math.copysign(1, x)), int(math.copysign(1, y)))]
 
     @singleton_classmethod
-    def check_platform_collision(self, sprite, time_delta):
+    def check_platform_collision(self, sprite):
+        """Check for collision with sprite"""
         if self.empty:
             return None, None
 
@@ -207,17 +153,6 @@ class Map:
         right = int((x + width // 2) // self.tile_size)
         top = int((y - height // 2) // self.tile_size)
         bottom = int((y + height // 2) // self.tile_size)
-
-        # if (y + height) / self.tile_size == bottom:
-        #     bottom -= 1
-        # if y / self.tile_size == top:
-        #     top += 1
-        # if x / self.tile_size == left:
-        #     left += 1
-        # if (x + width) / self.tile_size == right:
-        #     right -= 1
-
-        # sprite.update_velocity_and_acceleration(time_delta)
 
         called = []
         for column in range(top, bottom + 1):
@@ -236,18 +171,12 @@ class Map:
 
                             tile.group.set_reference(tile)
                             manifold = collider.manifold_generator(sprite, tile.group)
-                            # print("collision :(", manifold, manifold.collision, collider.manifold_generator.func)
 
                             if (manifold is None) or manifold.collision:
                                 called.append(collection)
 
-                                # t = Timer(
-                                #     0.1, True
-                                # )
-
                                 tile.sprite_collide(sprite, manifold)
-                                # sprite.update_velocity_and_acceleration(time_delta)
-                except IndexError as e:  # no collision
+                except IndexError:  # no collision
                     pass
 
         try:
@@ -259,6 +188,7 @@ class Map:
 
 
 def screen_maker(func):
+    """Decorator - creates a screen, then updates class's properties"""
     def inner(*args, **kwargs):
         val = func(DisplayMods, *args, **kwargs)
         DisplayMods.current_width, DisplayMods.current_height = val.get_size()
@@ -281,37 +211,44 @@ class DisplayMods:
 
     @classmethod
     def get_resolution(cls):
+        """Returns the current resolution of the screen"""
         return cls.current_width, cls.current_height
 
     @screen_maker
     def FullScreen(cls):
+        """Generates a fullscreen display"""
         return pygame.display.set_mode(cls.MONITOR_RESOLUTION, pygame.FULLSCREEN)
 
     @screen_maker
     def FullScreenAccelerated(cls):
+        """Generates a fullscreen display, hardware accelerated."""
         return pygame.display.set_mode(cls.MONITOR_RESOLUTION, pygame.HWSURFACE)
 
     @screen_maker
     def WindowedFullScreen(cls):
+        """Generates a windowed fullscreen display"""
         return pygame.display.set_mode(cls.MONITOR_RESOLUTION, pygame.NOFRAME, display=0)
 
     @screen_maker
     def Windowed(cls, size):
+        """Generates a windowed display"""
         cls.current_width, cls.current_height = size
         return pygame.display.set_mode((cls.current_width, cls.current_height))
 
     @screen_maker
     def Resizable(cls, size):
+        """Generates a resizable windowed display"""
         cls.current_width, cls.current_height = size
         return pygame.display.set_mode((cls.current_width, cls.current_height), pygame.RESIZABLE)
 
     @screen_maker
     def NoWindow(cls):
+        """No window (to use on server)"""
         return EmptyDisplayMod()
 
 
 class EmptyDisplayMod:
-
+    """Mimics the pygame.display class"""
     def fill(self, _):
         pass
 
@@ -345,6 +282,7 @@ class HealthBar:
 
     def draw(self):
         """
+        Draws health bar to screen
         negative_bar -> stays the same size
         positive_bar -> decreases with hp
         """
@@ -395,6 +333,7 @@ class Animation:
     @classmethod
     def by_images_list(cls, lst, frames_per_image=1, repeat=True, flip_x=False, flip_y=False, scale=1):
         """
+        Generates an Animation object from an image list
         :param lst:  list of surfaces (list)
         :param frames_per_image:  frames until image switches (int)
         :param repeat: after finished to show all images, whether reset pointer or not (bool)
@@ -407,6 +346,7 @@ class Animation:
     @classmethod
     def by_directory(cls, dir_regex, frames_per_image=1, repeat=True, flip_x=False, flip_y=False, scale=1):
         """
+        Generates an Animation object from a directory
         :param dir_regex:  directory path regex (string)
         :param frames_per_image:  frames until image switches (int)
         :param repeat: after finished to show all images, whether reset pointer or not (bool)
@@ -418,6 +358,7 @@ class Animation:
         return cls(cls._key, dir_regex, frames_per_image, repeat, flip_x, flip_y, scale)
 
     def get_image(self):
+        """Next image in the animation list"""
         if not self.timer.is_counting:
             if self.timer.finished():
                 self.update_pointer()
@@ -425,6 +366,7 @@ class Animation:
         return self.images_list[self.pointer]  # ??
 
     def update_pointer(self):
+        """Updates the pointer. If it's too big - go back to the start or stay on the last frame"""
         self.pointer += 1
         if self.pointer >= len(self.images_list):  # ??
             if self.repeat:
@@ -435,16 +377,18 @@ class Animation:
         return False
 
     def reset(self):
+        """Takes the pointer back to the beginning"""
         self.pointer = 0
 
     def finished(self):
+        """Returns true if the animation is done and not set to repeat"""
         return (not self.repeat) and self.pointer == len(self.images_list) - 1  # ??
 
     def __next__(self):
         return self.get_image()
 
     def get_next_size(self):
-        # Returns the size of the next image
+        """Returns the size of the next image"""
         return self.images_list[self.pointer].get_size()
 
     def __len__(self):
@@ -461,12 +405,15 @@ class TileCollection(pygame.sprite.Sprite):
         super(TileCollection, self).__init__()
 
     def update(self):
+        """Called when the collection is changed. Updates the mask"""
         self.mask = pygame.mask.Mask(self.rect.size, True)
 
     def set_reference(self, tile):
+        """Set the reference tile to "tile" """
         self.reference = tile
 
     def add_tile(self, tile):
+        """Adds a tile to the group"""
         if self.rect is None:
             self.rect = pygame.Rect(*tile.rect)
         else:
@@ -482,7 +429,7 @@ class TileCollection(pygame.sprite.Sprite):
             self.update()
 
     def sprite_collide(self, _sprite, collision):
-        pass
+        """Called on collision with a sprite"""
 
 
 class Timer:
@@ -503,9 +450,11 @@ class Timer:
         return self._is_counting
 
     def reset(self):
+        """Reset the clock"""
         self.start_time = time()
 
     def activate(self, new_time=None):
+        """Activates the clock"""
         if new_time:
             self.delay = new_time
         else:
@@ -517,6 +466,7 @@ class Timer:
         return self.delay < (time() - self.start_time)
 
     def finished(self):
+        """Returns true if the timer is done"""
         return bool(self)
 
 
@@ -536,6 +486,7 @@ class RotatableImageOld:
         self.rotate(init_angle)
 
     def rotate(self, angle):
+        """Rotates the image"""
         if not angle == self.angle:
             self.angle = angle
             if Camera.screen:
@@ -546,9 +497,8 @@ class RotatableImageOld:
                 center=structures.add_tuples(self.position(), self.edited_center_offset))
 
     def blit_image(self):
+        """Blits the image"""
         self.rect.center = structures.add_tuples(self.position(), self.edited_center_offset)
-        # r = self.rect.copy()
-        # r.topleft -= Camera.scroller
         Camera.blit(self.edited_img,
                     structures.add_tuples(self.rect.topleft, self.edited_center_offset) - Camera.scroller)
         # pygame.draw.rect(Camera.screen, Color('red'), r, 5)
@@ -571,6 +521,7 @@ class RotatableImage:
         self.angle = init_angle
 
     def rotate(self, angle, skip_optimisation=False):
+        """Rotates the image"""
         if not angle == self.angle or skip_optimisation:
             self.angle = angle
             self.box_rotate = box_rotate = [p.rotate(angle) for p in self.box]
@@ -581,12 +532,12 @@ class RotatableImage:
             self.edited_img = pygame.transform.rotate(self.original_img, angle)
 
     def blit_image(self, center_position, blit_to_camera=True):
+        """Blits the image"""
         origin = (center_position[0] - self.center_offset[0] + self.min_box[0] - self.pivot_move[0],
                   center_position[1] - self.center_offset[1] - self.max_box[1] + self.pivot_move[1])
 
         if blit_to_camera:
-            Camera.blit(self.edited_img,
-                        origin - Camera.scroller)
+            Camera.blit(self.edited_img, origin - Camera.scroller)
 
         # pygame.draw.rect(Camera.screen, Color('red'), r, 5)
         return self.edited_img, origin
@@ -627,6 +578,7 @@ class FlippableRotatedImage:
                                                  lambda: structures.add_tuples(sprite_rect.topleft, new_position))
 
     def rotate(self, angle):
+        """Rotates the image"""
         if self.original_direction == structures.Direction.right:
             self.right_image.rotate(angle)
             self.left_image.rotate(-angle)
@@ -635,14 +587,11 @@ class FlippableRotatedImage:
             self.right_image.rotate(-angle)
 
     def blit_image(self, _direction):
+        """Blits the image"""
         if _direction in structures.Direction.rights:
-            r = self.right_image.rect.copy()
             self.right_image.blit_image()
         elif _direction in structures.Direction.lefts:
-            r = self.left_image.rect.copy()
             self.left_image.blit_image()
-        # r.topleft = r.topleft - Camera.scroller
-        # draw.rect(Camera.screen, Color('red'), r, 5)
 
 
 class Camera:
@@ -695,27 +644,33 @@ class Camera:
 
     @classmethod
     def blit_continuous_image(cls, image, position, time_to_blit):
+        """Blit an image for a "time to blit" seconds long"""
         cls.images.append(cls.Image(image, position, time_to_blit, time()))
 
     @classmethod
     def add_blit_order(cls, function, time_to_blit):
+        """A function called in the end of the frame to blit something to the screen"""
         cls.blits.append(cls.BlitOrder(function, time_to_blit, time()))
 
     @classmethod
     def set_scroller_position(cls, position, smooth_move=False):
+        """Updates the scoller position"""
         cls.scroller.set_position(position, smooth_move)
 
     @classmethod
     def get_scroller(cls):
+        """Returns the scroller"""
         return cls.scroller
 
     @staticmethod
     def add_particle(particle, *args, **kwargs):
+        """Adds a particle to the screen"""
         particle(*args, **kwargs)
 
     @classmethod
     def display_text(cls, text: str, position, signature, font=None,
                      antialais=True, color=pygame.Color('red'), bg=None):
+        """Display a text to the screen until removed"""
         if font is None:
             font = cls.default_font
         sur = font.render(text, antialais, color, bg)
@@ -727,6 +682,7 @@ class Camera:
 
     @classmethod
     def remove_text(cls, signature):
+        """Removes a displayed text from the screen"""
         for txt in cls.displayed_text.values():
             if txt.signature == signature:
                 break
@@ -736,6 +692,7 @@ class Camera:
 
     @classmethod
     def shake(cls):
+        """Shakes the screen"""
         cls.shake_offset = cls.shake_generator()
 
     @staticmethod
@@ -758,10 +715,12 @@ class Camera:
 
     @classmethod
     def blit(cls, surface, position):
+        """Blits an image to the screen"""
         cls.screen.blit(surface, position)
 
     @classmethod
     def post_process(cls, sprites_list):
+        """Blits texts, blit orders and continuous images. Also adds the shake effect"""
         for txt in cls.displayed_text.values():
             cls.blit(txt.text, txt.position)
         if cls.display_fps:
@@ -806,10 +765,13 @@ class Camera:
 
     @classmethod
     def reset_frame(cls):
+        """Resets the screen"""
         cls.screen.fill(cls.background)
 
 
 class AutoConvertSurface:
+    """Automatically converts a surface of a class"""
+    __slots__ = 'image', 'converted'
 
     def __init__(self, image):
         self.image = image
@@ -817,6 +779,7 @@ class AutoConvertSurface:
         self.convert()
 
     def convert(self):
+        """Converts image if possible"""
         try:
             self.image = self.image.convert_alpha()
             self.converted = True
@@ -826,11 +789,13 @@ class AutoConvertSurface:
             pass
 
     def __get__(self, instance, owner):
+        """Tries to convert and return the best image it can"""
         if not self.converted:
             self.convert()
         return self.image
 
     def get_size(self):
+        """Returns the size of self.image"""
         return self.image.get_size()
 
 
@@ -842,10 +807,12 @@ class ImageHolder:
         self.converted = False
 
     def image_converted(self, new_image):
+        """Replace old image with the new one and sets the converted flag to true"""
         self.image = new_image
         self.converted = True
 
     def get_image(self):
+        """Returns the held image"""
         return self.image
 
     def __getitem__(self, item):
@@ -858,6 +825,7 @@ class ImageHolder:
 
 
 class PrivateAutoConvertSurface:
+    """Automatically converts a surface if an instance"""
     __slots__ = 'alpha', 'name'
 
     def __init__(self, alpha=True):
@@ -867,15 +835,14 @@ class PrivateAutoConvertSurface:
         self.name = name
 
     def __get__(self, instance, owner):
-        # return self.get_image(instance)
+        """Tries to convert and return the best image it can"""
         try:
-            image, converted = self.get_image_converted(instance)
+            image, converted = self.get_image_holder(instance)
         except KeyError:
             raise AttributeError(f"'{type(instance).__name__}' object has no attribute '{self.name}'")
         if converted or not Camera.screen:
             return image
         try:
-            # print("converting...")
             if self.alpha:
                 converted = image.convert_alpha()
             else:
@@ -889,23 +856,28 @@ class PrivateAutoConvertSurface:
         return self.get_image(instance)
 
     def set_image(self, instance, image):
+        """Sets the image of the instance to image"""
         instance.__dict__[self.name] = ImageHolder(image)
 
     def get_image(self, instance):
-        return instance.__dict__[self.name].get_image()
+        """Returns the image of the instance"""
+        return self.get_image_holder(instance).get_image()
 
     def is_converted(self, instance):
-        return instance.__dict__[self.name].converted
+        """Returns whether or not the instance's image is converted"""
+        return self.get_image_holder(instance).converted
 
-    def get_image_converted(self, instance):
+    def get_image_holder(self, instance):
+        """Returns the image holder"""
         return instance.__dict__[self.name]
 
     def image_converted(self, instance, new_image):
-        instance.__dict__[self.name].image_converted(new_image)
+        """Replaces old instance image with a new one"""
+        self.get_image_holder(instance).image_converted(new_image)
 
     def __set__(self, instance, value):
         self.set_image(instance, value)
-#
+
 
 class ImageList(list):
     """

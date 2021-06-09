@@ -1,4 +1,4 @@
-from pygame import mixer, init
+from pygame import mixer
 from enum import Enum
 import os
 
@@ -7,6 +7,7 @@ cwd = os.getcwd()
 
 
 class Sounds(Enum):
+    """Enum of available sounds"""
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     death = mixer.Sound(r"sounds effects\death effect.wav")
     gun_shot = mixer.Sound(r"sounds effects\gun sound.wav")
@@ -32,9 +33,11 @@ class Player:
         self.music = Music()
 
     def toggle_music(self):
+        """Toggles music status"""
         self.music.toggle()
 
     def toggle_mute(self):
+        """Toggles mute status"""
         self.mute = not self.mute
 
     def check_music(self):
@@ -44,7 +47,8 @@ class Player:
         elif not self.mute and self.music.paused:  # music is not muted but paused
             self.music.unpause()
 
-    def play_sound(self, sound):
+    def play_sound(self, sound: Sounds):
+        """Plays a sound effect from the enum "Sounds" """
         try:
             if not self.mute:
                 sound.value.play()
@@ -73,6 +77,7 @@ class Music:
         self.paused = not value
 
     def play(self):
+        """Starts the music"""
         self.paused = False
         mixer.music.play(-1)
 
@@ -95,4 +100,5 @@ class Music:
         self.paused = not self.paused
 
     def restart(self):
+        """Start the music from the beginning"""
         self.play()

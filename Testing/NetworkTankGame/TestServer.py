@@ -4,12 +4,8 @@ import inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0,parentdir)
-import pygame
-import math
 from Engine.structures import VectorType, Vector2, Direction, DegTrigo
-import Engine.base_sprites as base_sprites
 import Engine.base_control as base_control
-import Engine.pygame_structures as pygame_structures
 from Engine.Networking.Server import GameServer, CommandServer
 from common_sprites import *
 import threading

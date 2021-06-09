@@ -170,8 +170,7 @@ class WinningTile(base_sprites.BlockingTile):
             image, group, 0, 0, 0, x=x, y=y
         )
 
-
-    def sprite_collide(self, _sprite, collision: pygame_structures.collision_manifold):
+    def sprite_collide(self, _sprite, collision):
         if isinstance(_sprite, Drone) and _sprite.golden:
             color = _sprite.color
             pygame_structures.Camera.display_text(f'{color.name} Wins!!', 'center', 'Winning')
@@ -192,7 +191,7 @@ class GoldenPool(base_sprites.BlockingTile):
             image, group, 0, 0, 0, x=x, y=y
         )
 
-    def sprite_collide(self, _sprite, collision: pygame_structures.collision_manifold):
+    def sprite_collide(self, _sprite, collision):
         if isinstance(_sprite, Drone):
             _sprite.make_gold()
 

@@ -452,7 +452,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
 
         # collision.normal *= -1
         relative_velocity = _sprite.velocity - self.velocity
-        velocity_among_normal = relative_velocity * collision.normal
+        velocity_among_normal = relative_velocity * collision.tangent
 
         pg.draw.circle(pygame_structures.Camera.screen, pg.Color('white'), tuple(self.position), 10)
 
@@ -462,7 +462,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
         j = -(1 + self.restitution) * velocity_among_normal
         j /= 1 / float('inf') + 1 / _sprite.mass
 
-        impulse = j * collision.normal
+        impulse = j * collision.tangent
 
         # print(impulse, velocity_among_normal)
         self.friction(_sprite, collision, j)
@@ -480,7 +480,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
             non_infinite = next(filter(lambda x: x.mass < 50000, [_sprite, self]))
             percent = 0.2
             slop = 0.01
-            correction = max(collision.penetration - slop, 0.0) / (1 / non_infinite.mass) * percent * collision.normal
+            correction = max(collision.penetration - slop, 0.0) / (1 / non_infinite.mass) * percent * collision.tangent
             non_infinite.position += 1 / non_infinite.mass * correction
             non_infinite.set_position()
         except StopIteration:
@@ -507,14 +507,14 @@ class RigidCube(base_sprites.ImagedRigidBody):
             close_vel2 = sprite.velocity + rot_vel2
 
             # impulse augmentation
-            imp_aug1 = arm1 ** collision.normal
+            imp_aug1 = arm1 ** collision.tangent
             imp_aug1 = imp_aug1 * self.inv_moment_of_inertia * imp_aug1
-            imp_aug2 = arm2 ** collision.normal
+            imp_aug2 = arm2 ** collision.tangent
             imp_aug2 = imp_aug2 * sprite.inv_moment_of_inertia * imp_aug2
 
             relative_velocity = close_vel1 - close_vel2
 
-            separating_velocity = relative_velocity * collision.normal
+            separating_velocity = relative_velocity * collision.tangent
 
             if separating_velocity > 0:
                 return
@@ -527,7 +527,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
                 return
 
             impulse = vel_sep_diff / (self.inv_mass + sprite.inv_mass + imp_aug1 + imp_aug2)
-            impulse_vector = collision.normal * impulse
+            impulse_vector = collision.tangent * impulse
             impulse_vector /= collision.contact_count
 
             self.velocity += impulse_vector * self.inv_mass
@@ -558,7 +558,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
             pass
 
     def friction(self, _sprite, collision, j):
-        t = _sprite.velocity - (_sprite.velocity * collision.normal) * collision.normal
+        t = _sprite.velocity - (_sprite.velocity * collision.tangent) * collision.tangent
         if t:
             t.normalize()
 

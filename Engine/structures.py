@@ -1,9 +1,10 @@
 from enum import Enum
 import math
-from time import time
+from time import time, perf_counter
 
 
 def maybe(value, or_else):
+    """Return value if it isn't None. Else returns or else"""
     if value is None:
         return or_else
     else:
@@ -11,6 +12,7 @@ def maybe(value, or_else):
 
 
 def sign(x):
+    """Returns the sign of x"""
     if x > 0:
         return 1
     elif x < 0:
@@ -19,21 +21,23 @@ def sign(x):
 
 
 def print_time(func):
+    """Prints the time it takes for func to run each time it runs"""
     def wrapper(*args, **kwargs):
-        before = time()
+        before = perf_counter()
         func(*args, **kwargs)
-        print(time() - before)
-
+        print(perf_counter() - before)
     return wrapper
 
 
 def get_run_time(func, *args, **kwargs):
-    before = time()
+    """Returns the time it takes for func to run"""
+    before = perf_counter()
     func(*args, **kwargs)
-    return time() - before
+    return perf_counter() - before
 
 
 def print_run_time(func, *args, **kwargs):
+    """Prints the time it takes for func to run"""
     before = time()
     val = func(*args, **kwargs)
     print(time() - before)
@@ -41,6 +45,7 @@ def print_run_time(func, *args, **kwargs):
 
 
 def get_all_subclasses(cls):
+    """Returns all the subclasses of cls"""
     all_subclasses = []
     for subclass in cls.__subclasses__():
         if subclass is type:
@@ -52,32 +57,26 @@ def get_all_subclasses(cls):
 
 
 def slope(point1, point2):
+    """Returns the slope between two points"""
     return (point2[1] - point1[1]) / (point2[0] - point1[0])
 
 
 def line(point1, point2):
+    """Returns line equation by two points (y = mx + b)"""
     m = slope(point1, point2)
     b = point1[1] - point1[0] * m
     return f"y = {m}x {' + ' if b > 0 else ''}{b if round(b, 5) != 0.0 else ''}"
 
 
 def angle_between_points(point1, point2):
+    """Returns the angle two points make with the horizontal axis"""
     dy = point2[1] - point1[1]
     dx = point2[0] - point1[0]
     return DegTrigo.atan1(dx, dy)
 
 
-def accurate_rect_collide_old(rect1, rect2, dpos1, dpos2=(0, 0)):
-    rectangle_a = {"x1": rect1.x + dpos1[0], "y1": rect1.y + dpos1[1],
-                   "x2": rect1.bottomright[0] + dpos1[0], "y2": rect1.bottomright[1] + dpos1[1]}
-    rectangle_b = {"x1": rect2.x + dpos2[0], "y1": rect2.y + dpos2[1],
-                   "x2": rect2.bottomright[0] + dpos2[0], "y2": rect2.bottomright[1] + dpos2[1]}
-
-    return not ((rectangle_a["y1"] >= rectangle_b["y2"] or rectangle_a["x1"] >= rectangle_b["x2"]) or
-                rectangle_a["x2"] <= rectangle_b["x1"] or rectangle_a["y2"] <= rectangle_b["y1"])
-
-
 def add_tuples(*tuples):
+    """Adds tuples together like vectors"""
     lst = [0] * len(min(tuples, key=len))
     for i in range(len(lst)):
         for tup in tuples:
@@ -85,12 +84,8 @@ def add_tuples(*tuples):
     return tuple(lst)
 
 
-def get_rect_min_max(rect, dpos):
-    return add_tuples(rect.topleft, dpos), \
-           add_tuples(rect.bottomright, dpos)
-
-
 def accurate_rect_collide(rect1, rect2, dpos1, dpos2=(0, 0)):
+    """Checks for rect collision but accounts for float value"""
     max_1 = add_tuples(rect1.bottomright, dpos1)
     max_2 = add_tuples(rect2.bottomright, dpos2)
     min_1 = add_tuples(rect1.topleft, dpos1)
@@ -103,10 +98,12 @@ def accurate_rect_collide(rect1, rect2, dpos1, dpos2=(0, 0)):
 
 
 def sub_tuples(a, b):
+    """Subtracts tuples like 2D vector"""
     return a[0] - b[0], a[1] - b[1]
 
 
 def mul_tuple(tup, num):
+    """Multiply a tuple by a scalar like a vector"""
     return tuple(map(lambda x: x * num, tup))
 
 
@@ -123,6 +120,56 @@ class EmptyStackException(Exception):
 
 class EmptyQueueException(Exception):
     pass
+
+
+class AlwaysSameValue:
+    def __init__(self, value):
+        self.value = value
+
+    def __add__(self, other):
+        return self
+
+    def __radd__(self, other):
+        return self
+
+    def __sub__(self, other):
+        return self
+
+    def __rsub__(self, other):
+        return self
+
+    def __and__(self, other):
+        return self
+
+    def __rand__(self, other):
+        return self
+
+    def __mul__(self, other):
+        return self
+
+    def __rmul__(self, other):
+        return self
+
+    def __div__(self, other):
+        return self
+
+    def __rdiv__(self, other):
+        return self
+
+    def __divmod__(self, other):
+        return self
+
+    def __rdivmod__(self, other):
+        return self
+
+    def __int__(self):
+        return int(self.value)
+
+    def __bool__(self):
+        return bool(self.value)
+
+    def __str__(self):
+        return str(self.value)
 
 
 class VectorType(Enum):
@@ -152,18 +199,22 @@ class DegTrigo:
 
     @staticmethod
     def deg_to_rad(deg):
+        """Converts degrees to radians"""
         return math.radians(deg)
 
     @staticmethod
     def rad_to_deg(rad):
+        """Converts radians to degrees"""
         return math.radians(rad)
 
     @staticmethod
     def atan(value):
+        """Atan trigonometric function"""
         return math.degrees(math.atan(value))
 
     @classmethod
     def atan1(cls, x, y):  # 0 to 360
+        """Atan1 trigonometric function"""
         if (x > 0) and (y >= 0):
             return cls.atan(y / x)
         elif (x > 0) and (y < 0):
@@ -178,6 +229,7 @@ class DegTrigo:
 
     @classmethod
     def atan2(cls, x, y):  # -180 to 180
+        """Atan2 trigonometric function"""
         if x > 0:
             return cls.atan(y / x)
         elif (x < 0) and (y >= 0):
@@ -192,22 +244,27 @@ class DegTrigo:
 
     @staticmethod
     def asin(value):
+        """asin trigonometric function"""
         return math.degrees(math.asin(value))
 
     @staticmethod
     def acos(value):
+        """acos trigonometric function"""
         return math.degrees(math.acos(value))
 
     @staticmethod
     def sin(value):
+        """sin trigonometric function"""
         return math.sin(math.radians(value))
 
     @staticmethod
     def cos(value):
+        """cos trigonometric function"""
         return math.cos(math.radians(value))
 
     @staticmethod
     def tan(value):
+        """tan trigonometric function"""
         return math.tan(math.radians(value))
 
 
@@ -253,83 +310,97 @@ class Vector2:
         self.x, self.y = value
 
     def magnitude(self):
+        """Returns the size of the vector"""
         return abs(self.r)
 
     def square_magnitude(self):
+        """Returns the square of the size of the vector (for fast comparison purposes)"""
         return self * self
 
     @classmethod
     def Cartesian(cls, x=0.0, y=0.0):
+        """Creates a vector with cartesian coordinates"""
         return cls(cls.__key, (x, y), VectorType.cartesian)
 
     @classmethod
     def Point(cls, point):
+        """Creates a vector from a tuple"""
         return cls(cls.__key, (point[0], point[1]), VectorType.cartesian)
 
     @classmethod
     def Polar(cls, r, theta):
+        """Creates a vector with cartesian coordinates"""
         return cls(cls.__key, (r, theta), VectorType.polar)
 
     @classmethod
     def Unit(cls, angle):
+        """Creates a unit vector by an angle"""
         return cls.Polar(1, angle)
 
     @classmethod
     def Zero(cls):
+        """Returns the zero vector"""
         return cls.Cartesian(0, 0)
 
     @classmethod
     def Copy(cls, vector):
+        """Returns a copy of vector"""
         return cls.Cartesian(vector.x, vector.y)
 
     def copy(self):
+        """Returns a copy of self"""
         return Vector2.Copy(self)
 
     def reset(self):
+        """Resets the vector"""
         self.x = 0
         self.y = 0
 
     def rotate(self, angle):
+        """Rotates the vector by angle"""
         self.theta += angle
 
     def rotated(self, angle):
+        """Returns a rotated version of the vector"""
         new = self.copy()
         new.rotate(angle)
         return new
 
     def normalized(self):
+        """Returns a normalized version of self"""
         if not self:
             return Vector2.Zero()
         return Vector2.Cartesian(self.x / self.magnitude(), self.y / self.magnitude())
 
     def normalize(self):
+        """Normalizes self"""
         mag = self.magnitude()
         self.x /= mag
         self.y /= mag
 
     def sign(self):
+        """Return the vector changed by the sign operator"""
         return Vector2.Cartesian(sign(self.x), sign(self.y))
 
-    def normal(self):
+    def tangent(self):
+        """Returns a vector tangent to self"""
         return Vector2.Cartesian(-self.y, self.x)
 
-    def perpendicular(self):
-        return self.normal()
-
-    def tangent(self):
-        return self.normal()
-
     def floor(self):
+        """Return the vector changed by the floor operator"""
         return Vector2.Cartesian(int(self.x), int(self.y))
 
     def set_values(self, x=None, y=None):
+        """Sets the x and y value of self"""
         self.x = maybe(x, self.x)
         self.y = maybe(y, self.y)
 
     def multiply_terms(self, other):
+        """Multiply self by other by multiplying each term by the other"""
         return Vector2.Cartesian(self.x * other.x, self.y * other.y)
 
     def reversed(self, term):
+        """Returns a version of self where term is reversed"""
         c = self.copy()
         c[term] *= -1
         return c
@@ -462,22 +533,27 @@ class Vector2:
         return str(self)
 
     def encode(self):
+        """Encodes the vector so it can be send over a socket"""
         return f'{int(self.x)}:{int(self.y)}'
 
     def encode_polar(self):
+        """Encodes the vector so it can be send over a socket, in a polar form (usfule for unit vectors)"""
         return f'{int(self.r)}:{int(self.theta)}'
 
     @classmethod
     def decode(cls, string):
+        """Decodes the information encoded by Vector2.encode"""
         x, y = string.split(':')
         return cls.Cartesian(int(x), int(y))
 
     @classmethod
     def decode_polar(cls, string):
+        """Decodes the information encoded by Vector2.decode_polar"""
         r, theta = string.split(':')
         return cls.Polar(int(r), int(theta))
 
     def str_polar(self):
+        """same as __str__ but as a polar form"""
         return f"r={self.r:.2f}, θ={self.theta:.2f}"
 
     def __getitem__(self, item):
@@ -512,6 +588,9 @@ class Vector2:
         if isinstance(other, self.__class__):
             return (self.x == other.x) and (self.y == other.y)
         return NotImplemented
+
+    def __hash__(self):
+        return hash((self.x, self.y))
 
     def __bool__(self):
         return bool(round(self.r, 5))
@@ -548,12 +627,14 @@ class Vector2:
         return 2
 
     def modf(self):
+        """Returns the float and the whole parts of the vector"""
         x_float, x_num = math.modf(self.x)
         y_float, y_num = math.modf(self.y)
         return Vector2.Cartesian(x_float, y_float), \
             Vector2.Cartesian(x_num, y_num)
 
     def min(self, other):
+        """Returns the smallest terms from self and other"""
         other = Vector2.Point(other)
         return Vector2.Cartesian(
             min(self.x, other.x),
@@ -561,6 +642,7 @@ class Vector2:
         )
 
     def max(self, other):
+        """Returns the greatest terms from self and other"""
         other = Vector2.Point(other)
         return Vector2.Cartesian(
             max(self.x, other.x),
@@ -568,38 +650,19 @@ class Vector2:
         )
 
     def add_point(self, point):
+        """Adds a vector to a point"""
         return self + Vector2.Point(point)
+
 
 class Default:
     pass
 
 
-class OrientedBoundingBox:
-    def __init__(self, width_extent: Vector2, height_extent: Vector2):
-        pass
-
-    @classmethod
-    def by_extent(cls, width_extent: Vector2, height_extent: Vector2):
-        pass
-
-    def by_size_and_orientation(self):
-        pass
-
-
-class IfCondition:
-    def __init__(self, condition, reverse=False):
-        self.reversed = reverse
-        self.condition = condition
-
-    def __bool__(self):
-        return self.condition ^ self.reversed
-
-
 class UntilCondition:
+    """A condition that stays the same until a requirement is made"""
     conditions = []
 
     def __init__(self, condition, reverse=False):
-        # self.state = bool(conddition()) ^ reverse
         self.state = False
         self.reversed = reverse
         self.condition = condition
@@ -610,6 +673,7 @@ class UntilCondition:
 
     @classmethod
     def update_all(cls):
+        """Called each frame. updates all conditions"""
         for cond in cls.conditions:
             if (not cond.state) and (bool(cond.condition()) ^ cond.reversed):
                 cond.state = True
@@ -630,9 +694,11 @@ class Queue:
             self.insert(i)
 
     def insert(self, value):
+        """Inserts a value to the queue"""
         self.__items.append(value)
 
     def remove(self, default=None):
+        """Removes a value from the queue"""
         if len(self.__items) > 0:
             return self.__items.pop(-1)
         elif default is None:
@@ -641,6 +707,7 @@ class Queue:
             return default
 
     def head(self, default=None):
+        """Returns the head of the queue"""
         if len(self.__items) > 0:
             return self.__items[-1]
         elif default is None:
@@ -668,9 +735,11 @@ class Stack:
             self.push(arg)
 
     def push(self, value):
+        """Push a value to the stack"""
         self.__items.append(value)
 
     def pop(self, default=None):
+        """Pops a value from the stack"""
         if len(self.__items) > 0:
             return self.__items.pop()
         if default is None:
@@ -678,9 +747,11 @@ class Stack:
         return default
 
     def get_items(self):
+        """Returns the stack as a list of items"""
         return self.__items
 
     def top(self, default=None):
+        """Returns the top of the stack without popping it"""
         if len(self.__items) > 0:
             return self.__items[-1]
         if default is None:
@@ -688,6 +759,7 @@ class Stack:
         return default
 
     def is_empty(self):
+        """Returns whether or not the stack is empty"""
         return not bool(self)
 
     def __len__(self):
@@ -755,15 +827,13 @@ class Scroller:  # tested
             self.ty = value
 
     def __set_abs_position(self, position):
+        """Sets the position without a smooth transition"""
         x, y = position
-        if x is None:
-            x = self.position()[0]
-        if y is None:
-            y = self.position()[1]
         self.tx = min(max(x - self.display_size[0] / 2, self.minx), self.maxx)
         self.ty = min(max(y - self.display_size[1] / 2, self.miny), self.maxy)
 
     def set_position(self, position, smooth_move=False):
+        """Sets the position of the scroller to position. For a smooth transition, pass smooth_move=True."""
         if isinstance(position, tuple):
             if len(position) == 2:
                 self.position = lambda: position
@@ -772,13 +842,14 @@ class Scroller:  # tested
         else:
             raise AttributeError("Invalid position")
 
-        if not smooth_move:
+        if not smooth_move:  # for a smooth transition just wait
             self.__set_abs_position(self.position())
 
     def __rsub__(self, other):
         return other[0] - self.x, other[1] - self.y
 
     def update(self):
+        """Updates the scroller, called each frame"""
         x, y = self.position()
         dx = (x - self.tx - self.display_size[0] / 2)
         if (abs(dx) < 3) and (abs(dx) < abs(self.last_dx)):  # makes movement smoother
@@ -811,6 +882,7 @@ class Layer:
 
     @classmethod
     def add_layer(cls):
+        """Adds a collision layer"""
         cls.num_of_layers += 1
 
     def __and__(self, other):
@@ -818,14 +890,12 @@ class Layer:
             return self.layers & other.layers
         return NotImplemented
 
-members = [attr for attr in dir(Direction) if not callable(getattr(Direction, attr)) and not attr.startswith("__")]
-direction = {eval(f'Direction.{i}'): i for i in members}
 
 if __name__ == '__main__':
     v = Vector2.Cartesian(30, 30)
     v.normalize()
 
-    print(v, v.magnitude())
+    # print(v, v.magnitude())
     # A->velocity -= (1 / A->mass) * frictionImpulse
     # B->velocity += (1 / B->mass) * frictionImpulse
 

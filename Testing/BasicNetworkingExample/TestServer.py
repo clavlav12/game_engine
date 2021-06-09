@@ -12,8 +12,6 @@ import threading
 W = 1000
 H = 700
 
-print(base_sprites.BaseSprite.classes)
-
 class Server(GameServer):
     @CommandServer.command('Connect')
     def connect(self, user, kwargs):

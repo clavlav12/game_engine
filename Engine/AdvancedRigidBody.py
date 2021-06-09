@@ -14,7 +14,6 @@ Projection = namedtuple('Projection', ('min', 'max', 'collision_vertex'))
 Number = Union[int, float]
 Point = Union[List[Number], Tuple[Number, Number], Vector2]
 
-
 def advanced_rigid_generator(obj1, obj2):
     """
     Generate a collision manifold by two rigid bodies
@@ -64,7 +63,8 @@ class AdvancedRigidBody(base_sprites.BaseRigidBody):
             moment_of_inertia,
             orientation,
             control,
-            manifold_generator=self.advanced_rigid_generator
+            manifold_generator=self.advanced_rigid_generator,
+            sprite_collision_by_rect=structures.AlwaysSameValue(True)
         )
 
     def update(self, _):
@@ -72,6 +72,7 @@ class AdvancedRigidBody(base_sprites.BaseRigidBody):
         self.apply_gravity()
 
     def set_position(self, x=None, y=None):
+        super(AdvancedRigidBody, self).set_position(x, y)
         for comp in self.components:
             comp.update_position(self.position, self.orientation)
         self.update_rect()
@@ -104,8 +105,24 @@ class AdvancedRigidBody(base_sprites.BaseRigidBody):
         return pg.Rect(*min_vec, *(max_vec - min_vec))
 
     def draw(self):
+        images = []
         for comp in self.components:
-            comp.redraw()
+            images.append(comp.redraw())
+
+        # redraw self.image
+        min_x = min(images, key=lambda x: x[1][0])[1][0]
+        min_y = min(images, key=lambda x: x[1][1])[1][1]
+
+        max_x = max(map(lambda x: x[1][0] + x[0].get_size()[0], images))
+        max_y = max(map(lambda x: x[1][1] + x[0].get_size()[1], images))
+
+        width = max_x - min_x
+        height = max_y - min_y
+
+        self.image = pg.Surface((width, height), pg.SRCALPHA)
+        # for image, position in images:
+        #     self.image.blit(image, structures.sub_tuples(position, (min_x, min_y)))
+        # super(AdvancedRigidBody, self).draw()
 
     def top_down_friction(self, control_dict):
         """
@@ -185,8 +202,8 @@ class Capsule(AdvancedRigidBody):
         circle1 = Bodies.Circle(self.p1, radius, center - self.p1, 0)
         circle2 = Bodies.Circle(self.p2, radius, center - self.p2, 0)
         rectangle = Bodies.Rectangle.Oriented(
-            self.p2 + (self.p2 - self.p1).normalized().normal() * radius,
-            self.p1 + (self.p2 - self.p1).normalized().normal() * radius,
+            self.p2 + (self.p2 - self.p1).normalized().tangent() * radius,
+            self.p1 + (self.p2 - self.p1).normalized().tangent() * radius,
             radius * 2,
             (0, 0),
             0
@@ -418,10 +435,10 @@ def Main():
 
     # Star(50, (500, 500), 1, base_control.wasd)
     # b = Ball((500, 500), 50, 1, base_control.wasd)
-    Wall((0, 0), (W, 0))
+    Wall((1, 0), (W-1, 0))
     Wall((0, 0), (0, H))
     Wall((W, 0), (W, H))
-    Wall((0, H), (W, H))
+    Wall((1, H), (W-1, H))
     c = None
     # Wall((W / 3, H / 2), (2 * W / 3, H / 2))
     # Planet(500, 500, 1, pg.Color('red'), 50)
@@ -449,7 +466,8 @@ def Main():
                     builder.add_point(event.pos)
 
                 elif event.button == 3:
-                    c = {
+                    # OBB.AxisAligned(event.pos, 25, 25)
+                    {
                         0: (lambda: OBB.AxisAligned(event.pos, 25, 25)),
                         4: (lambda: Ball(event.pos, 25, 1)),
                         2: (lambda: RegularPolygon(25, event.pos, random.randint(5, 6))),

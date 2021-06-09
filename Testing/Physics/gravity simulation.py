@@ -32,7 +32,7 @@ class Planet(base_sprites.BaseSprite):
         pygame.draw.circle(self.image, color, (radius, radius), radius)
         self.image.convert_alpha()
         super(Planet, self).__init__(pygame.Rect(x - radius, y - radius, radius * 2, radius * 2),
-                                     base_control.BaseControl(self, Direction.right), mass)
+                                     base_control.BaseControl(self, Direction.right), mass, sprite_collision_by_rect=True)
         self.color = color
         self.radius = radius
 
@@ -72,7 +72,8 @@ class Planet(base_sprites.BaseSprite):
         self.color = color
         self.radius = radius
 
-        self.velocity = (self.mass * self.velocity + other.mass * other.velocity) / (self.mass + other.mass)
+        momentum_before = self.mass * self.velocity + other.mass * other.velocity
+        self.velocity = momentum_before / (self.mass + other.mass)
         other.velocity = Vector2.Zero()
         self.force = Vector2.Zero()
         other.force = Vector2.Zero()

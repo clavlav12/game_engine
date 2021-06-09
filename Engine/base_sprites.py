@@ -1,3 +1,5 @@
+import warnings
+
 from Engine.CollisionManifold import ManifoldGenerator, CollisionManifold
 import Engine.base_control as controls
 import Engine.Particle as Particles
@@ -17,7 +19,8 @@ player = Sound.Player()
 clock = pygame.time.Clock()
 GRAVITY = 3_000
 GRAVITY = 1_500
-GRAVITY = 150
+
+# GRAVITY = 150
 # GRAVITY = 20
 
 
@@ -78,6 +81,9 @@ class Tile(pygame.sprite.Sprite):
         return cls.classes[id_]
 
     def __init_subclass__(cls, **kwargs):
+        """
+        Sets an id to each subclass
+        """
         Tile.classes[cls.id] = cls
 
     def __init__(self, img: pygame.Surface, group: pygame_structures.TileCollection, *, x: int, y: int,
@@ -109,20 +115,35 @@ class Tile(pygame.sprite.Sprite):
             c.add_tile(self)
             self.group = c
 
-    def sprite_collide(self, _sprite, collision: pygame_structures.collision_manifold):
-        return _sprite.to_dict()
+    def sprite_collide(self, sprite, collision: CollisionManifold):
+        """
+        Called when sprite collides with tile
+        :param sprite: other sprite
+        :param collision: collision manifold
+        """
 
-    def update(self):
+    def _update(self):
+        """
+        Called each frame to update self's attributes.
+        """
         self.draw()
 
-    def draw(self):
-        pygame_structures.Camera.blit(self.image, self.rect.topleft - pygame_structures.Camera.scroller)
-        self.draw_rect()
+    def update(self):
+        """
+        Called each frame, meant to control the tile's behavior (by overriding).
+        """
 
-    def draw_no_convert(self):
+    def draw(self):
+        """
+        Draws the tile to the screen
+        """
         pygame_structures.Camera.blit(self.image, self.rect.topleft - pygame_structures.Camera.scroller)
 
     def draw_rect(self, clr=pygame.Color('red')):
+        """
+        Draw tile's hitbox
+        :param clr: rectangle color
+        """
         if not pygame_structures.Camera.screen:
             return
         r = pygame.Rect(self.rect)
@@ -131,8 +152,11 @@ class Tile(pygame.sprite.Sprite):
 
     @classmethod
     def update_all(cls):
+        """
+        Updates all tiles (called each frame)
+        """
         for platform in cls.blocks_list:
-            platform.update()
+            platform._update()
 
 
 class BlockingTile(Tile):
@@ -142,143 +166,15 @@ class BlockingTile(Tile):
                  *, x, y,):
         super(BlockingTile, self).__init__(img, x=x, y=y, group=group, manifold_generator=BaseSprite.basic_generator,
                                            )
-        self.max_stopping_friction = float('inf')  # change if want to simulate ice or something with low friction coeff
-        # self.max_stopping_friction = 0  # change if want to simulate ice or something with low friction coeff
-
-        self.dynamic_friction = 0  # not how real life friction works, but feels nice.
-        self.static_friction = 0  # not how real life friction works, but feels nice.
         self.dynamic_friction = 0.15  # not how real life friction works, but feels nice.
         self.static_friction = 0.2  # not how real life friction works, but feels nice.
-        self.restitution = restitution  # how "bouncy" the tile is, from zero to one
-
-        self.normal = structures.Vector2.Zero()
-
-    def sprite_collide(self, _sprite, manifold):
-        # if not sprite.collide_mask(self, _sprite):
-        #     return
-        # print(self.rect.topleft)
-        return
-        before = super(BlockingTile, self).sprite_collide(_sprite, collision)
-
-        # if not isinstance(_sprite, AdvancedSprite):
-        #     return before
-        try:
-            if collision.contact_count > 0:
-                contacts = collision.contact_points
-            else:
-                contacts = [None]
-
-            for point in contacts:
-                relative_velocity = _sprite.get_future_velocity(BaseSprite.game_states['dtime'])
-                # relative_velocity = - _sprite.calculate_relative_velocity(self, point)
-
-                # collision.normal = collision.normal * -1
-                velocity_among_normal = relative_velocity * collision.normal
-
-                if velocity_among_normal > 0:
-                    return before
-
-                if collision.x_collision:
-                    was_on = _sprite.on_platform
-                    _sprite.on_platform = self
-
-                j = -(1 + self.restitution) * velocity_among_normal
-                j /= 1 / float('inf') + 1 / _sprite.mass
-
-                impulse = j * collision.normal
-
-                self.friction(_sprite, collision, j)
-                if not impulse:
-                    return
-
-                number_of_points = 1 if not collision.contact_count else collision.contact_count
-
-                _sprite.apply_impulse(1 / _sprite.mass * impulse / number_of_points, point)
-
-                # _sprite.add_force(impulse, 'normal', TrueSA)
-
-                percent = 0.2
-                slop = 0.01
-                correction = max(collision.penetration - slop, 0.0) / (1 / _sprite.mass) * percent * collision.normal
-                _sprite.position += 1 / _sprite.mass * correction
-
-        except Exception as e:
-            # pass
-            raise e
-            # print(e)
-            # print(collision)
-
-        return before
-
-    def friction(self, _sprite, collision, j):
-        t = _sprite.velocity - (_sprite.velocity * collision.normal) * collision.normal
-        if t:
-            t.normalize()
-
-        jt = - (_sprite.velocity * t)
-        jt *= _sprite.mass
-
-        mu = math.hypot(self.static_friction, _sprite.static_friction)
-        if abs(jt) < j * mu:
-            frictionImpulse = - jt * t
-        else:
-            dynamic_friction = math.hypot(self.dynamic_friction, _sprite.dynamic_friction)
-            frictionImpulse = -jt * t * dynamic_friction
-
-        _sprite.velocity -= (1 / _sprite.mass) * frictionImpulse
-        _sprite.update_velocity_and_acceleration(BaseSprite.game_states['dtime'])
-        # print("changing velocity by:", frictionImpulse)
-
-
-'''
-    def friction(self, _sprite, collision, j):
-        t = _sprite.velocity - (_sprite.velocity * collision.normal) * collision.normal
-        if t:
-            t.normalize()
-        else:
-            _sprite.update_velocity_and_acceleration(BaseSprite.game_states['dtime'])
-            return
-        jt = - (_sprite.velocity * t)
-        jt *= _sprite.mass
-
-        dynamic_friction = math.hypot(self.dynamic_friction, _sprite.dynamic_friction)
-        frictionImpulse = -jt * t * dynamic_friction
-        _sprite.add_force(- frictionImpulse, 'friction', False)
-        _sprite.update_velocity_and_acceleration(BaseSprite.game_states['dtime'])
-        # print("changing velocity by:", frictionImpulse)
-        # _sprite.velocity -= (1 / _sprite.mass) * frictionImpulse
-
-    def friction_old(self, _sprite, collision):
-        velocity = _sprite.get_future_velocity(BaseSprite.game_states['dtime'])
-        t = velocity - (velocity * collision.normal) * collision.normal
-        if t:
-            t.normalize()
-        mu = math.hypot(self.static_friction, _sprite.static_friction)
-        # print("sprite force is ", _sprite.force, t)
-        # print(_sprite.force_document['sigma'], collision.normal, mu, normal)
-
-        jt = - (_sprite.velocity * t)
-
-        jt *= _sprite.mass
-
-        if round(t * _sprite.velocity) == 0:
-            if _sprite.force_document['sigma'] * t < collision.normal * mu * self.normal / BaseSprite.game_states['dtime']:
-                frictionImpulse = structures.Vector2.Zero()
-                _sprite.add_force((-_sprite.force_document['sigma'] * t) * t, 'static friction', False)
-                _sprite.force_document['sigma'] = structures.Vector2.Zero()
-        else:
-            dynamic_friction = math.hypot(self.dynamic_friction, _sprite.dynamic_friction)
-            frictionImpulse = -jt * t * dynamic_friction
-            _sprite.add_force(- frictionImpulse, 'friction', False)
-        # print("changing velocity by:", frictionImpulse)
-        # _sprite.velocity -= (1 / _sprite.mass) * frictionImpulse
-'''
+        self.restitution = restitution  # how "bouncy" the tile is, from zero to one (coefficient of restitution)
 
 
 class Spike(BlockingTile):
     id = 2
 
-    def sprite_collide(self, _sprite, collision: pygame_structures.collision_manifold):
+    def sprite_collide(self, _sprite, collision: CollisionManifold):
         if isinstance(_sprite, AdvancedSprite) and _sprite.resistance_timer:
             _sprite.hit_points -= 1
             _sprite.resistance_timer.activate()
@@ -289,9 +185,10 @@ class Slime(BlockingTile):
     id = 4
     sur = pygame.image.load(os.path.dirname(__file__) + '\\images\\Slime_block.png')
 
-    def __init__(self, size, *, x, y):
+    def __init__(self, group, *, x, y):
+        size = pygame_structures.Map.instance.tile_size
         sur = pygame.transform.smoothscale(self.sur, [size] * 2).convert_alpha()
-        super(Slime, self).__init__(sur, restitution=0.7, static_friction=0.5, dynamic_friction=0.5, x=x, y=y)
+        super(Slime, self).__init__(sur, group, restitution=0.7, static_friction=0.5, dynamic_friction=0.5, x=x, y=y)
 
 
 class air(Tile):
@@ -305,7 +202,7 @@ class air(Tile):
     def sprite_collide(self, _sprite, axis):
         pass
 
-    def update(self):
+    def _update(self):
         pass
 
     def draw(self):
@@ -319,6 +216,9 @@ class air(Tile):
 
 
 def by_two_objects(obj1, obj2):
+    """
+    The simplest manifold generator - generates a manifold using two objects' hitboxes.
+    """
     normal = get_mid(obj2) - get_mid(obj1)
     obj1_extent_x = obj1.rect.width / 2
     obj2_extent_x = obj2.rect.width / 2
@@ -346,11 +246,13 @@ def by_two_objects(obj1, obj2):
 
             return CollisionManifold(None, normal_normalized, penetration, obj1, obj2, True)
 
-    print("no coll")
     return CollisionManifold(None, None, 0, obj1, obj2, False)
 
 
 def get_mid(obj):
+    """
+    Returns the COM of a sprite
+    """
     if isinstance(obj, BaseSprite):
         return obj.position
     else:  # Rect only no float position
@@ -361,7 +263,7 @@ class MetaSprite(type):
     sprites_list = pygame.sprite.Group()
 
     def __call__(cls, *args, **kwargs):
-        """Called when you call BaseSprite() """
+        """Called when you call BaseSprite()"""
         obj = type.__call__(cls, *args, **kwargs)
         obj.final_initiation()
         return obj
@@ -388,23 +290,41 @@ class BaseSprite(pygame.sprite.Sprite, metaclass=MetaSprite):
 
     @classmethod
     def create_from_kwargs(cls, *, id_, **kwargs):
+        """
+        Creates a sprite from the given kwargs
+        :param id_: id of sprite
+        :param kwargs: kwargs for initiation
+        :return: Instance of cls
+        """
         return cls(**kwargs)
 
     @classmethod
     def get_sprite_class(cls, id_):
+        """
+        :return: Sprite class by id
+        """
         if '0' not in cls.classes:
             cls.classes['0'] = BaseSprite
         return cls.classes[id_]
 
     @classmethod
     def set_server(cls, server):
+        """
+        Sets server attribute
+        """
         cls.server = server
 
     @classmethod
     def set_client(cls, client):
+        """
+        Sets client attribute
+        """
         cls.client = client
 
     def __init_subclass__(cls, **kwargs):
+        """
+        Called when BaseSprite is inherited. Assigns a unique id for each.
+        """
         cls.id = BaseSprite.id
         BaseSprite.classes[str(cls.id)] = cls
         BaseSprite.id += 1
@@ -445,58 +365,106 @@ class BaseSprite(pygame.sprite.Sprite, metaclass=MetaSprite):
 
         self.static_friction = 0
         self.dynamic_friction = 0
+        self.restitution = 0
 
         self.control: controls.BaseControl = control
 
-        self.restitution = 0
-
         self.child_sprites = []
+
+        self.current_collisions = set()
+        self._frame_collisions = set()
 
         self.id = BaseSprite.current_id
         BaseSprite.current_id += 1
-        if str(self.id) in BaseSprite.sprites_by_id:
+        if str(self.id) not in BaseSprite.sprites_by_id:
+            BaseSprite.sprites_by_id[str(self.id)] = self
+        else:
             pass
-            # raise WTFError('id occupied?!')
-        BaseSprite.sprites_by_id[str(self.id)] = self
+            # warnings.warn('id occupied?!')
 
     def final_initiation(self):
+        """
+        Called after a sprite is initiated. Adds it to the sprite's list (so it won't be updated before it's ready)
+        """
         self.initiated = True
-        BaseSprite.sprites_list.add(self)
+        if self.id is not None:
+            BaseSprite.sprites_list.add(self)
+
+        for sprite in self.child_sprites:
+            if sprite in BaseSprite.sprites_list:
+                BaseSprite.sprites_list.remove(sprite)
+            BaseSprite.sprites_list.add(sprite)
 
     def add_child(self, child):
+        """
+        Adds a child to self. (Child is a sprite that is accompanied by another.
+         It doesn't have it's own id and it's updated by it's parent)
+        :param child: child sprite
+        """
         self.child_sprites.append(child)
         child.set_id(None)
 
     def add_to_server(self, controller, **kwargs):
+        """
+        Adds a sprite to the server post-creation
+        :param controller: Sprite's user
+        :param kwargs: kwargs used to create self
+        """
         if self.server is not None:
             self.server.add_sprite(self, controller, **kwargs)
 
     @classmethod
     def create_and_add_to_server(cls, controller, **kwargs):
+        """
+        Creates a sprite, then adds it to the server.
+        :param controller: Sprite's user
+        :param kwargs: kwargs used to create the sprite
+        :return: New sprite
+        """
         sprite = cls(**kwargs)
         sprite.add_to_server(controller, **kwargs)
         return sprite
 
     def set_user(self, user):
+        """
+        Sets sprite user (controller)
+        :param user: User or OtherUser
+        """
         self.user = user
         for child in self.child_sprites:
             child.set_user(user)
 
     def set_id(self, id_):
-        if self.id == id_: return
-        # if str(id_) in BaseSprite.sprites_by_id:
-        #     raise WTFError('id occupied?! by ' + str(BaseSprite.sprites_by_id[str(id_)]))
+        """
+        Sets sprite's id to id_
+        :param id_:
+        :return:
+        """
+        if self.id == id_:
+            return
+        if str(id_) in BaseSprite.sprites_by_id:
+            warnings.warn(str(self) + '\t' + 'id occupied?! by ' + str(BaseSprite.sprites_by_id[str(id_)]))
 
-        BaseSprite.sprites_by_id.pop(str(self.id))
+        if BaseSprite.sprites_by_id[str(self.id)] is self:
+            BaseSprite.sprites_by_id.pop(str(self.id))
         self.id = id_
         BaseSprite.sprites_by_id[str(self.id)] = self
 
     def encode(self) -> dict:
+        """
+        Encode self to a dict that can be sent over socket.
+        It is sent from server to client with the command "Update".
+        :return: A dict that can be sent over socket
+        """
         x = self.position.floor()
         v = self.velocity.floor()
         return {'x': x.encode(), 'v': v.encode()}
 
     def decode_update(self, **kwargs):
+        """
+        Decodes the dict made by the encode method and updates self accordingly
+        :param kwargs: dict made by the encode method
+        """
         new_position = structures.Vector2.decode(kwargs['x'])
         new_velocity = structures.Vector2.decode(kwargs['v'])
         self.position.set_values(*new_position)
@@ -504,37 +472,58 @@ class BaseSprite(pygame.sprite.Sprite, metaclass=MetaSprite):
 
     @classmethod
     def encode_creation(cls, **kwargs):
+        """
+        Similar to the encode method, but encode information about sprite's *initiation*.
+        :param kwargs: Real creation arguments
+        :return: Encoded creation arguments
+        """
         return kwargs
 
     @classmethod
     def decode_creation(cls, **kwargs):
+        """
+        Similar to the decode method, but decode the information encoded by "encode_creation".
+        This method does NOT create a sprite from the decoded information. Just returns it
+        :param kwargs: Encoded creation arguments
+        :return: Real creation arguments
+        """
         return kwargs
 
     @property
-    def elasticity(self):
-        return self.restitution
-
-    @elasticity.setter
-    def elasticity(self, value):
-        self.restitution = value
-
-    @property
     def inv_mass(self):
+        """
+        Inverse mass
+        """
         return 1 / self.mass
 
     def apply_impulse(self, impulse, contact_point=None):
-        self.velocity += impulse
-
-    def to_dict(self):
-        return {}
+        """
+        Applies an impulse vector "impulse" to self.
+        :param impulse: Vector2 which represents the impulse
+        :param contact_point: Where the impulse took place
+            (only matters when accounting for rotation - BaseRigidBody class)
+        """
+        self.velocity += impulse / self.mass
 
     def apply_gravity(self):
+        """
+        Applies gravitational force on self.
+        """
         self.add_force(structures.Vector2.Cartesian(0, GRAVITY * self.mass), 'gravity', False)
 
     def __call__(self):
+        """
+        :return: Position of self.
+        """
         return self.rect.center
 
     def calculate_relative_velocity(self, other, contact_point):
+        """
+        Calculates the relative velocity between self and other.
+        :param other: The second sprite
+        :param contact_point: A point to calculate the relative velocity at
+            (only matters when accounting for rotation - BaseRigidBody class)
+        """
         if isinstance(other, BaseSprite):
             other_vel = other.velocity
         elif isinstance(other, Tile):
@@ -542,15 +531,24 @@ class BaseSprite(pygame.sprite.Sprite, metaclass=MetaSprite):
         return other_vel - self.velocity
 
     def draw_rect(self, clr=pygame.Color('red'), w=1):
-        r = pygame.Rect(self.rect)
-        r.topleft = r.topleft - pygame_structures.Camera.scroller
-        pygame.draw.rect(pygame_structures.Camera.screen, clr, r, w)
+        """
+        Draw the sprite's hitbox
+        :param clr: hitbox color
+        :param w: width of the hitbox
+        """
+        if 1 in self.rect.size:
+            pygame.draw.line(pygame_structures.Camera.screen, clr, self.rect.topleft, self.rect.bottomright, w)
+        else:
+            r = pygame.Rect(self.rect)
+            r.topleft = r.topleft - pygame_structures.Camera.scroller
+            pygame.draw.rect(pygame_structures.Camera.screen, clr, r, w)
 
     def add_force(self, force: structures.Vector2, signature: str = None, mul_dtime: bool = True):
         """
+        Adds a force to accelerate self.
         :param force : force to change acceleration (Vector2)
         :param signature: allows individual sprites class to ignore force from other sprites, e.g. ghost can avoid from
-        :param mul_dtime: if True -> multiply the force by delta time
+        :param mul_dtime: if True -> multiply the force by delta time (So force is actually difference in velocity)
         getting normal force from walls
         """
         if mul_dtime:
@@ -561,24 +559,29 @@ class BaseSprite(pygame.sprite.Sprite, metaclass=MetaSprite):
         return force
 
     def debug(self, *args):
+        """
+        Prints requested self's attributes. Used for debugging purposes (Debug mode is for the weak)
+        :param args: list of attributes to print
+        :return:
+        """
         string = ''
         for arg in args:
-            string += arg + ': ' + str(eval(f'self.{arg}'))
+            string += arg + ': ' + str(self.__getattribute__(arg))
             string += ', '
         print(string)
 
     def draw(self):
-        """Called on redraw function for each sprite in BaseSprite.sprites_list.
-         draw the sprite to the screen"""
+        """
+        Called on redraw function for each sprite in BaseSprite.sprites_list.
+        draw the sprite to the screen
+        """
         pygame_structures.Camera.blit(self.image, self.rect.topleft - pygame_structures.Camera.scroller)
-
 
     def _update(self, control_dict):
         """A method to control sprite behavior. Called ones per frame"""
         if self.user is not None:
             control_dict = control_dict.copy()
             control_dict['keys'] = self.user.active_keys
-            # print("setting keys to ", self.user.active_keys)
 
         self.control.move(**control_dict)
         self.update_kinematics(control_dict['dtime'])
@@ -586,44 +589,57 @@ class BaseSprite(pygame.sprite.Sprite, metaclass=MetaSprite):
         self.force_document = {}
 
     def update(self, control_dict):
-        pass
+        """A method to control sprite behavior. Called ones per frame. Meant to be overridden.
+        :param control_dict: A dictionary containing the current game_states (dt, pressed keys, sprites list)
+        """
 
     def update_acceleration(self):
+        """
+        Updates the acceleration by newton second law. Called once per frame
+        """
         self.acceleration = (self.force / self.mass)  # Σ𝑓 = 𝓂 ⋅ 𝒶 -⋙ 𝒶 = Σ𝑓 / 𝓂
 
-    def update_velocity(self, time_delta, axis=None):
-        if axis is None:
-            self.velocity += self.acceleration * time_delta
-        elif axis == structures.Direction.horizontal:
-            self.velocity.x += self.acceleration.x * time_delta
-        elif axis == structures.Direction.vertical:
-            self.velocity.y += self.acceleration.y * time_delta
+    def update_velocity(self, time_delta):
+        """
+        Updates sprite's velocity by it's acceleration. Called once per frame
+        :param time_delta: elapsed time from last frame
+        """
+        self.velocity += self.acceleration * time_delta
 
     def update_position(self, time_delta):
+        """
+        Updates sprite's position by it's velocity and updates the hitbox. Called once per frame.
+        :param time_delta: elapsed time from last frame
+        :return: Difference in position from last frame
+        """
         change = self.velocity * time_delta
-        self.position += change
-        self.rect.center = tuple(round(self.position))
+        self.set_position(*(self.position + change))
         return change
 
     def set_position(self, x=None, y=None):
+        """
+        Sets sprites position to x and y
+        :param x: x position value
+        :param y: y position value
+        """
         self.position.set_values(x, y)
         self.rect.center = tuple(round(self.position))
 
-    #
-
     def on_platform_collision(self, platform):
         """Called when the sprite collides with a platform"""
-        # when finishing the game, should try to change it to forced verision
-        pass
 
     def update_kinematics(self, time_delta):
+        """
+        Updates sprite's kinematic values and check for collision with the tiles.
+        :param time_delta: elapsed time from last frame
+        :return: one (if any) of the platform the sprite has collided with.
+        """
         if self.collision_detection:
-            platform = pygame_structures.Map.check_platform_collision(self, time_delta)
+            platform = pygame_structures.Map.check_platform_collision(self)
             if platform is not None:
                 self.on_platform_collision(platform)
                 self.control.platform_collide(platform)
 
-        # print(self.force)
         self.update_position(time_delta)
         self.update_velocity_and_acceleration(time_delta)
 
@@ -631,48 +647,44 @@ class BaseSprite(pygame.sprite.Sprite, metaclass=MetaSprite):
             return platform
 
     def update_velocity_and_acceleration(self, time_delta):
+        """Update sprite's velocity and acceleration. then reset force"""
         self.update_acceleration()
         self.update_velocity(time_delta)
         self.force.reset()
 
     def get_future_velocity(self, time_delta):
+        """Returns the velocity of sprite on the next frame"""
         return self.velocity + (self.force / self.mass) * time_delta
 
     @classmethod
-    def check_sprite_collision(cls, collision_type='mask', *, lst=None):
+    def check_sprite_collision(cls, *, lst=None):
+        """
+        Checks and tests for sprites collision.
+        :param lst: list of sprites (None means BaseSprite.sprites_list)
+        """
         if not cls.collision_detection:
             return
         if lst is None:
             lst = cls.sprites_list
-        if collision_type == 'mask':
-            lst = list(lst)
-            shuffle(lst)
-            for idx, sprite1 in enumerate(lst):
-                skip = idx + 1
-                for sprite2 in lst:
-                    if skip > 0:
-                        skip -= 1
-                        continue
+        lst = list(lst)
+        shuffle(lst)
+        for idx, sprite1 in enumerate(lst):
+            skip = idx + 1
+            for sprite2 in lst:
+                if skip > 0:
+                    skip -= 1
+                    continue
 
-                    collider: Collider = sprite1.collider & sprite2.collider
-                    if pygame.sprite.collide_rect(sprite1, sprite2) and \
-                            (collider.sprites_collision_by_rect or
-                             pygame.sprite.collide_mask(sprite1, sprite2)):
+                collider: Collider = sprite1.collider & sprite2.collider
+                if pygame.sprite.collide_rect(sprite1, sprite2) and \
+                        (collider.sprites_collision_by_rect or
+                         pygame.sprite.collide_mask(sprite1, sprite2)):
 
-                        manifold = collider.manifold_generator(sprite1, sprite2)
-                        if (manifold is None) or manifold.collision:
-                            block_second = sprite1.collision(sprite2)
-                            sprite1.control.sprite_collide(sprite2)
+                    manifold = collider.manifold_generator(sprite1, sprite2)
+                    if (manifold is None) or manifold.collision:
 
-                            if not block_second:
-                                sprite2.collision(sprite1)
-                                sprite2.control.sprite_collide(sprite1)
-
-        elif collision_type == 'rect':
-            raise
-            for sprite1 in cls.sprites_list:
-                for sprite2 in pygame.sprite.spritecollide(sprite1, cls.sprites_list, False):
-                    if sprite2 is not sprite1:
+                        sprite1.add_collision(sprite2)
+                        sprite2.add_collision(sprite1)
 
                         block_second = sprite1.collision(sprite2)
                         sprite1.control.sprite_collide(sprite2)
@@ -683,6 +695,7 @@ class BaseSprite(pygame.sprite.Sprite, metaclass=MetaSprite):
 
     @classmethod
     def update_all(cls):
+        """Updates all sprites"""
         if cls.game_states['dtime'] == 0:
             return
         for sprt in cls.sprites_list:
@@ -690,33 +703,44 @@ class BaseSprite(pygame.sprite.Sprite, metaclass=MetaSprite):
 
     @classmethod
     def update_states(cls, keys, time_delta):
+        """Update game states. Called at the beginning of each frame"""
         cls.game_states['dtime'] = time_delta
         cls.game_states['keys'] = keys
 
     def collision(self, other):
-        """
-        Called when one sprite collides with another
-        """
+        """Called when one sprite collides with another"""
 
     def solved_collision(self, other):
-        """
-        Called after a collision manifols is solved
-        """
+        """Called after a collision manifold is solved"""
+
+    def add_collision(self, other):
+        self._frame_collisions.add(other)
+
+    @classmethod
+    def replace_current_collisions(cls):
+        """Resets all sprites' current collisions"""
+        sprite: BaseSprite
+        for sprite in cls.sprites_list:
+            sprite.current_collisions = sprite._frame_collisions
+            sprite._frame_collisions = set()
+
+    def kill(self) -> None:
+        if self.server and self.id is not None:
+            self.server.kill_sprite(self.id)
+        super(BaseSprite, self).kill()
+
 
 class AdvancedSprite(BaseSprite):
-    """Sprite that can jump and has health bar"""
+    """Sprite that have hp (including resistance timer and health bar)"""
     sprites_list = pygame.sprite.Group()
     image = pygame.Surface((100, 100))
 
     def __init__(self, rect, control, mass, hit_points,
                  health_bar_colors: Optional[Tuple[tuple, tuple]] = None, resistance_length=0):
-        # hit boxes & moving
         super(AdvancedSprite, self).__init__(rect, control, mass,
                                              manifold_generator=BaseSprite.basic_generator)
-        #
 
-        # jumping & physics
-        # Jumping
+        # Hitpoints
         self.base_hit_points = hit_points
         self.hit_points = self.base_hit_points
         self.resistance_timer = pygame_structures.Timer(resistance_length)
@@ -727,21 +751,10 @@ class AdvancedSprite(BaseSprite):
             self.health_bar = pygame_structures.HealthBar(*health_bar_colors, self)
         else:
             self.health_bar = None
-        # self.stand_on_platform = False
-        self.on_platform = False
-        # physics
-        self.velocity = structures.Vector2.Zero()
-        self.acceleration = structures.Vector2.Zero()
-        self.force = structures.Vector2.Zero()
 
-        #  so the sprite will flicker when it has resistance
+        # flickering effect of the sprite when it has resistance
         self.alpha = -1
         self.delta_alpha = 1020  # brightness / second
-
-        BaseSprite.sprites_list.add(self)
-
-        # used for conditions
-        self.sprite_collide = False  # Turn on when collides with sprite - used for conditions
 
     def encode(self):
         d = super(AdvancedSprite, self).encode()
@@ -753,12 +766,11 @@ class AdvancedSprite(BaseSprite):
         self.hit_points = int(kwargs['hp'])
 
     def draw_health_bar(self):
+        """Draws the health bar"""
         if self.health_bar:
             self.health_bar.draw()
 
     def draw(self, draw_health=True):
-        """Called on redraw function for each sprite in BaseSprite.sprites_list.
-         draw the sprite to the screen"""
         if draw_health:
             self.draw_health_bar()
 
@@ -786,12 +798,9 @@ class AdvancedSprite(BaseSprite):
     def update_kinematics(self, time_delta):
         self.on_platform = super(AdvancedSprite, self).update_kinematics(time_delta)
 
-    def collision(self, other):
-        self.sprite_collide = other
-
     def dead_check(self):
+        """Checks if sprite is dead. If it is it kills it"""
         if self.hit_points <= 0 and not self.is_dead:
-            print("dead")
             self.is_dead = True
             self.die()
             return True
@@ -799,10 +808,12 @@ class AdvancedSprite(BaseSprite):
         return False
 
     def die(self):
-        pass
+        """Called when the sprite is out of HP. Recommended way of handling it is adding a dying animation"""
+        self.kill()
 
 
 def rigid_obb_generator(obj1, obj2):
+    """Generates a collision manifold with two object, Using two OBB's as hitboxes"""
     if isinstance(obj1, BaseRigidBody):
         self = obj1
         other = obj2
@@ -836,12 +847,11 @@ class BaseRigidBody(BaseSprite):
                  calculate_attributes=False,
                  sprite_collision_by_rect=False,
                  tile_collision_by_rect=True,
-                 manifold_generator=Collider.empty_generator):
+                 manifold_generator=Collider.empty_generator,
+                 obb_orientation=0):
 
-        # super(BaseRigidBody, self).__init__(rect, control, mass, hit_points=hit_points,
-        #                                     health_bar_colors=health_bar_colors)
-        print("orientation is not one, make ur own obb")
-        self.obb = Bodies.Rectangle.AxisAligned(rect.center, rect.width / 2, rect.height / 2, (0, 0), 0)
+        warnings.warn("orientation is not one, make ur own obb")
+        self.obb = Bodies.Rectangle.AxisAligned(rect.center, rect.width / 2, rect.height / 2, (0, 0), obb_orientation)
         if calculate_attributes:
             mass = self.obb.polygon.mass
             moment_of_inertia = self.obb.polygon.moment_of_inertia
@@ -856,16 +866,8 @@ class BaseRigidBody(BaseSprite):
         self.angular_velocity = 0
         self.torque = 0
 
-    # @property
-    # def angular_velocity(self):
-    #     return 0
-    #
-    # @angular_velocity.setter
-    # def angular_velocity(self, value):
-    #     if value != 0:
-    #         print()
-
     def draw_bounding_box(self):
+        """Similar to BaseSprite draw_rect method but draws an OBB instead"""
         self.obb.update_position(self.position, self.orientation)
         self.obb.redraw()
 
@@ -962,6 +964,11 @@ class BaseRigidBody(BaseSprite):
 
     @staticmethod
     def projection_onto_axis(obj: Bodies.Body, axis: structures.Vector2):
+        """
+        :param obj: sprite
+        :param axis: 2D Unit Vector
+        :return: The projection of "sprite" on the axis "axis"
+        """
         obj.update_floating_vertices(axis)
         min_projection = float('inf')
         max_projection = float('-inf')
@@ -987,11 +994,8 @@ class BaseRigidBody(BaseSprite):
 
     def decode_update(self, **kwargs):
         super(BaseRigidBody, self).decode_update(**kwargs)
-        # print("av:", kwargs['av'])
-        # print("a:", kwargs['a'])
         self.angular_velocity = int(kwargs['av'])
         self.orientation = int(kwargs['a'])
-        # self.orientation = 0
 
 
 class ImagedRigidBody(BaseRigidBody):
@@ -1007,25 +1011,15 @@ class ImagedRigidBody(BaseRigidBody):
     def draw(self):
         self.real_image.rotate(int(self.orientation))
         self.image, origin = self.real_image.blit_image(self.position.floor())
-        # try:
-        #     pygame.draw.circle(pygame_structures.Camera.screen, pygame.Color('red'), tuple(self.com_position.floor()), 2)
-        #     pygame.draw.circle(pygame_structures.Camera.screen, pygame.Color('red'), tuple(self.position.floor()), 2)
-        # except Exception as e:
-        #     print(self.com_position)
-        #     raise e
-        # center = self.rect.center
 
         new = self.rect.copy()
         new.size = self.real_image.edited_img.get_size()
         new.center = self.rect.center
-        # self.rect.size = self.real_image.edited_img.get_size()
-        # self.rect.center = center
 
         self.rect.topleft = tuple(
             self.rect.topleft - (structures.Vector2.Point(new.size) - structures.Vector2.Point(self.rect.size)) / 2
         )
         self.rect.size = new.size
-        # self.draw_rect()
 
 
 class DrivableSprite(AdvancedSprite):
@@ -1053,10 +1047,12 @@ class Vehicle(AdvancedSprite):
         self.sprite = None
         self.sprite_position = sprite_position
 
-    def set_sprite(self, sprt):
-        self.sprite = sprt
+    def set_sprite(self, sprite: DrivableSprite):
+        """Sets the driver of the vehicle"""
+        self.sprite = sprite
 
     def get_sprite_position(self):
+        """Get global sprite position"""
         return self.sprite_position
 
 
@@ -1088,8 +1084,6 @@ class Bullet(BaseSprite):
                 other.resistance_timer.activate()
             self.kill()
             return True
-            # Camera.shake()
-        # elif isinstance(other, Bullet):
 
     def on_platform_collision(self, platform):
         self.kill()
@@ -1108,18 +1102,20 @@ class Magazine(pygame.sprite.Group):
         Magazine.magazines_list.append(self)
 
     def add_bullet(self, x, y, velocity_vector, clr=None, size=None, damage=None):
+        """Adds a bullet to the magazine"""
         if self.shot_timer.finished() and not self.full():
             self.shot_timer.activate()
-            bull = GunBullet(maybe(clr).or_else(self.color),
-                             maybe(size).or_else(self.size),
+            bull = GunBullet(clr or self.color,
+                             size or self.size,
                              x, y,
-                             maybe(damage).or_else(self.damage))
+                             damage or self.damage)
             bull.add_force(velocity_vector, "shoot")
             self.add(bull)
             return bull
         return None
 
     def full(self):
+        """Returns true if the magazine is full, false otherwise"""
         return len(self) == self.capacity
 
 
@@ -1127,15 +1123,15 @@ class GunBullet(Bullet):
     DAMAGE = 1
     SPEED = 500
     TRAVEL_DISTANCE = 1000
+    SCALE = 2
 
-    def __init__(self, clr, size, x, y, damage=DAMAGE, travel_distance=TRAVEL_DISTANCE):
+    def __init__(self, clr, x, y, size=SCALE, damage=DAMAGE, travel_distance=TRAVEL_DISTANCE):
         try:
             self.right_image = pygame.image.load(os.path.join(r'animation\bullet', size, clr) + '.png').convert_alpha()
             self.left_image = pygame.transform.flip(self.right_image, True, False).convert_alpha()
         except pygame.error:
             raise AttributeError('invalid color or size. color can be green, yellow, blue or red; size can be small,'
                                  'medium or large')
-        size = 2
         self.right_image = pygame.transform.smoothscale(self.right_image, (self.right_image.get_width() * size,
                                                                            self.right_image.get_height() * size)).convert_alpha()
         self.left_image = pygame.transform.smoothscale(self.left_image, (self.left_image.get_width() * size,
@@ -1152,17 +1148,19 @@ class GunBullet(Bullet):
         super(GunBullet, self).draw()
         # self.draw_rect()
 
-    @staticmethod
-    def get_image_size(clr, size):
+    @classmethod
+    def get_image_size(cls, clr, size):
+        """Returns the default image size of a bullet """
         try:
             size = pygame.image.load(os.path.join(r'animation\bullet', size, clr) + '.png').get_size()
-            return size[0] * 2, size[1] * 2
+            return size[0] * cls.SCALE, size[1] * cls.SCALE
         except pygame.error:
             raise AttributeError('invalid color or size. color can be green, yellow, blue or red; size can be small,'
                                  'medium or large')
 
 
 def resolve_collisions():
+    """Solves current open manifolds"""
     for manifold in CollisionManifold.Manifolds:
         manifold.collision_response()
 
@@ -1176,6 +1174,7 @@ def resolve_collisions():
 
 
 def solve_manifolds(n=10):
+    """Solves and checks for collisions n times"""
     if n > 0:
         sprites_set = set()
         for m in CollisionManifold.Manifolds:
@@ -1186,15 +1185,17 @@ def solve_manifolds(n=10):
     resolve_collisions()
     for i in range(n - 1):
         BaseSprite.check_sprite_collision(lst=sprites_set)
+        if not CollisionManifold.Manifolds:
+            break
         resolve_collisions()
 
 
 def tick(elapsed, keys=pygame.key.get_pressed()):
-    # print(len(BaseSprite.sprites_list))
+    """A frame of the physics engine"""
     start = time()
     BaseSprite.update_states(keys, elapsed)
     pygame_structures.Camera.reset_frame()
-    # BaseSprite.check_sprite_collision()
+
     Particles.Particle.check_all_collision(BaseSprite.sprites_list)
     BaseSprite.update_all()
     BaseSprite.check_sprite_collision()
@@ -1205,6 +1206,8 @@ def tick(elapsed, keys=pygame.key.get_pressed()):
         for s in BaseSprite.sprites_list:
             s.draw()
 
+    BaseSprite.replace_current_collisions()
+
     Particles.Particle.update_all()
     Tile.update_all()
     pygame_structures.Camera.scroller.update()
@@ -1212,6 +1215,7 @@ def tick(elapsed, keys=pygame.key.get_pressed()):
 
 
 def basic_loop():
+    """Most basic main loop - runs the engine, controls client and check for exit events"""
     running = 1
     fps = 1000
     elapsed = 1/fps

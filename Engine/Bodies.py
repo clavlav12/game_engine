@@ -50,7 +50,6 @@ class Body(ABC):
         self.image: pygame.Surface = self.EMPTY
         self.center_offset = center_offset
         self.reference_orientation = parent_orientation
-        # self.update_position(parent_position, parent_orientation)
 
     @property
     @abstractmethod
@@ -103,6 +102,7 @@ class Body(ABC):
             position = (self.position - Vector2.Point(self.image.get_size()) / 2)
         position = tuple(position)
         Camera.screen.blit(self.image, position - Camera.scroller)
+        return self.image, position
 
     def get_normals(self, other):
         """
@@ -110,7 +110,7 @@ class Body(ABC):
         :param other: Second sprite to perform collision test with
         :return: axis to check for collision
         """
-        return [(self.vertices[i + 1] - self.vertices[i]).normalized().normal()
+        return [(self.vertices[i + 1] - self.vertices[i]).normalized().tangent()
                 for i in range(len(self.vertices) - 1)]
 
 
@@ -137,7 +137,7 @@ class Line(Body):
         pygame.draw.line(self.image, pygame.Color('white'), sub_tuples(self.vertices[0], r.topleft),
                          sub_tuples(self.vertices[1], r.topleft))
         # pygame.image.save(self.image, 'line.png')
-        super(Line, self).redraw()
+        return super(Line, self).redraw()
 
     def get_rect(self):
         p1, p2 = self.vertices
@@ -240,7 +240,7 @@ class Polygon(Body):
                                                      self.polygon.world_vertices], 4
                             )
 
-        super(Polygon, self).redraw(self.polygon.rect.topleft)
+        return super(Polygon, self).redraw(self.polygon.rect.topleft)
 
     def get_rect(self):
         return self.polygon.rect
@@ -345,6 +345,15 @@ class Rectangle(Polygon):
                     height_extent: Number,
                     center_offset: Point = Vector2.Zero(),
                     orientation: Number = 0):
+        """
+        Generates an axis aligned OBB
+        :param center: center of the rectangle
+        :param width_extent: half the width
+        :param height_extent: half the height
+        :param center_offset: offset of the OBB from the center of the parent
+        :param orientation: default orientation
+        :return: Instance of class Rectangle
+        """
         width_extent = Vector2.Cartesian(x=width_extent)
         height_extent = Vector2.Cartesian(y=height_extent)
 
@@ -364,6 +373,15 @@ class Rectangle(Polygon):
                  center_offset: Point = Vector2.Zero(),
                  orientation: Number = 0
                  ):
+        """
+        Generates a Oriented Bounding Box
+        :param p1: first point
+        :param p2: second (adjacent) point
+        :param width: one dimension of  the rectangle
+        :param center_offset: offset of the OBB from the center of the parent
+        :param orientation: default orientation
+        :return: Instance of class Rectangle
+        """
         vertices = [
             Vector2.Point(p1),
             Vector2.Point(p2),
@@ -374,7 +392,7 @@ class Rectangle(Polygon):
         edge = vertices[1] - vertices[0]
         length = edge.magnitude()
         direction = edge.normalized()
-        vertices[2] = vertices[1] + direction.perpendicular() * width
+        vertices[2] = vertices[1] + direction.tangent() * width
         vertices[3] = vertices[2] - direction * length
 
         return cls(cls.__key, vertices, center_offset, orientation)

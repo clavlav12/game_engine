@@ -4,6 +4,7 @@ from Engine import pygame_structures
 import pygame as pg
 from time import time
 
+
 class Ball(BaseSprite):
     R = 10
     K = R * 2
@@ -87,6 +88,7 @@ class Bat(BaseSprite):
         )
         self.static_friction = 0
         self.dynamic_friction = 0.05
+        self.restitution = 1
 
         self.image = pg.Surface((self.WIDTH, self.HEIGHT))
         self.image.fill(self.COLOR)

@@ -280,7 +280,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
 
     def sprite_collide_func(self, _sprite, collision):
         relative_velocity = _sprite.velocity - self.velocity
-        velocity_among_normal = relative_velocity * collision.normal
+        velocity_among_normal = relative_velocity * collision.tangent
 
         pg.draw.circle(pygame_structures.Camera.screen, pg.Color('white'), tuple(self.com_position), 10)
 
@@ -290,7 +290,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
         j = -(1 + self.restitution) * velocity_among_normal
         j /= 1 / float('inf') + 1 / _sprite.mass
 
-        impulse = j * collision.normal
+        impulse = j * collision.tangent
 
         if collision.contact_count > 0:
             for point in collision.contact_points:
@@ -304,7 +304,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
         non_infinite = next(filter(lambda x: x.mass < 50000, [_sprite, self]))
         percent = 0.2
         slop = 0.01
-        correction = max(collision.penetration - slop, 0.0) / (1 / non_infinite.mass) * percent * collision.normal
+        correction = max(collision.penetration - slop, 0.0) / (1 / non_infinite.mass) * percent * collision.tangent
         _sprite.position += 1 / non_infinite.mass * correction
         _sprite.set_position()
 

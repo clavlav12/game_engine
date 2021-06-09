@@ -1,20 +1,14 @@
-import random
 import time
 import socket
 import select
-import warnings
-import json
 from Engine.base_sprites import BaseSprite, player
-from Engine.structures import Vector2
-from Engine.base_control import wasd
-from pygame import K_SPACE
-from pygame import Color as pg_color
 import inspect
 
 player.mute = True
 
 
 def merge_dicts(a: dict, b: dict):
+    """Merges two dicts. In case of an overlap b will win."""
     return {**a, **b}
 
 
@@ -27,11 +21,13 @@ class Message:
         self.messages_to_send.append(self)
 
     def send(self):
+        """Send a message to self.socket"""
         self.socket.send(self.message)
         self.messages_to_send.remove(self)
 
     @classmethod
     def remove_messages_to(cls, socket_):
+        """Removes all the waiting messages for a specific user"""
         cls.messages_to_send = [msg for msg in cls.messages_to_send if not msg.socket == socket_]
 
 
@@ -62,19 +58,34 @@ class User:
         self.active_keys = FalseDict()
 
     def disconnect(self):
+        """Disconnects a user safely."""
         self.users_list.pop(self.socket)
         self.socket.close()
 
     def __hash__(self):
         return self.address.__hash__()
 
-    def add_attribute(self, value, protected, name):
-        self.attributes[name] = Attribute(value, protected, name)
+    def __eq__(self, other):
+        if isinstance(other, User):
+            return self.address == other.address
+        return NotImplemented
+
+    def add_attribute(self, value, protected, name, convert_from_string=lambda x: x):
+        """
+        Adds an attributes.
+        :param value: Value of the attribute
+        :param protected: (bool) A protected value can't be changed by the User's client.
+        :param name: The name of the attribute
+        :param convert_from_string: A function to decode the value from it's string version that is sent over a socket
+        """
+        self.attributes[name] = Attribute(value, protected, name, convert_from_string)
 
     def set_attribute(self, name, value):
+        """Sets a new value to an attribute name"""
         self.attributes[name].set_value(value)
 
     def set_keys(self, keys: dict):
+        """Sets the current active keys of a user"""
         self.active_keys = keys
 
     def __getattr__(self, item):
@@ -84,6 +95,7 @@ class User:
             return self.attributes[item].value
 
     def replace(self, user_class: type, **kwargs):
+        """Replace a certain user with another User class"""
         new = user_class(self.socket, self.address, **kwargs)
         new.set_keys(self.active_keys)
         self.users_list[self.socket] = new
@@ -98,57 +110,26 @@ class Attribute:
         self.converter = convert_from_string
 
     def set_value(self, value, override_permission):
+        """
+        Sets the value of the attributes
+        :param value:
+        :param override_permission:
+        :return:
+        """
         if override_permission or not self.protected:
             self.value = self.converter(value)
 
 
 class ExampleUser(User):
-    def __init__(self, socket_, address, *, username):
+    def __init__(self, socket_, address, *, username, phone_number):
         super(ExampleUser, self).__init__(socket_, address)
         self.add_attribute(username, False, 'username')
-        # self.add_attribute(number, False, 'username')
-
-
-class SingleShotTimer:
-    inf = float('inf')
-    timers_list = []
-
-    def __init__(self, function):
-        self.timer = self.inf
-        self.activated = False
-        self.function = function
-        self.timers_list.append(self)
-
-    def activate(self, ms):
-        self.timer = ms
-        self.activated = True
-
-    def reset(self):
-        self.timer = self.inf
-        self.activated = False
-
-    def update(self, elapsed):
-        if self.activated:
-            self.timer -= elapsed
-            if self.timer <= 0:
-                self.function()
-                self.timer = 0
-                self.timers_list.remove(self)
-
-    def active(self):
-        return self.activated
-
-    def __bool__(self):
-        return self.active()
-
-    @classmethod
-    def update_all(cls, elapsed):
-        for timer in cls.timers_list:
-            timer.update()
+        self.add_attribute(phone_number, False, 'phone_number', int)
 
 
 class MetaServer(type):
     def __new__(mcs, name, bases, attrs):
+        """Makes sure commands are inherited"""
         cls = type.__new__(mcs, name, bases, attrs)
         if 'commands' in attrs:
             dictionary = attrs['commands']
@@ -193,23 +174,18 @@ class CommandServer(metaclass=MetaServer):
         self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.server_socket.bind((self.IP, self.PORT))
         self.server_socket.listen(1000)
-        print("yeah")
         BaseSprite.set_server(self)
         self.running = 1
         self.loop()
 
     def loop(self):
+        """The server's main loop"""
         while self.running:
-            # print("tick")
-            start_time = time.time()
             self.tick()
             time.sleep(1 / self.TICKS_PER_SECOND)
-            SingleShotTimer.update_all((time.time() - start_time) * 1000)
-
-            # for user in User.users_list.values():
-            #     print(user.current_keys)
 
     def tick(self):
+        """A single tick of a server. Reads the socket and treat the open ones."""
         read_list, write_list, _ = select.select([self.server_socket] + self.open_client_sockets,
                                                  self.open_client_sockets, [])
         for notified_socket in read_list:
@@ -223,11 +199,13 @@ class CommandServer(metaclass=MetaServer):
         self.send_waiting_messages(write_list)
 
     def receive_connection(self):
+        """Receive a new connection"""
         client_socket, client_address = self.server_socket.accept()
         self.open_client_sockets.append(client_socket)
         User(client_socket, client_address)
 
     def handle_request(self, client_socket):
+        """Handles one or more client requests. Splits it to command and arguments and calls the suitable function"""
         try:
             data = bytearray()
             while True:
@@ -253,20 +231,18 @@ class CommandServer(metaclass=MetaServer):
                     self.commands[command](self, User.users_list[client_socket], kwargs)
         except Exception as e:
             raise e
-            # warnings.warn("Something broken\n " + repr(e))
-            # print(command, kwargs)
-            # print(self.commands[command](self, User.users_list[client_socket], kwargs))
             return False
         return True
 
     def disconnect_user(self, user: User):
+        """Safely disconnects a user from the server"""
         self.open_client_sockets.remove(user.socket)
         Message.remove_messages_to(user.socket)
         user.disconnect()
 
-    # commands:
     @classmethod
     def command(cls, name=None):
+        """Meant to be used as a decorator. Defines a new command."""
         if callable(name):  # called without parenthesis
             f = name
             cls.commands[f.__name__] = f
@@ -280,6 +256,7 @@ class CommandServer(metaclass=MetaServer):
 
     @staticmethod
     def send_waiting_messages(write_list):
+        """Sends all the waiting messages that can be sent"""
         for message in Message.messages_to_send:
             if message.socket in write_list:
                 message.send()
@@ -291,12 +268,14 @@ class CommandServer(metaclass=MetaServer):
 
     @classmethod
     def build_packet(cls, command: str, **parameters):
+        """Converts command and arguments to something that can be sent over a socket"""
         return cls.format_string(command).encode() + (b'?' if parameters else b'') + ('&'.join(
             ['{}={}'.format(cls.format_string(param), cls.format_string(val))
              for param, val in parameters.items()])).encode() + b'\n'
 
     @classmethod
     def split_message(cls, request: str):
+        """Splits a message into command and arguments"""
         command, *arguments = cls.smart_split(request, '?')
         if arguments:
             args = [cls.smart_split(i, '=') for i in cls.smart_split(arguments[0], '&')]
@@ -310,8 +289,10 @@ class CommandServer(metaclass=MetaServer):
 
     @staticmethod
     def smart_split(string, separator, saver='\\'):
-        """Split string by the separator, as long as saver is not present before the separator.
-        for example: string='Hello0Dear0W\0rld, separator='0', saver='\' returns ['Hello', 'Dear', 'W0rld']"""
+        """
+        Split string by the separator, as long as saver is not present before it.
+        for example: string='Hello0Dear0W\0rld, separator='0', saver='\' returns ['Hello', 'Dear', 'W0rld']
+        """
         splited = string.split(separator)
         new_list = []
         i = 0
@@ -329,23 +310,37 @@ class CommandServer(metaclass=MetaServer):
 
     @staticmethod
     def encode_list(args):
+        """Encodes a list to something that can be sent over a socket"""
         return ','.join(str(arg).replace(',', r'\,') for arg in args)
 
     @classmethod
     def decode_list(cls, lst):
+        """Decodes the list encoded by encode_list"""
         return cls.smart_split(lst, ',')
 
     def send_message(self, socket_, command: str, **parameters):
+        """Send a command and arguments to socket"""
         self.send_packet(socket_, self.build_packet(command, **parameters))
 
     @staticmethod
     def send_packet(socket_, packet):
+        """Creates a message to be sent later"""
         Message(socket_, packet)
 
     def send_all(self, command: str, exceptions=(), *, user_exception=None, **parameters):
+        """
+        Send a message to all the users
+        :param command: The command of the request
+        :param exceptions: Users NOT to send the message to
+        :param user_exception: a dict of this form:
+            {user: {parameter: value, parameter2: value}, ...}
+            This way one user can get a slightly different message than the others
+        :param parameters:  The parameters of the request
+        :return: The default packet (without the exceptions)
+        """
         packet = self.build_packet(command, **parameters)
         for sock in self.open_client_sockets:
-            if exceptions and sock in exceptions:
+            if sock in exceptions:
                 continue
 
             user = User.users_list[sock]
@@ -355,6 +350,7 @@ class CommandServer(metaclass=MetaServer):
 
     @staticmethod
     def merge_kwargs(user_exception, user, kwargs):
+        """Merges the default arguments with the user_exception for a specific user"""
         if isinstance(user_exception, dict) and user in user_exception:
             return {**kwargs, **user_exception[user]}
         return kwargs
@@ -364,6 +360,19 @@ params = {}
 
 
 def safe_kwargs(f):
+    """
+    Meant to be used as a decorator. Makes sure that if a command function only takes one argument, it will get it as a
+    dictionary describing the keyword arguments it got.
+
+    without it, a command defined as:
+
+    @CommandClient.command
+    def command(self, keyword_arguments):
+        pass
+
+    can get a request like "command?keyword_arguments=4". This is dangerous because the programmer really expected to
+    get {"keyword_arguments": "4"} as keyword_arguments.
+    """
     def inner(self, user, kwargs):
         if f not in params:
             params[f] = list(inspect.signature(f).parameters)[1]
@@ -398,6 +407,7 @@ class GameServer(CommandServer):
     @safe_kwargs
     def connect(self, user: User, kwargs):
         """
+        Called on the command "Connect". Changes the user to the right class.
         Template:
         user.replace(ExampleUser, **kwargs)
         """
@@ -406,26 +416,16 @@ class GameServer(CommandServer):
             user.replace(self.user_type, **kwargs)
         user.socket.send(self.created_sprites)
 
-        # self.create_sprite(Tank, user,
-        #                                  init_direction=Vector2.Unit(random.choice(Tank.possible_angles)),
-        #                                  position=Vector2.Cartesian(random.randint(ts, W - ts),
-        #                                                             random.randint(ts, H-ts)),
-        #                                  control_keys=wasd,
-        #                                  shoot_key=K_SPACE,
-        #                                  color=Color.black,
-        #                                  health_bar_positive_color=pg_color('green'),
-        #                                  health_bar_negative_color=pg_color('red'),
-        #                                  user_exception={user: {'color': Color.green}}
-        #                                  )
-
     @CommandServer.command('Disconnect')
     @safe_kwargs
     def disconnect(self, user: User, kwargs):
+        """Called on the command "Disconnect". Disconnects the user."""
         user.disconnect()
 
     @CommandServer.command('KeyChange')
     @safe_kwargs
     def key_change(self, user: User, kwargs):
+        """Called on the command "KeyChange". Changes the key status of a user."""
         key_number = kwargs['keyNumber']
         pressed = kwargs['isPressed']
         user.active_keys[int(key_number)] = int(pressed)
@@ -433,22 +433,30 @@ class GameServer(CommandServer):
     @CommandServer.command('SetAttr')
     @safe_kwargs
     def set_attribute(self, user: User, kwargs):
+        """Called on the command "SetAttr". Changes an attribute of a user."""
         attr = kwargs['attr']
         value = kwargs['value']
 
         user.set_attribute(attr, value)
 
     def create_sprite(self, cls, controller: User = None, *, user_exception=None, **kwargs):
+        """
+        Creates a sprite and sends it to all the users.
+        :param cls: Sprite's class
+        :param controller: The user that controls the sprite (None for no one)
+        :param user_exception: a dict of this form:
+            {user: {parameter: value, parameter2: value}, ...}
+            This way one user can get a slightly different message than the others
+        :param kwargs: Arguments to pass to cls
+        :return: The new sprite
+        """
         if user_exception is None:
             user_exception = {}
         if controller is not None:
             old = user_exception.get(controller, {})
             user_exception[controller] = {**{'control': 1}, **old}
 
-        print(user_exception)
-        print("bed: ", kwargs)
         sprite = cls(**kwargs)
-        print("aft: ", kwargs)
         default_kwargs = cls.encode_creation(**kwargs)
         kwargs_dict = {'id': sprite.id, 'classId': cls.id, 'control': 0, **default_kwargs}
 
@@ -472,17 +480,23 @@ class GameServer(CommandServer):
         sprite.set_user(controller)
         return sprite
 
+    def kill_sprite(self, id_):
+        self.send_all('Kill', id_=id_)
+
     def send_sprite_update(self, sprite):
+        """Sends all the user an update about a sprite"""
         kwargs = sprite.encode()
 
         self.send_all('Update', id=sprite.id, **kwargs)
 
     def update_all(self, sprite_list):
+        """Sends all users an update about all sprites"""
         for sprite in sprite_list:
             if sprite.id is not None:
                 self.send_sprite_update(sprite)
 
     def tick(self):
+        """A single tick of a server. Updates all the users."""
         self.update_all(BaseSprite.sprites_list)
         super(GameServer, self).tick()
 

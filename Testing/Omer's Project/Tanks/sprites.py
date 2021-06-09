@@ -213,7 +213,7 @@ class Tank(base_sprites.AdvancedSprite):
 
         self.current_angle = angle - 90
         self.turret = Turret(control_keys, color, self.get_turret_position(), self.current_angle - 180)
-
+        self.child_sprites.append(self.turret)
         print(self.health_bar.bar_width, self.health_bar.bar_height)
 
     def get_turret_position(self):
@@ -224,6 +224,7 @@ class Tank(base_sprites.AdvancedSprite):
         if self.control.moving_direction:
             self.current_angle = self.control.moving_direction.reversed(1).theta + 90
             self.rotatable_image.rotate(self.current_angle)
+
     # def apply_gravity(self):
     #     pass
 
