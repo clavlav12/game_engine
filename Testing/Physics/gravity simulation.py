@@ -33,6 +33,10 @@ class Planet(base_sprites.BaseSprite):
         self.image.convert_alpha()
         super(Planet, self).__init__(pygame.Rect(x - radius, y - radius, radius * 2, radius * 2),
                                      base_control.BaseControl(self, Direction.right), mass, sprite_collision_by_rect=True)
+
+        mid = Vector2.Point(pygame_structures.Camera.screen.get_size())//2
+        new_position = mid + (self.position - mid) // pygame_structures.Camera.zoom
+        self.position.set_values(*new_position)
         self.color = color
         self.radius = radius
 
@@ -120,8 +124,8 @@ def random_color():
     return color
 
 
-def random_planet(x, y):
-    return Planet(x, y, random.randint(1, 100000), random_color(), random.randint(1, 10))
+def random_planet(x, y, mass=None):
+    return Planet(x, y, mass or random.randint(1, 100000), random_color(), random.randint(1, 10))
 
 
 current = None
@@ -178,6 +182,7 @@ def Main():
     fps = 1000
     elapsed = 1 / fps
     # fnt = pygame.font.SysFont('comicsansms', 12)
+    zoom_speed = 1.5
     while running:
         events = pygame.event.get()
         for event in events:
@@ -193,9 +198,18 @@ def Main():
                     random_planet(*add_positions(add_positions(pygame.mouse.get_pos(),
                                                                pygame_structures.Camera.scroller.position()),
                                                  (-W // 2, -H // 2)))
+                if event.button == 2:
+                    random_planet(*add_positions(add_positions(pygame.mouse.get_pos(),
+                                                               pygame_structures.Camera.scroller.position()),
+                                                 (-W // 2, -H // 2)), mass=1000000000000)
                 elif event.button == 3:
                     pygame_structures.Camera.set_scroller_position(next_sprite(), smooth_move=True)
-        # first = fnt.render(f'Hit Points: {tank1.hit_points}', True, get_color(tank1.hit_points))
+                elif event.button == 4:
+                    pygame_structures.Camera.zoom *= zoom_speed
+                elif event.button == 5:
+                    pygame_structures.Camera.zoom /= zoom_speed
+
+    # first = fnt.render(f'Hit Points: {tank1.hit_points}', True, get_color(tank1.hit_points))
         # second = fnt.render(f'Hit Points: {tank2.hit_points}', True, get_color(tank2.hit_points))
 
         keys = pygame.key.get_pressed()

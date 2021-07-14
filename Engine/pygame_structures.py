@@ -611,6 +611,8 @@ class Camera:
     fps_font = pygame.font.SysFont('comicsansms', 12)
     default_font = pygame.font.SysFont('Arial', 24)
 
+    zoom = 1
+
     images = []
     blits = []
 
@@ -714,26 +716,31 @@ class Camera:
             yield 0, 0
 
     @classmethod
-    def blit(cls, surface, position):
+    def blit(cls, surface, position, ignore_zoom=False):
         """Blits an image to the screen"""
-        cls.screen.blit(surface, position)
+        if not ignore_zoom:
+            mid = structures.Vector2.Point(cls.screen.get_size())//2
+            position = mid + ((position[0], position[1]) - mid) * cls.zoom
+        cls.screen.blit(surface, tuple(position))
 
     @classmethod
     def post_process(cls, sprites_list):
         """Blits texts, blit orders and continuous images. Also adds the shake effect"""
         for txt in cls.displayed_text.values():
-            cls.blit(txt.text, txt.position)
+            cls.blit(txt.text, txt.position, True)
         if cls.display_fps:
             fps_surface = cls.fps_font.render(str(round(clock.get_fps())) + ', ' + str(len(sprites_list)),
                                               True, pygame.Color('white'))
-            cls.blit(fps_surface, (5, 5))
+            cls.blit(fps_surface, (5, 5), True)
+            zoom_surface = cls.fps_font.render(f'x{cls.zoom}', True, pygame.Color('white'))
+            cls.blit(zoom_surface, (5, 5 + fps_surface.get_height()), True)
         if cls.images:
             new = cls.images.copy()
             for image in new:
                 if image.start_time - time() > image.blit_time:
                     cls.images.remove(image)
                 else:
-                    cls.blit(image.image, image.position)
+                    cls.blit(image.image, image.position, True)
 
         if cls.blits:
             new = cls.blits.copy()

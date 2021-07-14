@@ -640,7 +640,11 @@ class BaseSprite(pygame.sprite.Sprite, metaclass=MetaSprite):
                 self.on_platform_collision(platform)
                 self.control.platform_collide(platform)
 
-        self.update_position(time_delta)
+        try:
+            self.update_position(time_delta)
+        except TypeError as e: # Too far for rect to hold...
+            self.kill()
+            warnings.warn(repr(e))
         self.update_velocity_and_acceleration(time_delta)
 
         if self.collision_detection:
@@ -1219,6 +1223,7 @@ def basic_loop():
     running = 1
     fps = 1000
     elapsed = 1/fps
+    zoom_speed = 1
     while running:
         events = pygame.event.get()
         for event in events:
@@ -1227,6 +1232,12 @@ def basic_loop():
                 continue
             if event.type == pygame.QUIT:
                 running = 0
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 4:
+                    pygame_structures.Camera.zoom += zoom_speed
+                elif event.button == 5:
+                    pygame_structures.Camera.zoom -= zoom_speed
 
             if BaseSprite.client:
                 if event.type == pygame.KEYDOWN:
@@ -1240,7 +1251,6 @@ def basic_loop():
 
         pygame_structures.Camera.post_process(BaseSprite.sprites_list)
         elapsed = min(clock.tick(fps) / 1000.0, 1 / 30)
-
     if BaseSprite.server:
         print(BaseSprite.server)
         BaseSprite.server.server_socket.close()
