@@ -14,6 +14,8 @@ import pygame
 import math
 import os
 
+if not hasattr(pygame, 'WINDOWEVENT'):
+    pygame.WINDOWEVENT = None
 Projection = namedtuple('Projection', ('min', 'max', 'collision_vertex'))
 player = Sound.Player()
 clock = pygame.time.Clock()
@@ -97,7 +99,7 @@ class Tile(pygame.sprite.Sprite):
 
         self.set_group(group)
         self.collider = Collider(False, tile_collision_by_rect, manifold_generator)
-        self.elasticity = 1
+        self.restitution = 1
         self.mask = pygame.mask.from_surface(img)
         Tile.blocks_list.add(self)
 
