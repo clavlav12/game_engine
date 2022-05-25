@@ -1,5 +1,5 @@
-\HiddenFiles
-\__pycache__
-\.idea
-\engine\__pycache__
-\engine\.idea
+/HiddenFiles
+/__pycache__
+/.idea
+/engine/__pycache__
+/engine/.idea
