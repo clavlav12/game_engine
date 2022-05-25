@@ -70,7 +70,7 @@ class RigidBall(base_sprites.ImagedRigidBody):
         self.radius = radius
         self.vertices = [None, None]
 
-        self.elasticity = .2
+        self.restitution = .2
 
         self.normals_length = 1
 
@@ -95,7 +95,7 @@ class RigidBall(base_sprites.ImagedRigidBody):
         relative_velocity = self.velocity - other.velocity
         separating_velocity = relative_velocity * normal
 
-        new_separating_velocity = - separating_velocity * min(self.elasticity, other.elasticity)
+        new_separating_velocity = - separating_velocity * min(self.restitution, other.restitution)
 
         vel_sep_diff = new_separating_velocity - separating_velocity
         impulse = vel_sep_diff / (self.inv_mass + other.inv_mass)
@@ -207,7 +207,7 @@ class RigidConvexPolygon(base_sprites.BaseRigidBody):
 
         if separating_velocity > 0:
             return
-        new_separating_velocity = - separating_velocity * min(self.elasticity, other.elasticity)
+        new_separating_velocity = - separating_velocity * min(self.restitution, other.restitution)
 
         vel_sep_diff = new_separating_velocity - separating_velocity
 
@@ -433,7 +433,7 @@ class OBB(RigidConvexPolygon):
         super(OBB, self).__init__(1, vertex, control, gravity_times_mu=self.gravity_times_mu)
 
         self.normals_length = 2
-        self.elasticity = .3
+        self.restitution = .3
 
     def update_position(self, time_delta):
         super(OBB, self).update_position(time_delta)
@@ -472,7 +472,7 @@ class RegularPolygon(RigidConvexPolygon):
         self.gravity_times_mu = 1000
         super(RegularPolygon, self).__init__(density, vertices, control, gravity_times_mu=self.gravity_times_mu)
 
-        self.elasticity = .15
+        self.restitution = .15
         self.r = radius
 
     def update(self, control_dict):
@@ -539,7 +539,7 @@ class Capsule(base_sprites.BaseRigidBody):
                                       control
                                       )
 
-        self.elasticity = .4
+        self.restitution = .4
         self.redraw_image()
 
         self.p1_offset = self.p1 - self.position
@@ -726,7 +726,7 @@ class Capsule(base_sprites.BaseRigidBody):
 
         if separating_velocity > 0:
             return
-        new_separating_velocity = - separating_velocity * min(self.elasticity, other.elasticity)
+        new_separating_velocity = - separating_velocity * min(self.restitution, other.restitution)
 
         vel_sep_diff = new_separating_velocity - separating_velocity
 
@@ -899,7 +899,7 @@ class Wall(base_sprites.BaseRigidBody):
 
         normal = (other.position - self.closest_point(other)).normalized()
         separating_velocity = other.velocity * normal
-        new_separating_velocity = - separating_velocity * other.elasticity
+        new_separating_velocity = - separating_velocity * other.restitution
         vel_sep_diff = separating_velocity - new_separating_velocity
 
         other.velocity += normal * -vel_sep_diff

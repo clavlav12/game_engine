@@ -519,7 +519,7 @@ class RigidCube(base_sprites.ImagedRigidBody):
             if separating_velocity > 0:
                 return
 
-            new_separating_velocity = -separating_velocity * min(self.elasticity, sprite.elasticity)
+            new_separating_velocity = -separating_velocity * min(self.restitution, sprite.restitution)
 
             vel_sep_diff = new_separating_velocity - separating_velocity
 

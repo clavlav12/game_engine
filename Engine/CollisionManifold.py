@@ -19,7 +19,7 @@ def initialize(BaseSprite_, RigidBody_, Tile_):
 
 
 class CollidedSprite:
-    def __init__(self, obj, inv_mass, inv_moment_of_inertia, position, velocity, angular_velocity, elasticity,
+    def __init__(self, obj, inv_mass, inv_moment_of_inertia, position, velocity, angular_velocity, restitution,
                  static_friction, dynamic_friction):
         self.angular_velocity = angular_velocity
         self.velocity = velocity
@@ -27,7 +27,7 @@ class CollidedSprite:
         self.inv_moment_of_inertia = inv_moment_of_inertia
         self.inv_mass = inv_mass
         self.obj = obj
-        self.elasticity = elasticity
+        self.restitution = restitution
         self.static_friction = static_friction
         self.dynamic_friction = dynamic_friction
 
@@ -49,7 +49,7 @@ class CollidedSprite:
         Generates CollidedSprite by TileCollection
         """
         return cls(collection.reference, 0, 0, Vector2.Point(collection.reference.rect.center), Vector2.Zero(), 0,
-                   collection.reference.elasticity, collection.reference.static_friction,
+                   collection.reference.restitution, collection.reference.static_friction,
                    collection.reference.dynamic_friction)
 
     @classmethod
@@ -177,7 +177,7 @@ class CollisionManifold:
         beta = 0
 
         b = beta * self.depth
-        impulse = (-separating_velocity * (min(first.elasticity, second.elasticity) + 1) + b) / (
+        impulse = (-separating_velocity * (max(first.restitution, second.restitution) + 1) + b) / (
                 first.inv_mass + second.inv_mass + imp_aug1 + imp_aug2)
 
         impulse_vector = self.normal * impulse

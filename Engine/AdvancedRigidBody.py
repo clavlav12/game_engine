@@ -152,7 +152,7 @@ class OBB(AdvancedRigidBody):
 
         super(OBB, self).__init__(body.polygon.area * density, body.polygon.moment_of_inertia,
                                   0, [body], control)
-        self.elasticity = .2
+        self.restitution = .2
 
     @classmethod
     def AxisAligned(cls, center, width_extent, height_extent, density=1, control: base_control.controls = None):
@@ -220,7 +220,7 @@ class Capsule(AdvancedRigidBody):
             control
         )
 
-        self.elasticity = .2
+        self.restitution = .2
 
     def update(self, _):
         super(Capsule, self).update(_)
@@ -267,7 +267,7 @@ class Star(AdvancedRigidBody):
             control
         )
 
-        self.elasticity = .2
+        self.restitution = .2
 
 
 class RegularPolygon(AdvancedRigidBody):
@@ -285,7 +285,6 @@ class RegularPolygon(AdvancedRigidBody):
             control
         )
 
-        self.elasticity = .2
 
 
 class Hammer(AdvancedRigidBody):
@@ -306,7 +305,7 @@ class Hammer(AdvancedRigidBody):
             control
         )
 
-        self.elasticity = .2
+        self.restitution = .2
 
 
 class Ball(AdvancedRigidBody):
@@ -321,7 +320,7 @@ class Ball(AdvancedRigidBody):
         mass = r ** 2 * math.pi * density
         mmoi = mass * r ** 2
         super(Ball, self).__init__(mass, mmoi, 0, [body], control)
-        self.elasticity = .2
+        self.restitution = .2
         self.r = r
 
     def draw(self):
